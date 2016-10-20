@@ -25,7 +25,7 @@ import nl.naturalis.selenium.crs.pages.*;
 import nl.naturalis.selenium.crs.utils.Report;
 
 
-public class FirstTest extends AbstractTest {
+public class Test01 extends AbstractTest {
 
 	private static String projectID = "CRS";
 	private static String testID = "Test 01";
@@ -72,44 +72,44 @@ public class FirstTest extends AbstractTest {
 		Assert.assertEquals(driver.getCurrentUrl(),homePage.getPageURL());
 	}
 	
-	@Test(priority=2)
+	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageTitle() {
 		Assert.assertEquals(driver.getTitle().trim(),homePage.getPageTitle());
 	}
 
-	@Test(priority=2)
+	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageScriptSupport() {
 		Assert.assertTrue(homePage.hasJavascriptOkIcon());
 		Assert.assertTrue(homePage.hasAjaxOkIcon());
 		Assert.assertTrue(homePage.hasCookieOkIcon());
 	}
 
-	@Test(priority=2)
+	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageLoginElements() {
 		Assert.assertTrue(homePage.hasUsernameInput());
 		Assert.assertTrue(homePage.hasPasswordInput());
 		Assert.assertTrue(homePage.hasLoginButton());
 	}
 	
-	@Test(priority=3)
+	@Test(priority=3, dependsOnMethods = { "homePageLoginElements" })
 	public void homePageDoLogin() {
 		startPage = homePage.doLogin(config.getUsername(), config.getPassword());
 		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL());
 	}
 
-	@Test(priority=4)
+	@Test(priority=4, dependsOnMethods = { "homePageDoLogin" })
 	public void startPageTitle() {
 		Assert.assertEquals(driver.getTitle().trim(),startPage.getPageTitle());
 	}
 
-	@Test(priority=4)
+	@Test(priority=4, dependsOnMethods = { "homePageDoLogin" })
 	public void checkStartPageMenus() {
 		for (MenuItems menuItem : StartPageMenuItemsCollection) {
 			checkStartPageMenu(menuItem);
 		}
 	}
 
-	@Test(priority=5)
+	@Test(priority=5, dependsOnMethods = { "startPageTitle" })
 	public void detailPageOpen() {
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
 		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringOk);
@@ -117,17 +117,17 @@ public class FirstTest extends AbstractTest {
 		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
 	}
 
-	@Test(priority=6)
+	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
 	public void detailPageTitle() {
 		assertThat(driver.getTitle().trim(),containsString(detailBeschrijvingenPage.getPageTitle()));
 	}
 	
-	@Test(priority=6)
+	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
 	public void detailPageNumberOfResults() {
 		assertThat(DetailBeschrijvingenPageExpectedResultNumber,equalTo(detailBeschrijvingenPage.getNumberOfResults()));
 	}
 
-	@Test(priority=7)
+	@Test(priority=7, dependsOnMethods = { "detailPageTitle" })
 	public void detailPageOpenUnallowed() {
 		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringNok);
 		driver.get(detailBeschrijvingenPage.getCompletePageURL());
@@ -135,18 +135,18 @@ public class FirstTest extends AbstractTest {
 		Assert.assertNotEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
 	}
 
-	@Test(priority=8)
+	@Test(priority=8, dependsOnMethods = { "detailPageOpenUnallowed" })
 	public void unallowedPageOpen() {
 		homePage = new HomePage(driver);
 		assertThat(Constants.NO_AUTHORISATION_MESSAGE,equalTo(homePage.getAuthorizationFailureMessage()));
 	}
 
-	@Test(priority=9)
+	@Test(priority=9, dependsOnMethods = { "unallowedPageOpen" })
 	public void unallowedPageMouseToLogOff() {
 		assertThat(homePage.mouseToLogOffLink(),equalTo(true));
 	}
 
-	@Test(priority=10)
+	@Test(priority=10, dependsOnMethods = { "unallowedPageMouseToLogOff" })
 	public void logOff() {
 		homePage.clickLogOffLink();
 		assertThat(driver.getCurrentUrl(),equalTo(LoggedOutUrl));
