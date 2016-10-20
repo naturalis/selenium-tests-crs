@@ -1,0 +1,6 @@
+---
+jdbc-url:   jdbc:mysql://localhost:3306/
+database:
+            db-name:   selenium
+            username:  selenium_user
+            password:  7Adq5Kw3GnCCQB3s0CKd

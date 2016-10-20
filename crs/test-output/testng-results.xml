@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="14" passed="14">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="14292" started-at="2016-10-20T14:19:21Z" finished-at="2016-10-20T14:19:35Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="14292" started-at="2016-10-20T14:19:21Z" finished-at="2016-10-20T14:19:35Z">
+      <class name="nl.naturalis.selenium.crs.tests.FirstTest">
+        <test-method status="PASS" signature="initalize()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="initalize" is-config="true" duration-ms="4372" started-at="2016-10-20T16:19:21Z" finished-at="2016-10-20T16:19:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initalize -->
+        <test-method status="PASS" signature="homePageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="homePageOpen" duration-ms="23" started-at="2016-10-20T16:19:25Z" finished-at="2016-10-20T16:19:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- homePageOpen -->
+        <test-method status="PASS" signature="homePageLoginElements()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="homePageLoginElements" duration-ms="139" started-at="2016-10-20T16:19:25Z" finished-at="2016-10-20T16:19:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- homePageLoginElements -->
+        <test-method status="PASS" signature="homePageScriptSupport()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="homePageScriptSupport" duration-ms="86" started-at="2016-10-20T16:19:26Z" finished-at="2016-10-20T16:19:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- homePageScriptSupport -->
+        <test-method status="PASS" signature="homePageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="homePageTitle" duration-ms="14" started-at="2016-10-20T16:19:26Z" finished-at="2016-10-20T16:19:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- homePageTitle -->
+        <test-method status="PASS" signature="homePageDoLogin()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="homePageDoLogin" duration-ms="2224" started-at="2016-10-20T16:19:26Z" finished-at="2016-10-20T16:19:28Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- homePageDoLogin -->
+        <test-method status="PASS" signature="checkStartPageMenus()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="checkStartPageMenus" duration-ms="825" started-at="2016-10-20T16:19:28Z" finished-at="2016-10-20T16:19:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- checkStartPageMenus -->
+        <test-method status="PASS" signature="startPageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="startPageTitle" duration-ms="15" started-at="2016-10-20T16:19:29Z" finished-at="2016-10-20T16:19:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startPageTitle -->
+        <test-method status="PASS" signature="detailPageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="detailPageOpen" duration-ms="3392" started-at="2016-10-20T16:19:29Z" finished-at="2016-10-20T16:19:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- detailPageOpen -->
+        <test-method status="PASS" signature="detailPageNumberOfResults()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="detailPageNumberOfResults" duration-ms="44" started-at="2016-10-20T16:19:32Z" finished-at="2016-10-20T16:19:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- detailPageNumberOfResults -->
+        <test-method status="PASS" signature="detailPageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="detailPageTitle" duration-ms="14" started-at="2016-10-20T16:19:32Z" finished-at="2016-10-20T16:19:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- detailPageTitle -->
+        <test-method status="PASS" signature="detailPageOpenUnallowed()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="detailPageOpenUnallowed" duration-ms="1419" started-at="2016-10-20T16:19:32Z" finished-at="2016-10-20T16:19:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- detailPageOpenUnallowed -->
+        <test-method status="PASS" signature="unallowedPageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="unallowedPageOpen" duration-ms="38" started-at="2016-10-20T16:19:34Z" finished-at="2016-10-20T16:19:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unallowedPageOpen -->
+        <test-method status="PASS" signature="unallowedPageMouseToLogOff()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="unallowedPageMouseToLogOff" duration-ms="127" started-at="2016-10-20T16:19:34Z" finished-at="2016-10-20T16:19:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unallowedPageMouseToLogOff -->
+        <test-method status="PASS" signature="logOff()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="logOff" duration-ms="1145" started-at="2016-10-20T16:19:34Z" finished-at="2016-10-20T16:19:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logOff -->
+        <test-method status="PASS" signature="cleanUp()[pri:0, instance:nl.naturalis.selenium.crs.tests.FirstTest@d8355a8]" name="cleanUp" is-config="true" duration-ms="389" started-at="2016-10-20T16:19:35Z" finished-at="2016-10-20T16:19:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanUp -->
+      </class> <!-- nl.naturalis.selenium.crs.tests.FirstTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

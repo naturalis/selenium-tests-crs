@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
+    <classes>
+      <class name="nl.naturalis.selenium.crs.tests.FirstTest">
+        <methods>
+          <include name="initalize"/>
+          <include name="logOff"/>
+          <include name="homePageDoLogin"/>
+          <include name="detailPageTitle"/>
+          <include name="homePageTitle"/>
+          <include name="checkStartPageMenus"/>
+          <include name="startPageTitle"/>
+          <include name="homePageOpen"/>
+          <include name="detailPageNumberOfResults"/>
+          <include name="detailPageOpenUnallowed"/>
+          <include name="homePageLoginElements"/>
+          <include name="homePageScriptSupport"/>
+          <include name="detailPageOpen"/>
+          <include name="unallowedPageOpen"/>
+          <include name="unallowedPageMouseToLogOff"/>
+        </methods>
+      </class> <!-- nl.naturalis.selenium.crs.tests.FirstTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
