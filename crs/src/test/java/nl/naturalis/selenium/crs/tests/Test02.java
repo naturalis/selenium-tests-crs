@@ -34,6 +34,8 @@ public class Test02 extends AbstractTest {
 	private static HomePage homePage;
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
+	private static List<String> formListLabels;
+	
 
 	/*
 	public static void main(String[] args) {
@@ -104,15 +106,18 @@ public class Test02 extends AbstractTest {
 	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
 	public void openFormSelect() {
 		List<WebElement> availableOptions = detailBeschrijvingenPage.clickFormulierenSelect();
-		Assert.assertEquals(availableOptions.size(),2);
+		List<String> labels = new ArrayList<String>();
+
+		for (WebElement e : availableOptions) {
+			labels.add(e.getText());
+		}
+		
+		Assert.assertEquals(labels,formListLabels);
 	}
 
 	@Test(priority=7, dependsOnMethods = { "openFormSelect" })
 	public void clickFormSelect() {
-//		Collection Vertebrates Specimen
-//		Digistreet Vertebrates Specimen
-
-		detailBeschrijvingenPage.clickFormulierenSelectOption("Digistreet Vertebrates Specimen");
+		detailBeschrijvingenPage.clickFormulierenSelectOption(formListLabels.get(1));
 //		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
 	}
 
@@ -190,8 +195,8 @@ public class Test02 extends AbstractTest {
 	*/
 
 	private static void initializeTestParameters() {
-
-
+        addMenu = new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),-1);
+        formListLabels = Arrays.asList("Collection Vertebrates Specimen","Digistreet Vertebrates Specimen");
 	}
 
 
