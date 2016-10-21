@@ -30,7 +30,6 @@ public class Test01 extends AbstractTest {
 	private static String projectID = "CRS";
 	private static String testID = "Test 01";
 	
-	private static TestParameters testParameters;
 	private static List<MenuItems> StartPageMenuItemsCollection = new ArrayList<MenuItems>();
 	private static String DetailBeschrijvingenPageQueryStringOk;
 	private static String DetailBeschrijvingenPageQueryStringNok;
@@ -175,40 +174,14 @@ public class Test01 extends AbstractTest {
 	}
 
 	private static void initializeTestParameters() {
+		DetailBeschrijvingenPageQueryStringOk="xmlbeschrijvingid=20250966";
+		DetailBeschrijvingenPageQueryStringNok="xmlbeschrijvingid=23838308";
+		DetailBeschrijvingenPageExpectedResultNumber=1;
 
-		testParameters = new TestParameters();
-		testParameters.setConnection(connection);
-		testParameters.setProjectID(projectID);
-		testParameters.setTestId(testID);
-		
-		JSONObject parameters = testParameters.getTestParameters();
+		StartPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),1));
+		StartPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),1));
 
-		// DetailBeschrijvingenPage
-        JSONObject queryStrings = (JSONObject) parameters.get("detail_page_query_strings");
-		DetailBeschrijvingenPageQueryStringOk=queryStrings.get("ok").toString();
-		DetailBeschrijvingenPageQueryStringNok=queryStrings.get("nok").toString();
-		DetailBeschrijvingenPageExpectedResultNumber=Integer.valueOf(parameters.get("detail_page_ok_result_number").toString());
-
-		// StartPage
-        JSONObject pMenus = (JSONObject) parameters.get("menus");
-
-        List<String> pMenuNames = Arrays.asList("SearchMenu", "AddMenu");
-
-        for(String pMenuName : pMenuNames) {
-            JSONObject pMenu = (JSONObject) pMenus.get(pMenuName);
-            JSONArray pMenuItems = (JSONArray) pMenu.get("items");
-            Iterator<String> iterator = pMenuItems.iterator();
-            List<String> items = new ArrayList<String>();
-            while (iterator.hasNext()) {
-            	items.add(iterator.next().toString());
-            }
-    		MenuItems MenuItem = new MenuItems(items,Integer.valueOf(pMenu.get("end_point_sibling_count").toString()));
-    		StartPageMenuItemsCollection.add(MenuItem);
-        }
-
-		// logged out
-		LoggedOutUrl = config.getDomain() + parameters.get("url_logged_out").toString();
-
+		LoggedOutUrl = config.getDomain() + "/AtlantisWeb/pages/publiek/Login.aspx?restart=true&action=afmelden";
 	}
 
 }

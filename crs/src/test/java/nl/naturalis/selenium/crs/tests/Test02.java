@@ -30,7 +30,6 @@ public class Test02 extends AbstractTest {
 	private static String projectID = "CRS";
 	private static String testID = "Test 02";
 	
-	private static TestParameters testParameters;
 	private static MenuItems addMenu;
 	private static HomePage homePage;
 	private static StartPage startPage;
@@ -192,29 +191,6 @@ public class Test02 extends AbstractTest {
 
 	private static void initializeTestParameters() {
 
-		testParameters = new TestParameters();
-		testParameters.setConnection(connection);
-		testParameters.setProjectID(projectID);
-		testParameters.setTestId(testID);
-		
-		JSONObject parameters = testParameters.getTestParameters();
-
-		// StartPage
-        JSONObject pMenus = (JSONObject) parameters.get("menus");
-
-        List<String> pMenuNames = Arrays.asList("AddMenu");
-
-        for(String pMenuName : pMenuNames) {
-            JSONObject pMenu = (JSONObject) pMenus.get(pMenuName);
-            JSONArray pMenuItems = (JSONArray) pMenu.get("items");
-            Iterator<String> iterator = pMenuItems.iterator();
-            List<String> items = new ArrayList<String>();
-            while (iterator.hasNext()) {
-            	items.add(iterator.next().toString());
-            }
-    		MenuItems MenuItem = new MenuItems(items,-1);
-    		addMenu = MenuItem;
-        }
 
 	}
 
