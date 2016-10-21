@@ -64,7 +64,7 @@ public class Configuration {
             }
         }
         
-        if (!getStartUrl().isEmpty()) throw new MissingConfigurationException("start URL is missing");
+        if (getStartUrl().isEmpty()) throw new MissingConfigurationException("start URL is missing");
         if (getDomain().isEmpty()) throw new MissingConfigurationException("general domain is missing");
         if (getUsername().isEmpty()) throw new MissingConfigurationException("CRS username is missing");
         if (getPassword().isEmpty()) throw new MissingConfigurationException("CRS password is missing");
