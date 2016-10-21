@@ -4,7 +4,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 
-import org.openqa.selenium.firefox.FirefoxDriver;
+// import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import com.mysql.jdbc.Connection;
 
 import nl.naturalis.selenium.crs.utils.Report;
@@ -16,7 +17,8 @@ public class AbstractTest {
 	private static String configFile = "configuration/config.yaml";
 	
 	public static String testName;
-	protected static FirefoxDriver driver;
+	// protected static FirefoxDriver driver;
+	protected static ChromeDriver driver;
 	protected static Connection connection;
 	protected static Configuration config;
 	
@@ -39,9 +41,11 @@ public class AbstractTest {
 	protected static void initializeDriver()
 	{
 		if (Configuration.getBrowserPath()!=null) {
-			System.setProperty("webdriver.firefox.bin",Configuration.getBrowserPath());
+			// System.setProperty("webdriver.firefox.bin",Configuration.getBrowserPath());
+			System.setProperty("webdriver.chromedriver.bin",Configuration.getBrowserPath());
 		}
-		driver = new FirefoxDriver();
+		// driver = new FirefoxDriver();
+		driver = new ChromeDriver();
 		//driver.manage().window().maximize();
 	}
 
