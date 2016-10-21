@@ -1,5 +1,6 @@
 package nl.naturalis.selenium.crs.tests;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import static org.hamcrest.Matchers.equalTo;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.*;
+import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
 
 
@@ -46,14 +48,14 @@ public class Test02 extends AbstractTest {
 	*/
 	
 	@BeforeClass
-	private static void initalize() {
+	private static void initalize() throws MissingConfigurationException, SQLException {
 		initializeDatabase();
 		initializeConfiguration(projectID);
 		initializeTestParameters();
 		initializeDriver();
 		initializeLogging();
 		driver.get(config.getStartUrl());
-		//Report.LogTestStart();
+		Report.LogTestStart();
 		homePage = new HomePage(driver);
 	}
 

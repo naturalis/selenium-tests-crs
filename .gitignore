@@ -13,4 +13,4 @@ hs_err_pid*
 *.prefs
 *.project
 development_notes-mds.txt
-crs/test-output/**
+crs/test-output/*
