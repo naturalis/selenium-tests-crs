@@ -4,10 +4,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 
-// import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import com.mysql.jdbc.Connection;
 
+import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
 import nl.naturalis.selenium.crs.utils.YamlReader;
 import nl.naturalis.selenium.crs.configuration.*;
@@ -17,36 +19,46 @@ public class AbstractTest {
 	private static String configFile = "configuration/config.yaml";
 	
 	public static String testName;
-	// protected static FirefoxDriver driver;
-	protected static ChromeDriver driver;
+	protected static WebDriver driver;
 	protected static Connection connection;
 	protected static Configuration config;
 	
-	protected static void initializeDatabase()
+	protected static void initializeDatabase() throws SQLException
 	{
-		
 		YamlReader yamlReader = new YamlReader();
 		yamlReader.setFile(configFile);
 		Map settings = yamlReader.getData();
 		Map database = (Map) settings.get("database");
 		
-        try {
-        	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        	connection = (Connection) DriverManager.getConnection(settings.get("jdbc-url").toString()+database.get("db-name").toString(),database.get("username").toString(),database.get("password").toString());
-        } catch (SQLException ex) {
-        	Report.LogLine("initialization","failed to connect to database","connect to "+Database.getUsername()+":"+Database.getPassword()+"@"+Database.getUrl(),ex.getMessage(),Report.LogLevel.FATAL);
-        }
+    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+    	connection = (Connection) DriverManager.getConnection(settings.get("jdbc-url").toString()+database.get("db-name").toString(),database.get("username").toString(),database.get("password").toString());
 	}
 
 	protected static void initializeDriver()
-	{
-		if (Configuration.getBrowserPath()!=null) {
-			// System.setProperty("webdriver.firefox.bin",Configuration.getBrowserPath());
-			System.setProperty("webdriver.chromedriver.bin",Configuration.getBrowserPath());
+	{	
+		String browserType = config.getBrowserType();
+		
+		if (browserType.equals("Firefox")) {
+			if (Configuration.getBrowserPath()!=null) {
+				System.setProperty("webdriver.firefox.bin",Configuration.getBrowserPath());
+			}
+			driver = new FirefoxDriver();
 		}
-		// driver = new FirefoxDriver();
-		driver = new ChromeDriver();
-		//driver.manage().window().maximize();
+		else
+		if (browserType.equals("Gecko")) {
+			if (Configuration.getBrowserPath()!=null) {
+				System.setProperty("webdriver.gecko.driver",Configuration.getBrowserPath());
+			}
+			driver = new FirefoxDriver();
+		}
+		else
+		if (browserType.equals("Chrome"))
+		{
+			if (Configuration.getBrowserPath()!=null) {
+				System.setProperty("webdriver.chromedriver.bin",Configuration.getBrowserPath());
+			}
+			driver = new ChromeDriver();
+		}
 	}
 
 	protected static void initializeLogging()
@@ -55,7 +67,7 @@ public class AbstractTest {
 		Report.setTestName(getTestName());
 	}
 
-	protected static void initializeConfiguration(String projectId)
+	protected static void initializeConfiguration(String projectId) throws MissingConfigurationException
 	{
 		config = new Configuration();
 		config.setProjectID(projectId);
@@ -63,13 +75,9 @@ public class AbstractTest {
 		config.populateConfiguration();
 	}
 	
-	protected static void tearDown()
+	protected static void tearDown() throws SQLException
 	{
-        try {
-        	connection.close();	
-        } catch (SQLException ex) {
-        	//
-        }
+		connection.close();	
 		driver.quit();	
 	}
 

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
 
 public class Configuration {
@@ -16,6 +17,7 @@ public class Configuration {
 	private static String homepage;
 	private static String crs_username;
 	private static String crs_password;
+	private static String browser_type;
 	private static String browser_path;
 
 	final public void setProjectID(String projectID) {
@@ -26,7 +28,7 @@ public class Configuration {
 		this.connection = connection;
 	}
 	
-	final public void populateConfiguration() {
+	final public void populateConfiguration() throws MissingConfigurationException {
 
         Statement st = null;
         ResultSet rs = null;
@@ -41,6 +43,7 @@ public class Configuration {
                 if(rs.getString("setting").equals("homepage")) homepage=rs.getString("value");
                 if(rs.getString("setting").equals("crs_username")) crs_username=rs.getString("value");
                 if(rs.getString("setting").equals("crs_password")) crs_password=rs.getString("value");
+                if(rs.getString("setting").equals("browser_type")) browser_type=rs.getString("value");
                 if(rs.getString("setting").equals("browser_path")) browser_path=rs.getString("value");
             }
 
@@ -61,10 +64,11 @@ public class Configuration {
             }
         }
         
-        if (getStartUrl().isEmpty()) Report.LogLine("initialization","missing start URL","","<URL>",Report.LogLevel.FATAL);
-        if (getDomain().isEmpty()) Report.LogLine("initialization","missing site domain","","<http://domain/>",Report.LogLevel.FATAL);
-        if (getUsername().isEmpty()) Report.LogLine("initialization","missing CRS username","","<username>",Report.LogLevel.FATAL);
-        if (getPassword().isEmpty()) Report.LogLine("initialization","missing CRS password","","<password>",Report.LogLevel.FATAL);
+        if (!getStartUrl().isEmpty()) throw new MissingConfigurationException("start URL is missing");
+        if (getDomain().isEmpty()) throw new MissingConfigurationException("general domain is missing");
+        if (getUsername().isEmpty()) throw new MissingConfigurationException("CRS username is missing");
+        if (getPassword().isEmpty()) throw new MissingConfigurationException("CRS password is missing");
+        if (getBrowserType().isEmpty()) throw new MissingConfigurationException("browser type is missing");
 	}
 	
 	final public static String getStartUrl() {
@@ -81,6 +85,10 @@ public class Configuration {
 
 	final public static String getPassword() {
 		return crs_password;
+	}
+
+	final public static String getBrowserType() {
+		return browser_type;
 	}
 
 	final public static String getBrowserPath() {

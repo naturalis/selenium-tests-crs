@@ -32,6 +32,7 @@ example data:
 		('CRS','domain','https://this.domain.nl'),
 		('CRS','crs_username','UserName'),
 		('CRS','crs_password','secret')
+		('CRS','browser_type','Chrome')
 		('CRS','browser_path','C:/Program Files/FireFox-4.21/firefox.exe')
 	;
 
