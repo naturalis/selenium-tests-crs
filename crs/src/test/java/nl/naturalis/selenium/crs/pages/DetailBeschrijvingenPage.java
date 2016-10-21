@@ -30,7 +30,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "ctl00_masterContent_ddl_fomulieren")
 	private WebElement formulierenSelect;
 
-	
+	@FindBy(id = "ctl00_masterContent_btn_formulieren")
+	private WebElement buttonFormulierenSelect;
+
+//	@FindBy(xpath = "//*[@id='ctl00_masterContent_ddl_fomulieren']") // id = ctl00_masterContent_ddl_fomulieren
+//	private Select selectedFormulier;
+		
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -56,8 +61,15 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void clickFormulierenSelectOption(String optionLabel) {
 		Select select = new Select(this.formulierenSelect);
 		select.selectByVisibleText(optionLabel);
-		System.out.println(select.getFirstSelectedOption().getText());
 		select.getFirstSelectedOption().click();
+		buttonFormulierenSelect.click();
+	}
+	
+	public String findSelectedFormulier() {
+		// WebElement select = this.findElement(By.name("myselect"));
+		Select dropDown = new Select(formulierenSelect);           
+		String selected = dropDown.getFirstSelectedOption().getText();
+		return selected;
 	}
 
 	public String getCompletePageURL() {	

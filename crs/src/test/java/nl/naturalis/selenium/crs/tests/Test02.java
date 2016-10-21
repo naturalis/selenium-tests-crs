@@ -37,16 +37,7 @@ public class Test02 extends AbstractTest {
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
 	private static List<String> formListLabels;
-	
-
-	/*
-	public static void main(String[] args) {
-		initializeDatabase();
-		initializeConfiguration(projectID);
-		initializeTestParameters();
-	}
-	*/
-	
+		
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
 		initializeDatabase();
@@ -61,8 +52,8 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() {
-		//tearDown();
-		//Report.LogTestEnd();
+		// tearDown();
+		Report.LogTestEnd();
 	}
 	
 	@Test(priority=1)
@@ -87,7 +78,6 @@ public class Test02 extends AbstractTest {
 		WebElement UppMenu = startPage.getUppMenu();
 		Actions action = new Actions(driver);
 
-		Integer n=0;
 		for (String item : addMenu.getMenuItems()) {
 			WebElement element = UppMenu.findElement(By.linkText(item));
 			action.moveToElement(element).perform();
@@ -114,13 +104,14 @@ public class Test02 extends AbstractTest {
 			labels.add(e.getText());
 		}
 		
-		Assert.assertEquals(labels,formListLabels);
+		Assert.assertEquals(labels, formListLabels);
 	}
 
 	@Test(priority=7, dependsOnMethods = { "openFormSelect" })
-	public void clickFormSelect() {
-		detailBeschrijvingenPage.clickFormulierenSelectOption(formListLabels.get(1));
-//		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
+	public void selectSpecifiedForm() {
+		detailBeschrijvingenPage.clickFormulierenSelectOption(formListLabels.get(0));
+		// System.out.println( detailBeschrijvingenPage.findSelectedFormulier() );
+		Assert.assertEquals(detailBeschrijvingenPage.findSelectedFormulier(), formListLabels.get(0));
 	}
 
 
