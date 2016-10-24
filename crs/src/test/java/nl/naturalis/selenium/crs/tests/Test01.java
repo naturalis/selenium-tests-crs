@@ -3,11 +3,8 @@ package nl.naturalis.selenium.crs.tests;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -27,6 +24,14 @@ import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
 
 
+/**
+ * CRS Test 01, runs through scenario for logging in and out 
+ * Runs as TestNG application only (no main())
+ *
+ * @author      Maarten Schermer <maarten.schermer@naturalis.nl>
+ * @version     1.0
+ * @since       1.0
+ */
 public class Test01 extends AbstractTest {
 
 	private static String projectID = "CRS";
@@ -40,15 +45,14 @@ public class Test01 extends AbstractTest {
 	private static HomePage homePage;
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
-
-	/*
-	public static void main(String[] args) {
-		initializeDatabase();
-		initializeConfiguration(projectID);
-		initializeTestParameters();
-	}
-	*/
 	
+
+	/**
+	 * Initializes test, runs BeforeClass.
+	 *
+	 * @throws MissingConfigurationException, SQLException
+	 * @since 1.0
+	 */
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
 		initializeDatabase();
@@ -56,53 +60,93 @@ public class Test01 extends AbstractTest {
 		initializeTestParameters();
 		initializeDriver();
 		initializeLogging();
-		driver.get(config.getStartUrl());
+		driver.get(Configuration.getStartUrl());
 		Report.LogTestStart();
-		homePage = new HomePage(driver);
 	}
 
+	/**
+	 * Clean up, runs AfterClass 
+	 *
+	 * @throws SQLException
+	 * @since 1.0
+	 */
 	@AfterClass
 	private static void cleanUp() throws SQLException {
 		tearDown();
 		Report.LogTestEnd();
 	}
 	
+	/**
+	 * Opens home page, asserts correct URL. 
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=1)
 	public void homePageOpen() {
 		homePage = new HomePage(driver);
-		Assert.assertEquals(driver.getCurrentUrl(),homePage.getPageURL());
+		Assert.assertEquals(driver.getCurrentUrl(),homePage.getPageURL(),"home page URL");
 	}
 	
+	/**
+	 * Asserts correct page title. 
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageTitle() {
-		Assert.assertEquals(driver.getTitle().trim(),homePage.getPageTitle());
+		Assert.assertEquals(driver.getTitle().trim(),homePage.getPageTitle(),"home page, page title");
 	}
 
+	/**
+	 * Asserts presence of icons indicating correct working of Javascript, AJAX and cookies. 
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageScriptSupport() {
-		Assert.assertTrue(homePage.hasJavascriptOkIcon());
-		Assert.assertTrue(homePage.hasAjaxOkIcon());
-		Assert.assertTrue(homePage.hasCookieOkIcon());
+		Assert.assertTrue(homePage.hasJavascriptOkIcon(),"javascript ok icon");
+		Assert.assertTrue(homePage.hasAjaxOkIcon(),"AJAX ok icon");
+		Assert.assertTrue(homePage.hasCookieOkIcon(),"cookies ok icon");
 	}
 
+	/**
+	 * Asserts presence of username and password inputs and login button. 
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageLoginElements() {
-		Assert.assertTrue(homePage.hasUsernameInput());
-		Assert.assertTrue(homePage.hasPasswordInput());
-		Assert.assertTrue(homePage.hasLoginButton());
+		Assert.assertTrue(homePage.hasUsernameInput(),"username input");
+		Assert.assertTrue(homePage.hasPasswordInput(),"password input");
+		Assert.assertTrue(homePage.hasLoginButton(),"login button");
 	}
-	
+
+	/**
+	 * Opens start page by logging in and asserts correct URL. 
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=3, dependsOnMethods = { "homePageLoginElements" })
 	public void homePageDoLogin() {
-		startPage = homePage.doLogin(config.getUsername(), config.getPassword());
-		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL());
+		startPage = homePage.doLogin(Configuration.getUsername(), Configuration.getPassword());
+		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL(),"URL of home page");
 	}
 
+	/**
+	 * Asserts correct page title. 
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=4, dependsOnMethods = { "homePageDoLogin" })
 	public void startPageTitle() {
-		Assert.assertEquals(driver.getTitle().trim(),startPage.getPageTitle());
+		Assert.assertEquals(driver.getTitle().trim(),startPage.getPageTitle(),"title of start page");
 	}
 
+	/**
+	 * Checks whether the menu contains the right (number of) items.  
+	 *
+	 * @since 1.0
+	 */
 	@Test(priority=4, dependsOnMethods = { "homePageDoLogin" })
 	public void checkStartPageMenus() {
 		for (MenuItems menuItem : StartPageMenuItemsCollection) {
@@ -110,49 +154,91 @@ public class Test01 extends AbstractTest {
 		}
 	}
 
+	/**
+	 * Opens detail page, asserts correct URL.
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=5, dependsOnMethods = { "startPageTitle" })
 	public void detailPageOpen() {
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
 		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringOk);
 		driver.get(detailBeschrijvingenPage.getCompletePageURL());
-		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
+		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL(),"verifying URL detail page");
 	}
 
+	/**
+	 * Asserts page title.
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
 	public void detailPageTitle() {
-		assertThat(driver.getTitle().trim(),containsString(detailBeschrijvingenPage.getPageTitle()));
+		Assert.assertNotEquals(driver.getTitle().trim(),containsString(detailBeschrijvingenPage.getPageTitle()),"detail page, page title");
 	}
 	
+	/**
+	 * Asserts number of results.
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
 	public void detailPageNumberOfResults() {
-		assertThat(DetailBeschrijvingenPageExpectedResultNumber,equalTo(detailBeschrijvingenPage.getNumberOfResults()));
+		Assert.assertNotEquals(DetailBeschrijvingenPageExpectedResultNumber,equalTo(detailBeschrijvingenPage.getNumberOfResults()),"detail page, number of results");
 	}
 
+	/**
+	 * Attempts opening detail page, is redirected to home page due to illegal ID for this user. 
+	 * Asserts URL is not that of the detail page requested. 
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=7, dependsOnMethods = { "detailPageTitle" })
 	public void detailPageOpenUnallowed() {
 		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringNok);
-		driver.get(detailBeschrijvingenPage.getCompletePageURL());
-		// illegal ID, page automatically redirects to login (= HomePage)  
-		Assert.assertNotEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
+		driver.get(detailBeschrijvingenPage.getCompletePageURL());  
+		Assert.assertNotEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL(),"URL should *not* be that of detail page");
 	}
 
+	/**
+	 * Asserts not authorized message is being displayed.
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=8, dependsOnMethods = { "detailPageOpenUnallowed" })
 	public void unallowedPageOpen() {
 		homePage = new HomePage(driver);
-		assertThat(Constants.NO_AUTHORISATION_MESSAGE,equalTo(homePage.getAuthorizationFailureMessage()));
+		Assert.assertEquals(Constants.NO_AUTHORISATION_MESSAGE,homePage.getAuthorizationFailureMessage(),"'not authorized' message");
 	}
 
+	/**
+	 * Moves mouse to logoff link, asserts logoff link is displayed.
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=9, dependsOnMethods = { "unallowedPageOpen" })
 	public void unallowedPageMouseToLogOff() {
-		assertThat(homePage.mouseToLogOffLink(),equalTo(true));
+		Assert.assertEquals(homePage.mouseToLogOffLink().booleanValue(),true,"visibility of log off link");
 	}
 
+	/**
+	 * Logs out, asserts correct URL.
+	 * 
+	 * @since 1.0
+	 */
 	@Test(priority=10, dependsOnMethods = { "unallowedPageMouseToLogOff" })
 	public void logOff() {
 		homePage.clickLogOffLink();
-		assertThat(driver.getCurrentUrl(),equalTo(LoggedOutUrl));
+		Assert.assertEquals(driver.getCurrentUrl(),LoggedOutUrl,"URL after logging off");
 	}
-		
+
+	/**
+	 * Iterates through menu items, asserts whether the number of items in the
+	 * last branch is correct.
+	 * 
+	 * @param menuItem
+	 * @since 1.0
+	 */
 	private void checkStartPageMenu(MenuItems menuItem) {
 		WebElement UppMenu = startPage.getUppMenu();
 		Actions action = new Actions(driver);
@@ -172,9 +258,20 @@ public class Test01 extends AbstractTest {
 		WebElement LastItemParentElement = LastItem.findElement(By.xpath("./../../.."));
 		List<WebElement> LastItemAndSiblings = LastItemParentElement.findElements(By.tagName("tr"));
 		
-		Assert.assertEquals(Integer.valueOf(LastItemAndSiblings.size()),menuItem.getMaxLastItemAndSiblings(),String.join(" > ", menuItem.getMenuItems()));
+		Assert.assertEquals(Integer.valueOf(LastItemAndSiblings.size()),menuItem.getMaxLastItemAndSiblings(),"menu (" + String.join(" > ", menuItem.getMenuItems())+") item count");
 	}
 
+	/**
+	 * Initializes specific test parameters:
+	 * 
+	 *   DetailBeschrijvingenPageQueryStringOk
+	 *   DetailBeschrijvingenPageQueryStringNok
+	 *   DetailBeschrijvingenPageExpectedResultNumber
+	 *   MenuItems (SearchMenu, AddMenu)
+	 *   LoggedOutUrl
+	 * 
+	 * @since 1.0
+	 */
 	private static void initializeTestParameters() {
 		DetailBeschrijvingenPageQueryStringOk="xmlbeschrijvingid=20250966";
 		DetailBeschrijvingenPageQueryStringNok="xmlbeschrijvingid=23838308";

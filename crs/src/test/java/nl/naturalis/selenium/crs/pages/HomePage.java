@@ -1,11 +1,8 @@
 package nl.naturalis.selenium.crs.pages;
 
 import nl.naturalis.selenium.crs.configuration.*;
-import nl.naturalis.selenium.crs.utils.Report;
 import nl.naturalis.selenium.crs.pages.StartPage;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +10,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/**
+ * CRS HomePage page model 
+ *
+ * @author      Maarten Schermer <maarten.schermer@naturalis.nl>
+ * @version     1.0
+ * @since       1.0
+ */
 public class HomePage extends AbstractPage {
 
 	private WebDriver driver;
@@ -21,7 +25,7 @@ public class HomePage extends AbstractPage {
 	private String PageTitle="NCB PL omgeving - Log in";
 	private String PageURL="/AtlantisWeb/pages/publiek/Login.aspx";
 
-	private String okIconImgName="ok.png"; 
+	private String okAltText="Ok"; 
 	
 	@FindBy(id = "ctl00_masterContent_gebruikersnaam")
 	private WebElement inputUsername;
@@ -33,13 +37,13 @@ public class HomePage extends AbstractPage {
 	private WebElement buttonLogIn;
 
 	@FindBy(css = "#javascriptLabel>img")
-	private WebElement spanCheckJavascript;
+	private WebElement imgCheckJavascript;
 
 	@FindBy(css = "#ajaxLabel>img")
-	private WebElement spanCheckAjax;
+	private WebElement imgCheckAjax;
 
 	@FindBy(css = "#cookieLabel>img")
-	private WebElement spanCheckCookie;
+	private WebElement imgCheckCookie;
 	
 	@FindBy(id = "ctl00_masterContent_ingelogd_melding")
 	private WebElement ingelogdMelding;
@@ -67,15 +71,15 @@ public class HomePage extends AbstractPage {
 	}
 
 	public boolean hasJavascriptOkIcon() {
-		return this.spanCheckJavascript.getAttribute("src").contains(this.okIconImgName);
+		return this.imgCheckJavascript.getAttribute("alt").equals(okAltText);
 	}
 
 	public boolean hasAjaxOkIcon() {
-		return this.spanCheckAjax.getAttribute("src").contains(this.okIconImgName);
+		return this.imgCheckAjax.getAttribute("alt").equals(okAltText);
 	}
 
 	public boolean hasCookieOkIcon() {
-		return this.spanCheckCookie.getAttribute("src").contains(this.okIconImgName);
+		return this.imgCheckCookie.getAttribute("alt").equals(okAltText);
 	}
 
 	public StartPage doLogin(String username, String password) {
@@ -86,7 +90,7 @@ public class HomePage extends AbstractPage {
 	}
 	
 	public String getAuthorizationFailureMessage() {
-		return ingelogdMelding.getText().trim();
+		return ingelogdMelding.getText().toString().trim().replace("\r","");
 	}
 
 	public Boolean mouseToLogOffLink() {
