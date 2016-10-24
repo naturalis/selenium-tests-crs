@@ -17,9 +17,11 @@ public class Configuration {
 	private static String homepage;
 	private static String crs_username;
 	private static String crs_password;
+	private static String crs_instance;
 	private static String browser_type;
 	private static String browser_path;
 
+	
 	final public void setProjectID(String projectID) {
 		this.projectID = projectID;
 	}
@@ -43,6 +45,7 @@ public class Configuration {
                 if(rs.getString("setting").equals("homepage")) homepage=rs.getString("value");
                 if(rs.getString("setting").equals("crs_username")) crs_username=rs.getString("value");
                 if(rs.getString("setting").equals("crs_password")) crs_password=rs.getString("value");
+                if(rs.getString("setting").equals("crs_instance")) crs_instance=rs.getString("value");
                 if(rs.getString("setting").equals("browser_type")) browser_type=rs.getString("value");
                 if(rs.getString("setting").equals("browser_path")) browser_path=rs.getString("value");
             }
@@ -68,6 +71,7 @@ public class Configuration {
         if (getDomain().isEmpty()) throw new MissingConfigurationException("general domain is missing");
         if (getUsername().isEmpty()) throw new MissingConfigurationException("CRS username is missing");
         if (getPassword().isEmpty()) throw new MissingConfigurationException("CRS password is missing");
+        if (getInstance().isEmpty()) throw new MissingConfigurationException("CRS instance is missing");
         if (getBrowserType().isEmpty()) throw new MissingConfigurationException("browser type is missing");
 	}
 	
@@ -85,6 +89,10 @@ public class Configuration {
 
 	final public static String getPassword() {
 		return crs_password;
+	}
+
+	final public static String getInstance() {
+		return crs_instance;
 	}
 
 	final public static String getBrowserType() {

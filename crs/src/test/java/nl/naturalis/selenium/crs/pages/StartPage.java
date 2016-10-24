@@ -1,5 +1,6 @@
 package nl.naturalis.selenium.crs.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,20 @@ public class StartPage extends AbstractPage {
 	@FindBy(id = "ctl00_UppMenu")
 	private WebElement UppMenu;
 
+	@FindBy(id = "ctl00_QuickSearchTextBox")
+	private WebElement QuickSearchTextBox;
+
+	@FindBy(id = "ctl00_QuickSearchButton")
+	private WebElement QuickSearchButton;
+
+	@FindBy(id = "ctl00_QuickSearchPopUpPanel")
+	private WebElement QuickSearchPopUpPanel;
+
+	@FindBy(id = "ctl00_QuickSearchErrorPopupButton")
+	private WebElement QuickSearchErrorPopupButton;
+
+	
+	
 	public StartPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -27,6 +42,20 @@ public class StartPage extends AbstractPage {
 	
 	public WebElement getUppMenu() { 
 		return UppMenu;
+	}
+
+	public void doDetailSearch(String searchterm) {
+		this.QuickSearchTextBox.sendKeys(searchterm);
+		this.QuickSearchButton.click();
+	}
+	
+	// not working!
+	public void quickSearchErrorPopupButtonClick() {
+		QuickSearchErrorPopupButton.click();
+	}
+	
+	public String getSearchFailureMessage() {
+		return QuickSearchPopUpPanel.getAttribute("textContent").trim();
 	}
 	
 	@Override

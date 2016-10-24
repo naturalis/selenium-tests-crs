@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
+import nl.naturalis.selenium.crs.fragments.EditIcon;
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
@@ -129,8 +130,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return iconValues;
 	}
 
-	public String[] getIconInfo(String choice) {
+	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
+
 		if (choice == "icon1") {
 			icon = iconAddMultimedia;
 		} else if (choice == "icon2") {
@@ -146,11 +148,19 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		} else if (choice == "icon7") {
 			icon = iconSaveDefaults;
 		}
+		
+		EditIcon thisIcon = new EditIcon();
+		thisIcon.setSrc(icon.getAttribute("src").trim());
+		thisIcon.setAlt(icon.getAttribute("alt").trim());
+		thisIcon.setTitle(icon.getAttribute("title").trim());
+
+		/*
 		String[] iconValues = new String[3];
 		iconValues[0] = icon.getAttribute("src").trim();
 		iconValues[1] = icon.getAttribute("alt").trim();
 		iconValues[2] = icon.getAttribute("title").trim();
-		return iconValues;
+		*/
+		return thisIcon;
 	}
 	
 	
