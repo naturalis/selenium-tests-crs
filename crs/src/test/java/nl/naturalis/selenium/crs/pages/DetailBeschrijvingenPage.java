@@ -9,7 +9,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
@@ -34,6 +36,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	@FindBy(id = "ctl00_masterContent_btn_formulieren")
 	private WebElement buttonFormulierenSelect;
+	
+	@FindBy(id = "ctl00_QuickSearchTextBox")
+	private WebElement QuickSearchTextBox;
+
+	@FindBy(id = "ctl00_QuickSearchButton")
+	private WebElement QuickSearchButton;
 	
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
@@ -74,7 +82,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(this.driver, this);
 		this.PageURL=Configuration.getDomain() + this.PageURL;
 	}
 	
@@ -100,13 +108,29 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		select.getFirstSelectedOption().click();
 		buttonFormulierenSelect.click();
 	}
-	
+
+	public void switchToMasterContentFrame() {
+		WebDriverWait wait = new WebDriverWait(this.driver, 5);
+		wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("ctl00_masterContent_iframe_1"))));		
+		this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
+	}
+
 	public String findSelectedFormulier() {
 		Select dropDown = new Select(formulierenSelect);           
 		String selected = dropDown.getFirstSelectedOption().getText();
 		return selected;
 	}
 	
+	public String getRegistrationNumber() {
+		return this.registrationNumber.getAttribute("value");
+	}
+
+	public void doDetailSearch(String searchterm) {
+		this.QuickSearchTextBox.sendKeys(searchterm);
+		this.QuickSearchButton.click();
+	}
+	
+
 	public String getCompletePageURL() {	
 		if (this.PageUrlQueryString=="") {
 			return this.PageURL; 

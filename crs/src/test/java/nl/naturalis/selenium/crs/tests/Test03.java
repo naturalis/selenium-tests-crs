@@ -82,7 +82,7 @@ public class Test03 extends AbstractTest {
 		startPage.doDetailSearch(unitNumberIncorrect);
 		String failMessageActual = startPage.getSearchFailureMessage().replace("  "," ");
 		String failMessageExpected = Constants.SEARCH_FAILURE_MESSAGE.replace("%s",Configuration.getInstance()); 
-		Assert.assertEquals(failMessageExpected,failMessageActual,"detail search error message");
+		Assert.assertEquals(failMessageExpected,failMessageActual,"3.1.2. detail search error message");
 		//startPage.quickSearchErrorPopupButtonClick();
 	}
 	
@@ -91,7 +91,8 @@ public class Test03 extends AbstractTest {
 		this.driver.navigate().refresh(); // startPage.quickSearchErrorPopupButtonClick(); isn't working....
 		startPage.doDetailSearch(unitNumberCorrect);
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
-		
+		detailBeschrijvingenPage.switchToMasterContentFrame();
+		System.out.println(detailBeschrijvingenPage.getRegistrationNumber());
 	}
 	
 
