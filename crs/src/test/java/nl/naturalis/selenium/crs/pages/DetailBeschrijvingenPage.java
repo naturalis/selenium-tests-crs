@@ -47,6 +47,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement registrationNumber;
 	
 	// Iconen / buttons
+	
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
 	private WebElement iconAddMultimedia;
@@ -76,9 +77,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement iconSaveDefaults;
 
 	// #8 Load defaults
-//	@FindBy(class = "saveDefaults")
-//	private WebElement iconSaveDefaults;
+	@FindBy(css = "div#ctl00_masterContent_UpdatePanel4 div.tabcontent table.maxwidth tbody tr td img:last-of-type")
+	private WebElement iconLoadDefaults;
 	
+
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -171,6 +173,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			icon = iconSaveAddNewDocument;
 		} else if (choice == "icon7") {
 			icon = iconSaveDefaults;
+		} else if (choice == "icon8") {
+			icon = iconLoadDefaults;
 		}
 		
 		EditIcon thisIcon = new EditIcon();
@@ -178,12 +182,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		thisIcon.setAlt(icon.getAttribute("alt").trim());
 		thisIcon.setTitle(icon.getAttribute("title").trim());
 
-		/*
-		String[] iconValues = new String[3];
-		iconValues[0] = icon.getAttribute("src").trim();
-		iconValues[1] = icon.getAttribute("alt").trim();
-		iconValues[2] = icon.getAttribute("title").trim();
-		*/
 		return thisIcon;
 	}
 	

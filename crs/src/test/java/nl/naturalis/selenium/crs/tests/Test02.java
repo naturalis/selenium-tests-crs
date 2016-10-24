@@ -130,12 +130,12 @@ public class Test02 extends AbstractTest {
 	public void checkIconInfo() {
 		EditIcon thisIcon = null; 
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon1");
-		
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_add.png", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getAlt(), "Add multimedia", "Fout in 2.1.2");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon2");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_copy.png", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getSrc(), "Attach all multimedia from the global selectie to this document", "Fout in 2.1.2");
 		/*
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon1")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_add.png", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon1")[1], "Add multimedia", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon2")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_copy.png", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon2")[1], "Attach all multimedia from the global selectie to this document", "Fout in 2.1.2");
 		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon3")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_cut.png", "Fout in 2.1.2");
 		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon3")[1], "Move all multimedia from the global selectie to this document", "Fout in 2.1.2");
 		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon4")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/new.gif", "Fout in 2.1.2");
