@@ -134,19 +134,22 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getAlt(), "Add multimedia", "Fout in 2.1.2");
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon2");
 		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_copy.png", "Fout in 2.1.2");
-		Assert.assertEquals(thisIcon.getSrc(), "Attach all multimedia from the global selectie to this document", "Fout in 2.1.2");
-		/*
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon3")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_cut.png", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon3")[1], "Move all multimedia from the global selectie to this document", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon4")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/new.gif", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon4")[1], "New", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon5")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/save2.gif", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon5")[1], "Save", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon6")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/save_new2.gif", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon6")[1], "Save and add a new document", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon7")[0], "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/savedefault.gif", "Fout in 2.1.2");
-		Assert.assertEquals(detailBeschrijvingenPage.getIconInfo("icon7")[2], "Save defaults", "Fout in 2.1.2");
-		*/
+		Assert.assertEquals(thisIcon.getAlt(), "Attach all multimedia from the global selectie to this document", "Fout in 2.1.2");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon3");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_cut.png", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getAlt(), "Move all multimedia from the global selectie to this document", "Fout in 2.1.2");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon4");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/new.gif", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getAlt(), "New", "Fout in 2.1.2");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon5");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/save2.gif", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getAlt(), "Save", "Fout in 2.1.2");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon6");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/save_new2.gif", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getAlt(), "Save and add a new document", "Fout in 2.1.2");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon7");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/savedefault.gif", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getTitle(), "Save defaults", "Fout in 2.1.2");
 	}	
 	
 	/*
