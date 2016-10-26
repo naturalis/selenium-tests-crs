@@ -38,6 +38,10 @@ public class Report {
 		System.out.println("[" + timeStamp + "] FINISHED " + Report.testName);
 	}
 
+	public static void LogLine(String message) {
+		System.out.println(Report.testName + ": "+  message );
+	}
+
 	public static void LogLine(String page, String message, String expectedvalue, String actualvalue, LogLevel severity) {
 		System.out.println(Report.testName + ": "+ page + " {"+Report.username+"}: " + message + " (expected: " + expectedvalue + "; actual: " + actualvalue + ") [" + severity +"]");
 	}

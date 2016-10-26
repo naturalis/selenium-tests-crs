@@ -37,11 +37,11 @@ public class Test01 extends AbstractTest {
 	private static String projectID = "CRS";
 	private static String testID = "Test 01";
 	
-	private static List<MenuItems> StartPageMenuItemsCollection = new ArrayList<MenuItems>();
-	private static String DetailBeschrijvingenPageQueryStringOk;
-	private static String DetailBeschrijvingenPageQueryStringNok;
-	private static Integer DetailBeschrijvingenPageExpectedResultNumber;
-	private static String LoggedOutUrl;
+	private static List<MenuItems> startPageMenuItemsCollection = new ArrayList<MenuItems>();
+	private static String detailBeschrijvingenPageQueryStringOk;
+	private static String detailBeschrijvingenPageQueryStringNok;
+	private static Integer detailBeschrijvingenPageExpectedResultNumber;
+	private static String loggedOutUrl;
 	private static HomePage homePage;
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
@@ -84,7 +84,7 @@ public class Test01 extends AbstractTest {
 	@Test(priority=1)
 	public void homePageOpen() {
 		homePage = new HomePage(driver);
-		Assert.assertEquals(driver.getCurrentUrl(),homePage.getPageURL(),"home page URL");
+		Assert.assertEquals(driver.getCurrentUrl(),homePage.getPageURL(),"1.1.1. home page URL");
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageTitle() {
-		Assert.assertEquals(driver.getTitle().trim(),homePage.getPageTitle(),"home page, page title");
+		Assert.assertEquals(driver.getTitle().trim(),homePage.getPageTitle(),"1.1.1. home page, page title");
 	}
 
 	/**
@@ -104,9 +104,9 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageScriptSupport() {
-		Assert.assertTrue(homePage.hasJavascriptOkIcon(),"javascript ok icon");
-		Assert.assertTrue(homePage.hasAjaxOkIcon(),"AJAX ok icon");
-		Assert.assertTrue(homePage.hasCookieOkIcon(),"cookies ok icon");
+		Assert.assertTrue(homePage.hasJavascriptOkIcon(),"1.1.2. javascript ok icon");
+		Assert.assertTrue(homePage.hasAjaxOkIcon(),"1.1.2. AJAX ok icon");
+		Assert.assertTrue(homePage.hasCookieOkIcon(),"1.1.2. cookies ok icon");
 	}
 
 	/**
@@ -116,9 +116,9 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
 	public void homePageLoginElements() {
-		Assert.assertTrue(homePage.hasUsernameInput(),"username input");
-		Assert.assertTrue(homePage.hasPasswordInput(),"password input");
-		Assert.assertTrue(homePage.hasLoginButton(),"login button");
+		Assert.assertTrue(homePage.hasUsernameInput(),"1.1.3. username input");
+		Assert.assertTrue(homePage.hasPasswordInput(),"1.1.3. password input");
+		Assert.assertTrue(homePage.hasLoginButton(),"1.1.3. login button");
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=4, dependsOnMethods = { "homePageDoLogin" })
 	public void checkStartPageMenus() {
-		for (MenuItems menuItem : StartPageMenuItemsCollection) {
+		for (MenuItems menuItem : startPageMenuItemsCollection) {
 			checkStartPageMenu(menuItem);
 		}
 	}
@@ -162,7 +162,7 @@ public class Test01 extends AbstractTest {
 	@Test(priority=5, dependsOnMethods = { "startPageTitle" })
 	public void detailPageOpen() {
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
-		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringOk);
+		detailBeschrijvingenPage.setPageUrlQueryString(detailBeschrijvingenPageQueryStringOk);
 		driver.get(detailBeschrijvingenPage.getCompletePageURL());
 		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL(),"verifying URL detail page");
 	}
@@ -184,7 +184,7 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
 	public void detailPageNumberOfResults() {
-		Assert.assertNotEquals(DetailBeschrijvingenPageExpectedResultNumber,equalTo(detailBeschrijvingenPage.getNumberOfResults()),"detail page, number of results");
+		Assert.assertNotEquals(detailBeschrijvingenPageExpectedResultNumber,equalTo(detailBeschrijvingenPage.getNumberOfResults()),"detail page, number of results");
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=7, dependsOnMethods = { "detailPageTitle" })
 	public void detailPageOpenUnallowed() {
-		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringNok);
+		detailBeschrijvingenPage.setPageUrlQueryString(detailBeschrijvingenPageQueryStringNok);
 		driver.get(detailBeschrijvingenPage.getCompletePageURL());  
 		Assert.assertNotEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL(),"URL should *not* be that of detail page");
 	}
@@ -218,7 +218,7 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=9, dependsOnMethods = { "unallowedPageOpen" })
 	public void unallowedPageMouseToLogOff() {
-		Assert.assertEquals(homePage.mouseToLogOffLink().booleanValue(),true,"visibility of log off link");
+		Assert.assertEquals(homePage.mouseToLogOffLink(),true,"visibility of log off link");
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class Test01 extends AbstractTest {
 	@Test(priority=10, dependsOnMethods = { "unallowedPageMouseToLogOff" })
 	public void logOff() {
 		homePage.clickLogOffLink();
-		Assert.assertEquals(driver.getCurrentUrl(),LoggedOutUrl,"URL after logging off");
+		Assert.assertEquals(driver.getCurrentUrl(),loggedOutUrl,"URL after logging off");
 	}
 
 	/**
@@ -264,23 +264,23 @@ public class Test01 extends AbstractTest {
 	/**
 	 * Initializes specific test parameters:
 	 * 
-	 *   DetailBeschrijvingenPageQueryStringOk
-	 *   DetailBeschrijvingenPageQueryStringNok
-	 *   DetailBeschrijvingenPageExpectedResultNumber
+	 *   detailBeschrijvingenPageQueryStringOk
+	 *   detailBeschrijvingenPageQueryStringNok
+	 *   detailBeschrijvingenPageExpectedResultNumber
 	 *   MenuItems (SearchMenu, AddMenu)
-	 *   LoggedOutUrl
+	 *   loggedOutUrl
 	 * 
 	 * @since 1.0
 	 */
 	private static void initializeTestParameters() {
-		DetailBeschrijvingenPageQueryStringOk="xmlbeschrijvingid=20250966";
-		DetailBeschrijvingenPageQueryStringNok="xmlbeschrijvingid=23838308";
-		DetailBeschrijvingenPageExpectedResultNumber=1;
+		detailBeschrijvingenPageQueryStringOk="xmlbeschrijvingid=20250966";
+		detailBeschrijvingenPageQueryStringNok="xmlbeschrijvingid=23838308";
+		detailBeschrijvingenPageExpectedResultNumber=1;
 
-		StartPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),1));
-		StartPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),1));
+		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),1));
+		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),1));
 
-		LoggedOutUrl = config.getDomain() + "/AtlantisWeb/pages/publiek/Login.aspx?restart=true&action=afmelden";
+		loggedOutUrl = config.getDomain() + "/AtlantisWeb/pages/publiek/Login.aspx?restart=true&action=afmelden";
 	}
 
 }

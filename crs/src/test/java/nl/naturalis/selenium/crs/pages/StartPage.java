@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 
@@ -48,7 +50,14 @@ public class StartPage extends AbstractPage {
 		this.QuickSearchTextBox.sendKeys(searchterm);
 		this.QuickSearchButton.click();
 	}
-	
+
+	public void switchToMasterContentFrame() {
+		WebDriverWait wait = new WebDriverWait(this.driver, 5);
+		wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("ctl00_masterContent_iframe_1"))));		
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+	}
+
+
 	// not working!
 	public void quickSearchErrorPopupButtonClick() {
 		QuickSearchErrorPopupButton.click();

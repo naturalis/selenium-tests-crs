@@ -93,7 +93,7 @@ public class HomePage extends AbstractPage {
 		return ingelogdMelding.getText().toString().trim().replace("\r","");
 	}
 
-	public Boolean mouseToLogOffLink() {
+	public boolean mouseToLogOffLink() {
 		Actions action = new Actions(this.driver);
 		action.moveToElement(this.logOffMenu).perform();
 		WebElement logOffLink = driver.findElement(By.id("ctl00_AfmeldenLink"));
