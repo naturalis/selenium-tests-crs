@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -150,7 +151,18 @@ public class Test02 extends AbstractTest {
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon7");
 		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/savedefault.gif", "Fout in 2.1.2");
 		Assert.assertEquals(thisIcon.getTitle(), "Save defaults", "Fout in 2.1.2");
+		// Todo: controle op buttons die AFWEZIG moeten zijn
+		
 	}	
+
+	// Test Context Scherm
+	@Test(priority=9, dependsOnMethods ={ "selectSpecifiedForm" })
+	public void checkContextDisplay() {
+		Assert.assertTrue(detailBeschrijvingenPage.isContextDisplayAvailable(), "Contextscherm is afwezig (2.1.3).");
+		Assert.assertEquals(detailBeschrijvingenPage.getContextDisplayObjectType(), "Vertebrates Specimen", "Fout in Contextscherm (2.1.3)." );
+	}
+
+	
 	
 	/*
 	

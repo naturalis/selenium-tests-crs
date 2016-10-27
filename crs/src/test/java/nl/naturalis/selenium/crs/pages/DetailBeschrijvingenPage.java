@@ -79,8 +79,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #8 Load defaults
 	@FindBy(css = "div#ctl00_masterContent_UpdatePanel4 div.tabcontent table.maxwidth tbody tr td img:last-of-type")
 	private WebElement iconLoadDefaults;
-	
 
+	@FindBy(id = "scrolldiv")
+	private WebElement contextDisplay;
+
+	@FindBy(css = "span.ui-icon.ui-icon-triangle-1-e")
+	private WebElement contextDisplayMoreButton;
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -178,12 +182,26 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		}
 		
 		EditIcon thisIcon = new EditIcon();
-		thisIcon.setSrc(icon.getAttribute("src").trim());
-		thisIcon.setAlt(icon.getAttribute("alt").trim());
-		thisIcon.setTitle(icon.getAttribute("title").trim());
-
+		thisIcon.getSrc(icon.getAttribute("src").trim());
+		thisIcon.getAlt(icon.getAttribute("alt").trim());
+		thisIcon.getTitle(icon.getAttribute("title").trim());
 		return thisIcon;
 	}
+
+	public Boolean isContextDisplayAvailable() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		// contextDisplayMoreButton.click();
+		return contextDisplayMoreButton.isEnabled();
+	}
+	
+	public String getContextDisplayObjectType() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		return contextDisplay.getText().trim();
+	}
+	
+
 	
 	
 	@Override
