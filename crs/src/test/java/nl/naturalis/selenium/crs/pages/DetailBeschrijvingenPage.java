@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ByCssSelector;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
@@ -45,6 +47,15 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
+	
+	@FindBy(id = "uniqueID321918013")
+	private WebElement SourceInstitute;
+	
+	@FindBy(id = "uniqueID0219179827")
+	public WebElement currentCollectionName;
+	
+	
+	
 	
 	// Iconen / buttons
 	
@@ -81,11 +92,60 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement iconLoadDefaults;
 	
 
+<<<<<<< HEAD
+=======
+	// #9 Thesaurus icon Basis of record
+	@FindBy(css = "input#select3")
+	private WebElement iconThesaurusBasisOfRecord;
+	
+	// #10 Bin icon Basis of record
+	@FindBy(xpath = ".//*[@id='select3']/../input[2]")
+	private WebElement iconBinBasisOfRecord;
+
+	// #11 Thesaurus icon Data Group Type
+	@FindBy(css = "input#select9")
+	private WebElement iconThesaurusDataGroupType;
+	
+	// #12 Bin icon Data Group Type
+	@FindBy(xpath = ".//*[@id='select9']/../input[2]")
+	private WebElement iconBinDataGroupType;
+	
+	// #13 Thesaurus icon Gathering Site Country
+	@FindBy(css = "input#select21")
+	private WebElement iconThesaurusGatheringSiteCountry;
+	
+	// #14 Bin icon Gathering Site Country
+	@FindBy(xpath = ".//*[@id='select21']/../input[2]")
+	private WebElement iconBinGatheringSiteCountry;
+	
+	// #15 Warning
+	@FindBy (id = "ko_unique_58")
+	private WebElement invalidCollectionName;
+	
+	@FindBy(id = "scrolldiv")
+	private WebElement contextDisplay;
+
+	@FindBy(css = "span.ui-icon.ui-icon-triangle-1-e")
+	private WebElement contextDisplayMoreButton;
+
+	@FindBy(css = "input[atfid=\"add_ncrs_gatheringsites_dialog?dialog\"]")
+	private WebElement buttonAddGatheringSite;
+	
+	@FindBy(css = "*[title=\"Close\"")
+	private WebElement closeButton;
+
+	
+>>>>>>> Test02
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
 		this.PageURL=Configuration.getDomain() + this.PageURL;
+	}
+	
+	public void clickCloseButton() {
+		this.closeButton.click();
+		this.switchToMainFrame();
 	}
 	
 	public void setPageUrlQueryString(String queryString) {
@@ -111,13 +171,76 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		buttonFormulierenSelect.click();
 	}
 
+	public void enterValueToField(String fieldname, String value) {
+		this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
+		WebElement field = null;
+		if (fieldname == "currentcollectionname") {
+			field = currentCollectionName;
+			// Position the cursor in the input field ...
+			Actions builder = new Actions(driver);
+			builder.moveToElement(field).build().perform();
+			if (value == "TAB") {
+				// TAB to the next field
+				field.sendKeys(Keys.TAB);
+			} else {
+				// Enter the value
+				field.sendKeys(value);
+			}
+		}
+	}
+	
+	public void switchToMainFrame() {
+		driver.switchTo().defaultContent();
+	}
+
 	public void switchToMasterContentFrame() {
 		WebDriverWait wait = new WebDriverWait(this.driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("ctl00_masterContent_iframe_1"))));		
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 	}
+	
+	/**
+	 * 
+	 */
+	public void switchToGatheringSitesFrame() {
+		// driver.switchTo().defaultContent();
+		buttonAddGatheringSite.click();
+		driver.switchTo().defaultContent();
+		
+		int size = driver.findElements(By.tagName("iframe")).size();
+		for (int n = 0; n < size; n++) {
+			driver.switchTo().frame(n);
+			List<WebElement> wantedElements = driver.findElements(By.id("select21"));
+			if (wantedElements.size() > 0) { 
+				return;				
+			}
+			driver.switchTo().defaultContent();
+		}
+	}
+
+	/**
+	 * This method switches between all available iframes until it finds one
+	 * that contains the specified elementID.
+	 * 
+	 */
+	public void switchToFrameContainingElementID(String elementID) {
+		driver.switchTo().defaultContent();
+		int size = driver.findElements(By.tagName("iframe")).size();
+		for (int n = 0; n < size; n++) {
+			driver.switchTo().frame(n);
+			List<WebElement> wantedElements = driver.findElements(By.id("elementID"));
+			if (wantedElements.size() > 0) {
+				return;				
+			}
+			driver.switchTo().defaultContent();
+		}		
+	}
 
 	public String findSelectedFormulier() {
+		// Wacht eerst tot de pagina herladen is
+		// WebDriverWait wait = new WebDriverWait(this.driver, 15);
+		// wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
+		
 		Select dropDown = new Select(formulierenSelect);           
 		String selected = dropDown.getFirstSelectedOption().getText();
 		return selected;
@@ -176,7 +299,30 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			icon = iconSaveDefaults;
 		} else if (choice == "icon8") {
 			icon = iconLoadDefaults;
+		} else if (choice == "icon9") {
+			icon = iconThesaurusBasisOfRecord;
+		} else if (choice == "icon10") {
+			icon = iconBinBasisOfRecord;
+		}  else if (choice == "icon11") {
+			icon = iconThesaurusDataGroupType;
+		} else if (choice == "icon12") {
+			icon = iconBinDataGroupType;
+		} else if (choice == "icon13") {
+			icon = iconThesaurusGatheringSiteCountry;
+		} else if (choice == "icon14") {
+			icon = iconBinGatheringSiteCountry;
+		} else if (choice == "icon15") {
+			icon = invalidCollectionName;
 		}
+		
+
+		// Wacht tot het icoon klikbaar is
+//		WebDriverWait wait = new WebDriverWait(this.driver, 10);
+//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("*[type=\"image\"")));
+
+		WebDriverWait wait = new WebDriverWait(this.driver, 5);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
+
 		
 		EditIcon thisIcon = new EditIcon();
 		thisIcon.setSrc(icon.getAttribute("src").trim());
