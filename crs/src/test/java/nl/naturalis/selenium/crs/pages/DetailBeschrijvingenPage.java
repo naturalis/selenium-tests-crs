@@ -91,9 +91,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "div#ctl00_masterContent_UpdatePanel4 div.tabcontent table.maxwidth tbody tr td img:last-of-type")
 	private WebElement iconLoadDefaults;
 	
-
-<<<<<<< HEAD
-=======
 	// #9 Thesaurus icon Basis of record
 	@FindBy(css = "input#select3")
 	private WebElement iconThesaurusBasisOfRecord;
@@ -133,19 +130,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
-
-	
->>>>>>> Test02
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
 		this.PageURL=Configuration.getDomain() + this.PageURL;
-	}
-	
-	public void clickCloseButton() {
-		this.closeButton.click();
-		this.switchToMainFrame();
 	}
 	
 	public void setPageUrlQueryString(String queryString) {
@@ -323,11 +312,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		WebDriverWait wait = new WebDriverWait(this.driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
 
-		
 		EditIcon thisIcon = new EditIcon();
-		thisIcon.setSrc(icon.getAttribute("src").trim());
-		thisIcon.setAlt(icon.getAttribute("alt").trim());
-		thisIcon.setTitle(icon.getAttribute("title").trim());
+		thisIcon.getSrc(icon.getAttribute("src").trim());
+		thisIcon.getAlt(icon.getAttribute("alt").trim());
+		thisIcon.getTitle(icon.getAttribute("title").trim());
 
 		return thisIcon;
 	}
