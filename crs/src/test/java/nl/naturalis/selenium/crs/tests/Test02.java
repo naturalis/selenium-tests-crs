@@ -228,22 +228,21 @@ public class Test02 extends AbstractTest {
 
 	// Current Collection name
 	
-//	@Test(priority=11, dependsOnMethods = { "selectSpecifiedForm" })
-//	public void checkIncorrectSubmissionValues01(){
-//		// Cursor in veld, veld leeg laten en met tab verder
-//		EditIcon thisIcon = null;
-//		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "TAB");
-//		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
-//		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-//		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name", "Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");		
-//	}
+	@Test(priority=11, dependsOnMethods = { "selectSpecifiedForm" })
+	public void checkIncorrectSubmissionValues01(){
+		// Cursor in veld, veld leeg laten en met tab verder
+		EditIcon thisIcon = null;
+		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "TAB");
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
+		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
+		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name", "Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");		
+	}
 	
-	@Test(priority=12, dependsOnMethods = { "selectSpecifiedForm" })
+	@Test(priority=12, dependsOnMethods = { "checkThesaurusAndBinIcons" })
 	public void checkIncorrectSubmissionValues02(){
 		// Verkeerde waarde
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "illegal-text");
-
 		
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
 		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");

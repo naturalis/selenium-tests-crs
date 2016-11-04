@@ -22,11 +22,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	private WebDriver driver;
 
-	private String PageName="DetailBeschrijvingenPage";
-	private String PageTitle="NCB PL omgeving - ";
-	private String PageURL="/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
-	private String PageUrlQueryString="";
-
+	private String PageName = "DetailBeschrijvingenPage";
+	private String PageTitle = "NCB PL omgeving - ";
+	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
+	private String PageUrlQueryString = "";
+	
 	@FindBy(id = "ctl00_masterContent_tbl_navigatie")
 	private WebElement resultNumberTable;
 
@@ -35,30 +35,27 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(id = "ctl00_masterContent_ddl_fomulieren")
 	private WebElement formulierenSelect;
-	
+
 	@FindBy(id = "ctl00_masterContent_btn_formulieren")
 	private WebElement buttonFormulierenSelect;
-	
+
 	@FindBy(id = "ctl00_QuickSearchTextBox")
 	private WebElement QuickSearchTextBox;
 
 	@FindBy(id = "ctl00_QuickSearchButton")
 	private WebElement QuickSearchButton;
-	
+
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
-	
+
 	@FindBy(id = "uniqueID321918013")
 	private WebElement SourceInstitute;
-	
+
 	@FindBy(id = "uniqueID0219179827")
 	public WebElement currentCollectionName;
-	
-	
-	
-	
+
 	// Iconen / buttons
-	
+
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
 	private WebElement iconAddMultimedia;
@@ -90,11 +87,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #8 Load defaults
 	@FindBy(css = "div#ctl00_masterContent_UpdatePanel4 div.tabcontent table.maxwidth tbody tr td img:last-of-type")
 	private WebElement iconLoadDefaults;
-	
+
 	// #9 Thesaurus icon Basis of record
 	@FindBy(css = "input#select3")
 	private WebElement iconThesaurusBasisOfRecord;
-	
+
 	// #10 Bin icon Basis of record
 	@FindBy(xpath = ".//*[@id='select3']/../input[2]")
 	private WebElement iconBinBasisOfRecord;
@@ -102,23 +99,23 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #11 Thesaurus icon Data Group Type
 	@FindBy(css = "input#select9")
 	private WebElement iconThesaurusDataGroupType;
-	
+
 	// #12 Bin icon Data Group Type
 	@FindBy(xpath = ".//*[@id='select9']/../input[2]")
 	private WebElement iconBinDataGroupType;
-	
+
 	// #13 Thesaurus icon Gathering Site Country
 	@FindBy(css = "input#select21")
 	private WebElement iconThesaurusGatheringSiteCountry;
-	
+
 	// #14 Bin icon Gathering Site Country
 	@FindBy(xpath = ".//*[@id='select21']/../input[2]")
 	private WebElement iconBinGatheringSiteCountry;
-	
+
 	// #15 Warning
-	@FindBy (id = "ko_unique_58")
+	@FindBy(id = "ko_unique_58")
 	private WebElement invalidCollectionName;
-	
+
 	@FindBy(id = "scrolldiv")
 	private WebElement contextDisplay;
 
@@ -127,24 +124,24 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(css = "input[atfid=\"add_ncrs_gatheringsites_dialog?dialog\"]")
 	private WebElement buttonAddGatheringSite;
-	
+
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
-	
+
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
 		this.PageURL=Configuration.getDomain() + this.PageURL;
-	}
+	}	
 	
 	public void setPageUrlQueryString(String queryString) {
-		this.PageUrlQueryString=queryString;
+		this.PageUrlQueryString = queryString;
 	}
 
 	public Integer getNumberOfResults() {
-		return Integer.parseInt(numberSpan.getText().trim());	
+		return Integer.parseInt(numberSpan.getText().trim());
 	}
-	
+
 	public List<WebElement> clickFormulierenSelect() {
 		Actions action = new Actions(driver);
 		action.moveToElement(this.formulierenSelect).perform();
@@ -161,7 +158,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public void enterValueToField(String fieldname, String value) {
-		this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
+		// this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
+		this.switchToMainFrame();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		WebElement field = null;
 		if (fieldname == "currentcollectionname") {
 			field = currentCollectionName;
@@ -177,31 +176,30 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			}
 		}
 	}
-	
+
 	public void switchToMainFrame() {
 		driver.switchTo().defaultContent();
 	}
 
 	public void switchToMasterContentFrame() {
 		WebDriverWait wait = new WebDriverWait(this.driver, 5);
-		wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("ctl00_masterContent_iframe_1"))));		
+		wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("ctl00_masterContent_iframe_1"))));
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 	}
-	
+
 	/**
 	 * 
 	 */
 	public void switchToGatheringSitesFrame() {
-		// driver.switchTo().defaultContent();
 		buttonAddGatheringSite.click();
 		driver.switchTo().defaultContent();
-		
+
 		int size = driver.findElements(By.tagName("iframe")).size();
 		for (int n = 0; n < size; n++) {
 			driver.switchTo().frame(n);
 			List<WebElement> wantedElements = driver.findElements(By.id("select21"));
-			if (wantedElements.size() > 0) { 
-				return;				
+			if (wantedElements.size() > 0) {
+				return;
 			}
 			driver.switchTo().defaultContent();
 		}
@@ -210,7 +208,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	/**
 	 * This method switches between all available iframes until it finds one
 	 * that contains the specified elementID.
-	 * 
 	 */
 	public void switchToFrameContainingElementID(String elementID) {
 		driver.switchTo().defaultContent();
@@ -219,24 +216,20 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			driver.switchTo().frame(n);
 			List<WebElement> wantedElements = driver.findElements(By.id("elementID"));
 			if (wantedElements.size() > 0) {
-				return;				
+				return;
 			}
 			driver.switchTo().defaultContent();
-		}		
+		}
 	}
 
 	public String findSelectedFormulier() {
-		// Wacht eerst tot de pagina herladen is
-		// WebDriverWait wait = new WebDriverWait(this.driver, 15);
-		// wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
-		
-		Select dropDown = new Select(formulierenSelect);           
+		driver.switchTo().defaultContent();
+		Select dropDown = new Select(formulierenSelect);
 		String selected = dropDown.getFirstSelectedOption().getText();
 		return selected;
 	}
-	
+
 	public String getRegistrationNumber() {
-		//this.switchToMasterContentFrame();
 		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
 		return registrationNumber.getAttribute("value");
 	}
@@ -245,23 +238,22 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.QuickSearchTextBox.sendKeys(searchterm);
 		this.QuickSearchButton.click();
 	}
-	
-	public String getCompletePageURL() {	
-		if (this.PageUrlQueryString=="") {
-			return this.PageURL; 
-		}
-		else {
-			return this.PageURL+'?'+this.PageUrlQueryString;
+
+	public String getCompletePageURL() {
+		if (this.PageUrlQueryString == "") {
+			return this.PageURL;
+		} else {
+			return this.PageURL + '?' + this.PageUrlQueryString;
 		}
 	}
-	
+
 	public String[] getIconAddMultimedia() {
 		String[] iconValues = new String[2];
 		iconValues[0] = iconAddMultimedia.getAttribute("src").trim();
 		iconValues[1] = iconAddMultimedia.getAttribute("title").trim();
 		return iconValues;
 	}
-	
+
 	public String[] getIconAttachAllMultimediaFromGlobalSelection() {
 		String[] iconValues = new String[2];
 		iconValues[0] = iconAttachAllMultimediaFromGlobalSelection.getAttribute("src").trim();
@@ -292,7 +284,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			icon = iconThesaurusBasisOfRecord;
 		} else if (choice == "icon10") {
 			icon = iconBinBasisOfRecord;
-		}  else if (choice == "icon11") {
+		} else if (choice == "icon11") {
 			icon = iconThesaurusDataGroupType;
 		} else if (choice == "icon12") {
 			icon = iconBinDataGroupType;
@@ -303,14 +295,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		} else if (choice == "icon15") {
 			icon = invalidCollectionName;
 		}
-		
-
-		// Wacht tot het icoon klikbaar is
-//		WebDriverWait wait = new WebDriverWait(this.driver, 10);
-//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("*[type=\"image\"")));
-
-		WebDriverWait wait = new WebDriverWait(this.driver, 5);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
 
 		EditIcon thisIcon = new EditIcon();
 		thisIcon.getSrc(icon.getAttribute("src").trim());
@@ -326,75 +310,74 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		// contextDisplayMoreButton.click();
 		return contextDisplayMoreButton.isEnabled();
 	}
-	
+
 	public String getContextDisplayObjectType() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		return contextDisplay.getText().trim();
 	}
-	
+
 	public void clickFirstIdentificationEditIcon() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
-        List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
-        for(WebElement fieldset : fieldsets) {
-        	WebElement legend = fieldset.findElement(By.cssSelector("legend"));
-        	if (legend.getText().trim().equals("Identifications")) {
-        		List<WebElement> images = fieldset.findElements(By.cssSelector("input[type=image]"));
-        		for(WebElement image : images) {
-	        		if (image.getAttribute("src").contains("edit3.gif")) {
-	        			image.click();
-	        			break;
-	        		}
-        		}
-        	}
-        } 
+		List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
+		for (WebElement fieldset : fieldsets) {
+			WebElement legend = fieldset.findElement(By.cssSelector("legend"));
+			if (legend.getText().trim().equals("Identifications")) {
+				List<WebElement> images = fieldset.findElements(By.cssSelector("input[type=image]"));
+				for (WebElement image : images) {
+					if (image.getAttribute("src").contains("edit3.gif")) {
+						image.click();
+						break;
+					}
+				}
+			}
+		}
 	}
-	
+
 	public String getGenusInputValue() {
-        List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
-        for(WebElement fieldset : fieldsets) {
-        	WebElement legend = fieldset.findElement(By.cssSelector("legend"));
-        	if (legend.getText().trim().equals("Naming")) {
-        		WebElement genusInput = fieldset.findElement(By.cssSelector("input[conceptfield=GENUS]"));
-        		return genusInput.getAttribute("value");        		
-        	}
-        }
+		List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
+		for (WebElement fieldset : fieldsets) {
+			WebElement legend = fieldset.findElement(By.cssSelector("legend"));
+			if (legend.getText().trim().equals("Naming")) {
+				WebElement genusInput = fieldset.findElement(By.cssSelector("input[conceptfield=GENUS]"));
+				return genusInput.getAttribute("value");
+			}
+		}
 		return null;
 	}
-	
+
 	public String getThesaurusLinkValue() {
-        List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
-        for(WebElement fieldset : fieldsets) {
-        	WebElement legend = fieldset.findElement(By.cssSelector("legend"));
-        	if (legend.getText().trim().equals("Naming")) {
-        		WebElement thesaurusLink = fieldset.findElement(By.cssSelector("a[class=conceptLink]"));
-        		return thesaurusLink.getText();        		
-        	}
-        }
+		List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
+		for (WebElement fieldset : fieldsets) {
+			WebElement legend = fieldset.findElement(By.cssSelector("legend"));
+			if (legend.getText().trim().equals("Naming")) {
+				WebElement thesaurusLink = fieldset.findElement(By.cssSelector("a[class=conceptLink]"));
+				return thesaurusLink.getText();
+			}
+		}
 		return null;
 	}
-	
+
 	public WebElement getNextPageLink() {
 		driver.switchTo().defaultContent();
-        WebElement mainNav = this.driver.findElement(By.id("ctl00_masterContent_tbl_navigatie"));
-    	List<WebElement> as = mainNav.findElements(By.cssSelector("a"));
-    	for(WebElement a : as ) {
-    		if (a.getText().trim().equals("›")) {
-    			return a;
-    		}
-    	}
+		WebElement mainNav = this.driver.findElement(By.id("ctl00_masterContent_tbl_navigatie"));
+		List<WebElement> as = mainNav.findElements(By.cssSelector("a"));
+		for (WebElement a : as) {
+			if (a.getText().trim().equals("›")) {
+				return a;
+			}
+		}
 		return null;
 	}
 
 	public void clickCloseButton() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
-        WebElement closeButton = this.driver.findElement(By.cssSelector("input[title=Close]"));
-        closeButton.click();
+		WebElement closeButton = this.driver.findElement(By.cssSelector("input[title=Close]"));
+		closeButton.click();
 	}
 
-	
 	@Override
 	public String getPageName() {
 		return this.PageName;
