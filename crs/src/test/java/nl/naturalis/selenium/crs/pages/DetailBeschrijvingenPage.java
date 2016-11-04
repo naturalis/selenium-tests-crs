@@ -116,7 +116,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement iconBinGatheringSiteCountry;
 	
 	// #15 Warning
-	@FindBy (css ="img#ko_unique_58")
+	@FindBy (id = "ko_unique_58")
 	private WebElement invalidCollectionName;
 	
 	@FindBy(id = "scrolldiv")
@@ -195,6 +195,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
 	}
 	
+	/**
+	 * 
+	 */
 	public void switchToGatheringSitesFrame() {
 		// driver.switchTo().defaultContent();
 		buttonAddGatheringSite.click();
@@ -203,15 +206,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		int size = driver.findElements(By.tagName("iframe")).size();
 		for (int n = 0; n < size; n++) {
 			driver.switchTo().frame(n);
-			int innerFrameSize = driver.findElements(By.tagName("iframe")).size();
 			List<WebElement> wantedElements = driver.findElements(By.id("select21"));
-			if (wantedElements.size() > 0) {
-				// 
+			if (wantedElements.size() > 0) { 
 				return;				
 			}
 			driver.switchTo().defaultContent();
 		}
-		return;
 	}
 
 	/**
@@ -224,7 +224,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		int size = driver.findElements(By.tagName("iframe")).size();
 		for (int n = 0; n < size; n++) {
 			driver.switchTo().frame(n);
-			int innerFrameSize = driver.findElements(By.tagName("iframe")).size();
 			List<WebElement> wantedElements = driver.findElements(By.id("elementID"));
 			if (wantedElements.size() > 0) {
 				return;				
@@ -234,6 +233,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public String findSelectedFormulier() {
+		// Wacht eerst tot de pagina herladen is
+		// WebDriverWait wait = new WebDriverWait(this.driver, 15);
+		// wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
+		
 		Select dropDown = new Select(formulierenSelect);           
 		String selected = dropDown.getFirstSelectedOption().getText();
 		return selected;
@@ -306,8 +309,15 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		} else if (choice == "icon15") {
 			icon = invalidCollectionName;
 		}
+		
+
+		// Wacht tot het icoon klikbaar is
+//		WebDriverWait wait = new WebDriverWait(this.driver, 10);
+//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("*[type=\"image\"")));
+
 		WebDriverWait wait = new WebDriverWait(this.driver, 5);
-		WebElement iconImage = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("*[type=\"image\"")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.tabcontent")));
+
 		
 		EditIcon thisIcon = new EditIcon();
 		thisIcon.getSrc(icon.getAttribute("src").trim());

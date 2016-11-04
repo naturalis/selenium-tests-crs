@@ -125,8 +125,6 @@ public class Test02 extends AbstractTest {
 	 * save defaults & load defaults op het scherm met een mouse over als je de muis erover heen beweegt?
 	 * 
 	 */
-
-	// Test icon "Add multimedia"
 	@Test(priority=8, dependsOnMethods ={ "selectSpecifiedForm" })
 	public void checkIconInfo() {
 		EditIcon thisIcon = null; 
@@ -154,8 +152,13 @@ public class Test02 extends AbstractTest {
 		// Todo: controle op buttons die AFWEZIG moeten zijn
 		
 	}	
-
-	// Test Context Scherm
+	
+	/**
+	 * 2.1.3
+	 * 
+	 * Test Context Scherm
+	 * 
+	 */
 	@Test(priority=9, dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkContextDisplay() {
 		Assert.assertTrue(detailBeschrijvingenPage.isContextDisplayAvailable(), "Contextscherm is afwezig (2.1.3).");
@@ -193,7 +196,7 @@ public class Test02 extends AbstractTest {
 
 		
 		// Gathering Site > Country
-		this.detailBeschrijvingenPage.switchToGatheringSitesFrame();
+		Test02.detailBeschrijvingenPage.switchToGatheringSitesFrame();
 
 //		Algemenere methode: moet nog uitgewerkt worden ...		
 //		this.detailBeschrijvingenPage.buttonAddGatheringSite.click();
@@ -207,7 +210,7 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/delete7.gif", "Fout in 2.1.4");
 		Assert.assertEquals(thisIcon.getTitle(), "Clear", "Fout in 2.1.4");
 		
-		this.detailBeschrijvingenPage.clickCloseButton();
+		Test02.detailBeschrijvingenPage.clickCloseButton();
 	}
 
 	/**
@@ -223,29 +226,29 @@ public class Test02 extends AbstractTest {
 	 * 
 	 */
 
-	@Test(priority=11, dependsOnMethods = { "selectSpecifiedForm" })
-	public void checkIncorrectSubmissionValues01(){
-		// Current Collection name
-		
-		// Cursor in veld, veld leeg laten en met tab verder
-		
-		// Verkeerde waarde
-		EditIcon thisIcon = null;
-		this.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "TAB");
-		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
-		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name", "Fout in 2.1.5");		
-	}
+	// Current Collection name
+	
+//	@Test(priority=11, dependsOnMethods = { "selectSpecifiedForm" })
+//	public void checkIncorrectSubmissionValues01(){
+//		// Cursor in veld, veld leeg laten en met tab verder
+//		EditIcon thisIcon = null;
+//		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "TAB");
+//		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
+//		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
+//		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name", "Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");		
+//	}
 	
 	@Test(priority=12, dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkIncorrectSubmissionValues02(){
+		// Verkeerde waarde
 		EditIcon thisIcon = null;
-		this.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "illegal-text");
+		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "illegal-text");
+
+		
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
 		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
 		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name", "Fout in 2.1.5");		
 
-		
 		// Basis of record
 		
 		
