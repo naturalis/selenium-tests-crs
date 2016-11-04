@@ -3,6 +3,7 @@ package nl.naturalis.selenium.crs.tests;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -59,6 +60,7 @@ public class AbstractTest {
 			}
 			driver = new ChromeDriver();
 		}
+	
 	}
 
 	protected static void initializeLogging()

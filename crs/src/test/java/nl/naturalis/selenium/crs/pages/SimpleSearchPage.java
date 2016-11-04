@@ -29,7 +29,6 @@ public class SimpleSearchPage extends AbstractPage {
 	private String PageTitle="NCB PL omgeving - Search on";
 	private String PageURL="/AtlantisWeb/pages/medewerker/Zoeken.aspx";
 	private String PageUrlQueryString="";
-	private Integer waitUntil = 0; // seconds
 
 	@FindBy(id = "ctl00_masterContent_eenvoudigfiltertext")
 	private WebElement eenvoudigFilterText;
@@ -73,10 +72,6 @@ public class SimpleSearchPage extends AbstractPage {
 	@FindBy(id = "ctl00_masterContent_EenvoudigSearchEnvironment_2")
 	private WebElement environmentBoth;	
 
-	
-	
-	
-	
 	public SimpleSearchPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -85,11 +80,6 @@ public class SimpleSearchPage extends AbstractPage {
 
 	public void setPageUrlQueryString(String queryString) {
 		this.PageUrlQueryString=queryString;
-	}
-
-	public void setWaitUntil(Integer seconds) {
-		this.waitUntil=seconds;
-		this.driver.manage().timeouts().implicitlyWait(this.waitUntil, TimeUnit.SECONDS);
 	}
 
 	public void clearEenvoudigFilterText() {
@@ -119,11 +109,6 @@ public class SimpleSearchPage extends AbstractPage {
 
 	public SimpleSearchResultsPage clickEenvoudigZoeken() {
 		eenvoudigzoekenButton.click();
-
-		if (this.waitUntil>0) {
-			WebElement myDynamicElement = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
-		}
-		
 		return new SimpleSearchResultsPage(this.driver);
 	}
 	

@@ -114,7 +114,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void switchToMasterContentFrame() {
 		WebDriverWait wait = new WebDriverWait(this.driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("ctl00_masterContent_iframe_1"))));		
-		this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 	}
 
 	public String findSelectedFormulier() {
@@ -124,7 +124,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 	
 	public String getRegistrationNumber() {
-		return this.registrationNumber.getAttribute("value");
+		//this.switchToMasterContentFrame();
+		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
+		return registrationNumber.getAttribute("value");
 	}
 
 	public void doDetailSearch(String searchterm) {
@@ -132,7 +134,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.QuickSearchButton.click();
 	}
 	
-
 	public String getCompletePageURL() {	
 		if (this.PageUrlQueryString=="") {
 			return this.PageURL; 
@@ -184,7 +185,68 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 		return thisIcon;
 	}
+
+	public void clickFirstIdentificationEditIcon() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+        List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
+        for(WebElement fieldset : fieldsets) {
+        	WebElement legend = fieldset.findElement(By.cssSelector("legend"));
+        	if (legend.getText().trim().equals("Identifications")) {
+        		List<WebElement> images = fieldset.findElements(By.cssSelector("input[type=image]"));
+        		for(WebElement image : images) {
+	        		if (image.getAttribute("src").contains("edit3.gif")) {
+	        			image.click();
+	        			break;
+	        		}
+        		}
+        	}
+        } 
+	}
 	
+	public String getGenusInputValue() {
+        List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
+        for(WebElement fieldset : fieldsets) {
+        	WebElement legend = fieldset.findElement(By.cssSelector("legend"));
+        	if (legend.getText().trim().equals("Naming")) {
+        		WebElement genusInput = fieldset.findElement(By.cssSelector("input[conceptfield=GENUS]"));
+        		return genusInput.getAttribute("value");        		
+        	}
+        }
+		return null;
+	}
+	
+	public String getThesaurusLinkValue() {
+        List<WebElement> fieldsets = this.driver.findElements(By.cssSelector("fieldset"));
+        for(WebElement fieldset : fieldsets) {
+        	WebElement legend = fieldset.findElement(By.cssSelector("legend"));
+        	if (legend.getText().trim().equals("Naming")) {
+        		WebElement thesaurusLink = fieldset.findElement(By.cssSelector("a[class=conceptLink]"));
+        		return thesaurusLink.getText();        		
+        	}
+        }
+		return null;
+	}
+	
+	public WebElement getNextPageLink() {
+		driver.switchTo().defaultContent();
+        WebElement mainNav = this.driver.findElement(By.id("ctl00_masterContent_tbl_navigatie"));
+    	List<WebElement> as = mainNav.findElements(By.cssSelector("a"));
+    	for(WebElement a : as ) {
+    		if (a.getText().trim().equals("›")) {
+    			return a;
+    		}
+    	}
+		return null;
+	}
+
+	public void clickCloseButton() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+        WebElement closeButton = this.driver.findElement(By.cssSelector("input[title=Close]"));
+        closeButton.click();
+	}
+
 	
 	@Override
 	public String getPageName() {

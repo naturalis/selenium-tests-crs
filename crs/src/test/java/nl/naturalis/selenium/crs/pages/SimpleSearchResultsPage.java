@@ -16,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -34,7 +35,6 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	private String PageTitle="NCB PL omgeving - Results";
 	private String PageURL="/AtlantisWeb/pages/medewerker/Zoekresultaten.aspx";
 	private String PageUrlQueryString="";
-	private int waitUntil = 0; // seconds
 	private int resultRows=0;
 	private int resultRowsWithMultiMedia=0;
 	private int resultRowsWithModeration=0;
@@ -61,12 +61,8 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		this.PageUrlQueryString=queryString;
 	}
 
-	public void setWaitUntil(Integer seconds) {
-		this.waitUntil=seconds;
-		this.driver.manage().timeouts().implicitlyWait(this.waitUntil, TimeUnit.SECONDS);
-	}
-
 	public int getNumberOfFoundDocuments() {
+		this.driver.switchTo().defaultContent();
 		return Integer.valueOf(this.masterContent_SpnAantalDocumenten.getText());
 	}
 
@@ -106,29 +102,10 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		WebElement option = select.getFirstSelectedOption();
 		return option.getText().trim();
 	}
-	
+
 	public SimpleSearchResultsPage selectTemplateByName(String name) {
-
-		/*
-		 * we remove the resultlist from the current page so the driver will wait for the
-		 * same element in the next page, and findElement() not be tripped by the one in the
-		 * current page.    
-		 */
-		if (this.waitUntil>0) {
-			JavascriptExecutor js = null;
-			if (driver instanceof JavascriptExecutor) {
-			    js = (JavascriptExecutor) driver;
-			}
-			js.executeScript("return document.getElementById('ctl00_ctl00_masterContent_ResultatenLijst').remove();");
-		}
-
 		Select select = new Select(resultatenTemplatesSelect);
 		select.selectByVisibleText(name);
-
-		if (this.waitUntil>0) {
-			WebElement myDynamicElement = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
-		}
-				
 		return new SimpleSearchResultsPage(this.driver);
 	}
 
@@ -144,6 +121,24 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		return tableHeaders;
     } 
 	
+	public DetailBeschrijvingenPage clickDetailIcon(int rowNumber) {
+        List<WebElement> rows = resultatenLijst.findElements(By.xpath("id('ctl00_ctl00_masterContent_ResultatenLijst')/tbody/tr"));
+        for(WebElement row : rows) {
+        	if (!row.getAttribute("class").toLowerCase().contains("header") && !row.getAttribute("class").toLowerCase().contains("pager")) {
+	        	List<WebElement> images = row.findElements(By.cssSelector("img"));
+	            for(WebElement image : images) {
+	            	if (image.getAttribute("title").equals("Show details")) {
+	            		if (rowNumber--==0) {
+            				image.click();
+	            			return new DetailBeschrijvingenPage(this.driver);
+	            		}
+	            	}
+	            }
+        	}
+        }
+		return null; 
+	}
+
 	public String getCompletePageURL() {	
 		if (this.PageUrlQueryString=="") {
 			return this.PageURL; 
@@ -200,4 +195,5 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	}
 
 
+	
 }
