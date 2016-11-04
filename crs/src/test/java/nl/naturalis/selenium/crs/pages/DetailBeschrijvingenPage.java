@@ -3,7 +3,6 @@ package nl.naturalis.selenium.crs.pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByCssSelector;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
@@ -57,8 +55,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id ="uniqueID3219180130")
 	private WebElement basisOfRecord;
 
+	@FindBy(css ="input#uniqueID4219180231")
+	private WebElement mount;
 	
-	// Iconen / buttons
+	@FindBy(css ="input#uniqueID621918036")
+	private WebElement preservedPart;
 
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
@@ -117,14 +118,21 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement iconBinGatheringSiteCountry;
 
 	// #15 Warning
-	@FindBy(id = "ko_unique_58")
+	@FindBy(css = "img#ko_unique_58")
 	private WebElement invalidCollectionName;
 
-	// #16 Warning
-	@FindBy(id = "ko_unique_64")
+	// #16 Warning Basis of Record
+	@FindBy(css = "img#ko_unique_64")
 	private WebElement invalidBasisOfRecord;
 	
+	// #17 Warning Mount
+	@FindBy(css = "img#SPECIMENMOUNT")
+	private WebElement invalidMount;
 
+	// #17 Warning Preserved Part
+	@FindBy(css = "img#PRESERVEDPART")
+	private WebElement invalidPreservedPart;
+	
 	
 	@FindBy(id = "scrolldiv")
 	private WebElement contextDisplay;
@@ -180,6 +188,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
         case "basisofrecord":
         	field = basisOfRecord;
         	break;
+        case "mount":
+        	field = mount;
+        	break;
+        case "preservedpart":
+        	field = preservedPart;
+        	break;
         default:
         	field = null;
         }
@@ -198,7 +212,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			field.sendKeys(value);
 		}
 	}
-
+	
 	public String readValueFromField(String fieldname) {
 		WebElement field = null;
 		switch (fieldname) {         
@@ -207,6 +221,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			break;
         case "basisofrecord":
         	field = basisOfRecord;
+        	break;
+        case "mount":
+        	field = mount;
         	break;
         default:
         	field = null;
@@ -301,45 +318,70 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
-
-		if (choice == "icon1") {
+		switch (choice) {
+		case "icon1":
 			icon = iconAddMultimedia;
-		} else if (choice == "icon2") {
+			break;
+		case "icon2":
 			icon = iconAttachAllMultimediaFromGlobalSelection;
-		} else if (choice == "icon3") {
+			break;
+		case "icon3":
 			icon = iconMoveAllMultimediaFromGlobalSelection;
-		} else if (choice == "icon4") {
+			break;
+		case "icon4":
 			icon = iconNewDocument;
-		} else if (choice == "icon5") {
+			break;
+		case "icon5":
 			icon = iconSaveDocument;
-		} else if (choice == "icon6") {
+			break;
+		case "icon6":
 			icon = iconSaveAddNewDocument;
-		} else if (choice == "icon7") {
+			break;
+		case "icon7":
 			icon = iconSaveDefaults;
-		} else if (choice == "icon8") {
+			break;
+		case "icon8":
 			icon = iconLoadDefaults;
-		} else if (choice == "icon9") {
+			break;
+		case "icon9":
 			icon = iconThesaurusBasisOfRecord;
-		} else if (choice == "icon10") {
+			break;
+		case "icon10":
 			icon = iconBinBasisOfRecord;
-		} else if (choice == "icon11") {
+			break;
+		case "icon11":
 			icon = iconThesaurusDataGroupType;
-		} else if (choice == "icon12") {
+			break;
+		case "icon12":
 			icon = iconBinDataGroupType;
-		} else if (choice == "icon13") {
+			break;
+		case "icon13":
 			icon = iconThesaurusGatheringSiteCountry;
-		} else if (choice == "icon14") {
+			break;
+		case "icon14":
 			icon = iconBinGatheringSiteCountry;
-		} else if (choice == "icon15") {
+			break;
+		case "icon15":
 			icon = invalidCollectionName;
-		} else if (choice == "icon16") {
+			break;
+		case "icon16":
 			icon = invalidBasisOfRecord;
+			break;
+		case "icon17":
+			icon = invalidMount;
+			break;
+		case "icon18":
+			icon = invalidPreservedPart;
+			break;
+		default:
+			icon = null;
 		}
-
+	
 		EditIcon thisIcon = new EditIcon();
 		thisIcon.getSrc(icon.getAttribute("src").trim());
 		thisIcon.getAlt(icon.getAttribute("alt").trim());
 		thisIcon.getTitle(icon.getAttribute("title").trim());
+		System.out.println(thisIcon.getAlt());
 
 		return thisIcon;
 	}
