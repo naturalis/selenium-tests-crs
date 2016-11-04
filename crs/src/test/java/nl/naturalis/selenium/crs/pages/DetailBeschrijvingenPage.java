@@ -52,8 +52,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement SourceInstitute;
 
 	@FindBy(id = "uniqueID0219179827")
-	public WebElement currentCollectionName;
+	private WebElement currentCollectionName;
+	
+	@FindBy(id ="uniqueID3219180130")
+	private WebElement basisOfRecord;
 
+	
 	// Iconen / buttons
 
 	// #1 Add multimedia
@@ -116,6 +120,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "ko_unique_58")
 	private WebElement invalidCollectionName;
 
+	// #16 Warning
+	@FindBy(id = "ko_unique_64")
+	private WebElement invalidBasisOfRecord;
+	
+
+	
 	@FindBy(id = "scrolldiv")
 	private WebElement contextDisplay;
 
@@ -162,21 +172,49 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.switchToMainFrame();
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		WebElement field = null;
-		if (fieldname == "currentcollectionname") {
+
+		switch (fieldname) {         
+        case "currentcollectionname":
 			field = currentCollectionName;
-			// Position the cursor in the input field ...
-			Actions builder = new Actions(driver);
-			builder.moveToElement(field).build().perform();
-			if (value == "TAB") {
-				// TAB to the next field
-				field.sendKeys(Keys.TAB);
-			} else {
-				// Enter the value
-				field.sendKeys(value);
-			}
+			break;
+        case "basisofrecord":
+        	field = basisOfRecord;
+        	break;
+        default:
+        	field = null;
+        }
+
+		// Position the cursor in the input field ...
+		Actions builder = new Actions(driver);
+		builder.moveToElement(field).build().perform();
+		if (value == "TAB") {
+			// TAB to the next field
+			field.sendKeys(Keys.TAB);
+		} else if (value == "CLEAR") {
+			// Enter the value
+			field.clear();
+		} else {
+			// Enter the value
+			field.sendKeys(value);
 		}
 	}
 
+	public String readValueFromField(String fieldname) {
+		WebElement field = null;
+		switch (fieldname) {         
+        case "currentcollectionname":
+			field = currentCollectionName;
+			break;
+        case "basisofrecord":
+        	field = basisOfRecord;
+        	break;
+        default:
+        	field = null;
+        }
+		return field.getAttribute("value");
+		
+	}
+	
 	public void switchToMainFrame() {
 		driver.switchTo().defaultContent();
 	}
@@ -294,6 +332,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			icon = iconBinGatheringSiteCountry;
 		} else if (choice == "icon15") {
 			icon = invalidCollectionName;
+		} else if (choice == "icon16") {
+			icon = invalidBasisOfRecord;
 		}
 
 		EditIcon thisIcon = new EditIcon();
