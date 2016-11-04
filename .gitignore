@@ -15,3 +15,4 @@ hs_err_pid*
 development_notes-mds.txt
 crs/test-output/*
 .settings/*
+.metadata/*
