@@ -320,6 +320,19 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return thisIcon;
 	}
 
+	public Boolean isContextDisplayAvailable() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		// contextDisplayMoreButton.click();
+		return contextDisplayMoreButton.isEnabled();
+	}
+	
+	public String getContextDisplayObjectType() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		return contextDisplay.getText().trim();
+	}
+	
 	public void clickFirstIdentificationEditIcon() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
