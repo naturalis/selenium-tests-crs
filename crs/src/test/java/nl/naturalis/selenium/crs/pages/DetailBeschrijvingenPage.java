@@ -52,15 +52,24 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "uniqueID0219179827")
 	private WebElement currentCollectionName;
 	
-	@FindBy(id ="uniqueID3219180130")
+	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/input[2]")
+	private WebElement clearCurrentCollectionName;
+	
+//	@FindBy(css = "ul.ui-autocomplete>li.ui-menu-item>a.ui-corner-all")
+//	private WebElement autoCompleteCurrentCollectionName;
+
+	@FindBy(css = ".ui-corner-all")
+	private WebElement autoCompleteCurrentCollectionName;
+	
+	@FindBy(id = "uniqueID3219180130")
 	private WebElement basisOfRecord;
 
-	@FindBy(css ="input#uniqueID4219180231")
+	@FindBy(css = "input#uniqueID4219180231")
 	private WebElement mount;
 	
-	@FindBy(css ="input#uniqueID621918036")
+	@FindBy(css ="input#uniqueID6219180333")
 	private WebElement preservedPart;
-
+	
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
 	private WebElement iconAddMultimedia;
@@ -129,7 +138,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "img#SPECIMENMOUNT")
 	private WebElement invalidMount;
 
-	// #17 Warning Preserved Part
+	// #18 Warning Preserved Part
 	@FindBy(css = "img#PRESERVEDPART")
 	private WebElement invalidPreservedPart;
 	
@@ -146,6 +155,54 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
 
+	
+	public void deleteCurrentCollectionName() {
+		switchToFrame_1();
+		this.currentCollectionName.click();
+		this.clearCurrentCollectionName.click();
+	}
+	
+	public void setCurrentCollectionName(String text) {
+		switchToFrame_1();
+		this.currentCollectionName.click();
+		this.currentCollectionName.sendKeys(text);
+		this.currentCollectionName.sendKeys(Keys.DOWN);
+
+		driver.switchTo().defaultContent();
+		int size = driver.findElements(By.tagName("iframe")).size();
+		System.out.println("frame size: " + size);
+		
+		for (int n = 0; n < size; n++) {
+			driver.switchTo().frame(n);
+			List<WebElement> wantedElements = driver.findElements(By.className("ui-corner-all"));
+			if (wantedElements.size() > 0) {
+				System.out.println("frame #:" + n);
+				System.out.println("Elements:" + wantedElements.size());
+				return;
+			}
+			// driver.switchTo().defaultContent();
+		}
+		WebElement Link = driver.findElement(By.linkText("Pisces(Vertebrates)"));
+		Link.click();
+		
+//		Actions action = new Actions(driver);
+//		WebElement HoverLink = driver.findElement(By.linkText("Pisces(Vertebrates)"));
+//		action.moveToElement(HoverLink);
+//		action.perform();
+
+// 		switchToFrame_1();
+//		WebElement collectionName = (new WebDriverWait(driver, 3))
+//				  .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ui-corner-all")));
+//		System.out.println("# frames: " + driver.findElements(By.tagName("iframe")).size());
+//		this.autoCompleteCurrentCollectionName.click();
+
+	}
+	
+	public void selectCurrentCollectionName(String text) {
+		WebElement collectionName = this.autoCompleteCurrentCollectionName;
+		collectionName.click();
+	}
+	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
@@ -176,7 +233,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public void enterValueToField(String fieldname, String value) {
-		// this.driver.switchTo().frame( "ctl00_masterContent_iframe_1" );
 		this.switchToMainFrame();
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		WebElement field = null;
@@ -216,12 +272,15 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public String readValueFromField(String fieldname) {
 		WebElement field = null;
 		switch (fieldname) {         
-        case "currentcollectionname":
-			field = currentCollectionName;
-			break;
         case "basisofrecord":
         	field = basisOfRecord;
         	break;
+        case "currentcollectionname":
+			field = currentCollectionName;
+			break;
+        case "preservedpart":
+			field = preservedPart;
+			break;
         case "mount":
         	field = mount;
         	break;
@@ -242,6 +301,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 	}
 
+	public void switchToFrame_1() {
+		driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("iframe_1");
+	}
+
+	
 	/**
 	 * 
 	 */

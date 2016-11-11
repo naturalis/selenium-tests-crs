@@ -224,7 +224,7 @@ public class Test02 extends AbstractTest {
 	 * C. Blijft de verkeerde waarde staan?
 	 * 
 	 */
-	// Current Collection name
+	// 1. Current Collection name
 	@Test(priority=11, dependsOnMethods = { "checkThesaurusAndBinIcons" })
 	public void checkIncorrectSubmissionValueTest1A(){
 		// Cursor in veld, veld leeg laten en met tab verder
@@ -252,9 +252,10 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "CLEAR");
 	}
 	
-	// Basis of record
+	// 2. Basis of record
 	@Test(priority=14, dependsOnMethods = { "checkIncorrectSubmissionValueTest1C" })
 	public void checkIncorrectSubmissionValueTest2A(){
+		Test02.detailBeschrijvingenPage.switchToFrame_1();
 		// Cursor in veld, veld leeg laten en met tab verder
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("basisofrecord", "TAB");
@@ -280,9 +281,10 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.enterValueToField("basisofrecord", "CLEAR");
 	}
 
-	// Mount
+	// 3. Mount
 	@Test(priority=17, dependsOnMethods = { "checkIncorrectSubmissionValueTest2C" })
 	public void checkIncorrectSubmissionValueTest3A(){
+		Test02.detailBeschrijvingenPage.switchToFrame_1();
 		// Cursor in veld, veld leeg laten en met tab verder
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("mount", "TAB");
@@ -308,16 +310,17 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.enterValueToField("mount", "CLEAR");
 	}
 		
-		
-	// Preserved part
+	
+	// 4. Preserved part
 	@Test(priority=20, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
 	public void checkIncorrectSubmissionValueTest4A(){
+		Test02.detailBeschrijvingenPage.switchToFrame_1();
 		// Cursor in veld, veld leeg laten en met tab verder
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("preservedpart", "TAB");
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon18");
 		Assert.assertEquals(thisIcon.getSrc(), "https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-		Assert.assertEquals(thisIcon.getTitle(), "Invalid mount", "Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");		
+		Assert.assertEquals(thisIcon.getTitle(), "Invalid preserved part", "Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");		
 	}
 	
 	@Test(priority=21, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
@@ -339,9 +342,27 @@ public class Test02 extends AbstractTest {
 
 
 	
+	/**
+	 * 2.1.6
+	 * 
+	 * Voer de verplichte velden Current Collection name, Basis of record, Mount en Preserved part 
+	 * in met een waarde die voorkomt in de bijbehorende thesaurus. 
+	 * 
+	 * 1. Verschijnt er een autosuggest onder het veld als er een waarde uit de bijbehorende thesauruslijst 
+	 * wordt getypt? en 
+	 * 2. verschijnt er achter het prullenbakje de gekozen thesaurus term?
+	 * 
+	 */
 	
-	
-	
+	@Test(priority=23, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void enterValueToFieldCurrentCollectionName(){
+		// Pisces(Vertebrates)
+		Test02.detailBeschrijvingenPage.setCurrentCollectionName("p");
+		// Test02.detailBeschrijvingenPage.selectCurrentCollectionName("Pisces(Vertebrates)");
+		
+		// Test02.detailBeschrijvingenPage.deleteCurrentCollectionName();
+	}
+
 	
 	
 	
