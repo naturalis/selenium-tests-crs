@@ -63,6 +63,10 @@ public class AbstractTest {
 	
 	}
 
+	protected static void initializeWaiting(int seconds) {
+		driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+	}
+	
 	protected static void initializeLogging()
 	{
 		Report.setCredentials(Configuration.getUsername(),Configuration.getPassword());

@@ -45,6 +45,7 @@ public class Test02 extends AbstractTest {
 		initializeConfiguration(projectID);
 		initializeTestParameters();
 		initializeDriver();
+		initializeWaiting(1);
 		initializeLogging();
 		driver.get(config.getStartUrl());
 		Report.LogTestStart();
@@ -340,8 +341,6 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.enterValueToField("preservedpart", "CLEAR");
 	}
 
-
-	
 	/**
 	 * 2.1.6
 	 * 
@@ -355,88 +354,44 @@ public class Test02 extends AbstractTest {
 	 */
 	
 	@Test(priority=23, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
-	public void enterValueToFieldCurrentCollectionName(){
+	public void checkTextEntryCurrentCollectionName(){
 		// Pisces(Vertebrates)
-		Test02.detailBeschrijvingenPage.setCurrentCollectionName("p");
-		// Test02.detailBeschrijvingenPage.selectCurrentCollectionName("Pisces(Vertebrates)");
-		
-		// Test02.detailBeschrijvingenPage.deleteCurrentCollectionName();
+		String entryText = "p";
+		String collectionName = "Pisces";
+		Test02.detailBeschrijvingenPage.setCurrentCollectionName(entryText, collectionName);
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getCurrentCollectionNameTlink(), collectionName, "Fout in 2.1.6: Current Collection name.");
 	}
+
+	@Test(priority=24, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void checkTextEntryBasisOfRecord(){
+		// Basis of record
+		String entryText = "v";
+		String specimenType = "VirtualSpecimen";
+		Test02.detailBeschrijvingenPage.setBasisOfRecord(entryText, specimenType);
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getBasisOfRecordTlink(), specimenType, "Fout in 2.1.6: Basis of Record.");
+	}
+	
+	@Test(priority=25, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void checkTextEntryMount(){
+		// Mount
+		String entryText = "n";
+		String specimenType = "not applicable";
+		Test02.detailBeschrijvingenPage.setMount(entryText, specimenType);
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getMountTlink(), specimenType, "Fout in 2.1.6: Mount");
+	}
+
+	@Test(priority=26, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void checkTextEntryPreservedPart(){
+		// Preserved part
+		String entryText = "n";
+		String specimenType = "Not applicable";
+		Test02.detailBeschrijvingenPage.setPreservedPart(entryText, specimenType);
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPreservedPartTlink(), specimenType, "Fout in 2.1.6: Preserved part.");
+	}
+
 
 	
 	
-	
-	
-	
-	
-	
-	/*
-	
-	@Test(priority=5, dependsOnMethods = { "startPageTitle" })
-	public void detailPageOpen() {
-		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
-		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringOk);
-		driver.get(detailBeschrijvingenPage.getCompletePageURL());
-		Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
-	}
-
-	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
-	public void detailPageTitle() {
-		assertThat(driver.getTitle().trim(),containsString(detailBeschrijvingenPage.getPageTitle()));
-	}
-	
-	@Test(priority=6, dependsOnMethods = { "detailPageOpen" })
-	public void detailPageNumberOfResults() {
-		assertThat(DetailBeschrijvingenPageExpectedResultNumber,equalTo(detailBeschrijvingenPage.getNumberOfResults()));
-	}
-
-	@Test(priority=7, dependsOnMethods = { "detailPageTitle" })
-	public void detailPageOpenUnallowed() {
-		detailBeschrijvingenPage.setPageUrlQueryString(DetailBeschrijvingenPageQueryStringNok);
-		driver.get(detailBeschrijvingenPage.getCompletePageURL());
-		// illegal ID, page automatically redirects to login (= HomePage)  
-		Assert.assertNotEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL());
-	}
-
-	@Test(priority=8, dependsOnMethods = { "detailPageOpenUnallowed" })
-	public void unallowedPageOpen() {
-		homePage = new HomePage(driver);
-		assertThat(Constants.NO_AUTHORISATION_MESSAGE,equalTo(homePage.getAuthorizationFailureMessage()));
-	}
-
-	@Test(priority=9, dependsOnMethods = { "unallowedPageOpen" })
-	public void unallowedPageMouseToLogOff() {
-		assertThat(homePage.mouseToLogOffLink(),equalTo(true));
-	}
-
-	@Test(priority=10, dependsOnMethods = { "unallowedPageMouseToLogOff" })
-	public void logOff() {
-		homePage.clickLogOffLink();
-		assertThat(driver.getCurrentUrl(),equalTo(LoggedOutUrl));
-	}
-		
-	private void checkStartPageMenu(MenuItems menuItem) {
-		WebElement UppMenu = startPage.getUppMenu();
-		Actions action = new Actions(driver);
-			
-		Integer n=0;
-		for (String item : menuItem.getMenuItems()) {
-			if (n++ < menuItem.getMenuItems().size()-1) {
-				WebElement element = UppMenu.findElement(By.linkText(item));
-				action.moveToElement(element).perform();
-			}
-		}
-		
-		String lastItem = menuItem.getMenuItems().get(menuItem.getMenuItems().size()-1);
-		WebElement LastItem = UppMenu.findElement(By.linkText(lastItem));
-		action.moveToElement(LastItem).perform();
-		
-		WebElement LastItemParentElement = LastItem.findElement(By.xpath("./../../.."));
-		List<WebElement> LastItemAndSiblings = LastItemParentElement.findElements(By.tagName("tr"));
-		
-		Assert.assertEquals(Integer.valueOf(LastItemAndSiblings.size()),menuItem.getMaxLastItemAndSiblings(),String.join(" > ", menuItem.getMenuItems()));
-	}
-	*/
 
 	private static void initializeTestParameters() {
         addMenu = new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),-1);

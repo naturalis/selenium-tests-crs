@@ -54,21 +54,37 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearCurrentCollectionName;
-	
-//	@FindBy(css = "ul.ui-autocomplete>li.ui-menu-item>a.ui-corner-all")
-//	private WebElement autoCompleteCurrentCollectionName;
 
-	@FindBy(css = ".ui-corner-all")
-	private WebElement autoCompleteCurrentCollectionName;
+	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	private WebElement tlinkCurrentCollectionName;
 	
 	@FindBy(id = "uniqueID3219180130")
 	private WebElement basisOfRecord;
+	
+	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/input[2]")
+	private WebElement clearBasisOfRecord;
+
+	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	private WebElement tlinkBasisOfRecord;
 
 	@FindBy(css = "input#uniqueID4219180231")
 	private WebElement mount;
-	
+
+	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/input[2]")
+	private WebElement clearMount;
+
+	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	private WebElement tlinkMount;
+
 	@FindBy(css ="input#uniqueID6219180333")
 	private WebElement preservedPart;
+
+	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/input[2]")
+	private WebElement clearPreservedPart;
+
+	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	private WebElement tlinkPreservedPart;
+	
 	
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
@@ -155,53 +171,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
 
-	
-	public void deleteCurrentCollectionName() {
-		switchToFrame_1();
-		this.currentCollectionName.click();
-		this.clearCurrentCollectionName.click();
-	}
-	
-	public void setCurrentCollectionName(String text) {
-		switchToFrame_1();
-		this.currentCollectionName.click();
-		this.currentCollectionName.sendKeys(text);
-		this.currentCollectionName.sendKeys(Keys.DOWN);
 
-		driver.switchTo().defaultContent();
-		int size = driver.findElements(By.tagName("iframe")).size();
-		System.out.println("frame size: " + size);
-		
-		for (int n = 0; n < size; n++) {
-			driver.switchTo().frame(n);
-			List<WebElement> wantedElements = driver.findElements(By.className("ui-corner-all"));
-			if (wantedElements.size() > 0) {
-				System.out.println("frame #:" + n);
-				System.out.println("Elements:" + wantedElements.size());
-				return;
-			}
-			// driver.switchTo().defaultContent();
-		}
-		WebElement Link = driver.findElement(By.linkText("Pisces(Vertebrates)"));
-		Link.click();
-		
-//		Actions action = new Actions(driver);
-//		WebElement HoverLink = driver.findElement(By.linkText("Pisces(Vertebrates)"));
-//		action.moveToElement(HoverLink);
-//		action.perform();
-
-// 		switchToFrame_1();
-//		WebElement collectionName = (new WebDriverWait(driver, 3))
-//				  .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ui-corner-all")));
-//		System.out.println("# frames: " + driver.findElements(By.tagName("iframe")).size());
-//		this.autoCompleteCurrentCollectionName.click();
-
-	}
 	
-	public void selectCurrentCollectionName(String text) {
-		WebElement collectionName = this.autoCompleteCurrentCollectionName;
-		collectionName.click();
-	}
+	
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -212,7 +184,96 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void setPageUrlQueryString(String queryString) {
 		this.PageUrlQueryString = queryString;
 	}
+	
 
+
+
+	public void setCurrentCollectionName(String enterText, String selectText) {
+		this.switchToFrame_1();
+		this.currentCollectionName.click();
+		this.currentCollectionName.sendKeys(enterText);
+		this.currentCollectionName.sendKeys(Keys.DOWN);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		driver.findElement(By.partialLinkText(selectText)).click();
+	}
+
+	public String getCurrentCollectionNameTlink() {
+		this.switchToFrame_1();
+		return this.tlinkCurrentCollectionName.getText();
+	}
+
+	public void deleteCurrentCollectionName() {
+		this.switchToFrame_1();
+		this.currentCollectionName.click();
+		this.clearCurrentCollectionName.click();
+	}
+	
+	public void setBasisOfRecord(String enterText, String selectText) {
+		this.switchToFrame_1();
+		this.basisOfRecord.click();
+		this.basisOfRecord.sendKeys(enterText);
+		this.basisOfRecord.sendKeys(Keys.DOWN);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		driver.findElement(By.partialLinkText(selectText)).click();
+	}
+
+	public String getBasisOfRecordTlink() {
+		this.switchToFrame_1();
+		return this.tlinkBasisOfRecord.getText();
+	}
+
+	public void deleteBasisOfRecord() {
+		this.switchToFrame_1();
+		this.basisOfRecord.click();
+		this.clearBasisOfRecord.click();
+	}
+	
+	public void setMount(String enterText, String selectText) {
+		this.switchToFrame_1();
+		this.mount.click();
+		this.mount.sendKeys(enterText);
+		this.mount.sendKeys(Keys.DOWN);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		driver.findElement(By.partialLinkText(selectText)).click();
+	}
+
+	public String getMountTlink() {
+		this.switchToFrame_1();
+		return this.tlinkMount.getText();
+	}
+
+	public void deleteMount() {
+		this.switchToFrame_1();
+		this.mount.click();
+		this.clearMount.click();
+	}
+	
+	public void setPreservedPart(String enterText, String selectText) {
+		this.switchToFrame_1();
+		this.preservedPart.click();
+		this.preservedPart.sendKeys(enterText);
+		this.preservedPart.sendKeys(Keys.DOWN);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		driver.findElement(By.partialLinkText(selectText)).click();
+	}
+
+	public String getPreservedPartTlink() {
+		this.switchToFrame_1();
+		return this.tlinkPreservedPart.getText();
+	}
+	
+	public void deletePreservedPart() {
+		this.switchToFrame_1();
+		this.preservedPart.click();
+		this.preservedPart.click();
+	}
+
+
+	
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
