@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 import nl.naturalis.selenium.crs.fragments.EditIcon;
+import nl.naturalis.selenium.crs.fragments.InputGroup;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.*;
@@ -390,9 +391,35 @@ public class Test02 extends AbstractTest {
 	}
 
 
-	
+	/**
+	 * 2.1.7 Losse scripts (afhandeling registratienummer). 
+	 * 
+	 * Voer het veld Prefix in met een ongeldige waarde (waarde komt niet voor in thesaurus lijst prefix). 
+	 * 1. Verschijnt er direct een rood uitroepteken achter het veld? of 
+	 * 2. verschijnt deze dat bij het verlaten van het veld (als er een default is gedefineerd; thesaurus waarde staat achter prullenbak icoon)?
+	 *  
+	 */
+	@Test(priority=27, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void checkPrefix(){
+		InputGroup prefix = new InputGroup(driver, "uniqueID121917991");
+		prefix.enterText("illegal-text");
+		
+		// prefix.enterValue("Testing");
+		// id = uniqueID1219179928
+		// InputGroup prefix = new InputGroup(driver, "uniqueID1219179928");
+		// prefix.enterText("test");
+//		System.out.println(prefix.getBinImageScr());
+//		System.out.println(prefix.getBinImageTitle());
+//		prefix.clickInputField();
+//		prefix.clickThesaurus();
+//		prefix.clickBin();
+		// Test02.detailBeschrijvingenPage.deletePrefix();
+	}
+
+
 	
 
+	
 	private static void initializeTestParameters() {
         addMenu = new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),-1);
         formListLabels = Arrays.asList("Collection Vertebrates Specimen","Digistreet Vertebrates Specimen");

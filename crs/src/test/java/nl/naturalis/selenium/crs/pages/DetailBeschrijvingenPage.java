@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 
+
 public class DetailBeschrijvingenPage extends AbstractPage {
 
 	private WebDriver driver;
@@ -57,6 +58,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkCurrentCollectionName;
+
+	@FindBy(xpath = "//input[@id='uniqueID1219179928']/parent::*/span[@class='CSContainer']/input[2]")
+	private WebElement clearPrefix;
 	
 	@FindBy(id = "uniqueID3219180130")
 	private WebElement basisOfRecord;
@@ -171,9 +175,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
 
-
-	
-	
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -184,9 +185,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void setPageUrlQueryString(String queryString) {
 		this.PageUrlQueryString = queryString;
 	}
-	
-
-
 
 	public void setCurrentCollectionName(String enterText, String selectText) {
 		this.switchToFrame_1();
@@ -209,6 +207,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.clearCurrentCollectionName.click();
 	}
 	
+	public void deletePrefix() {
+		this.clearPrefix.click();
+	}
+
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
@@ -441,7 +443,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		iconValues[1] = iconAttachAllMultimediaFromGlobalSelection.getAttribute("title").trim();
 		return iconValues;
 	}
-
+	
+	
 	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
 		switch (choice) {
