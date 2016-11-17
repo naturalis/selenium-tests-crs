@@ -52,7 +52,14 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	
 	@FindBy(id = "ctl00_ctl00_masterContent_dropdownlistResultTemplates")
 	private WebElement resultatenTemplatesSelect;
+	
+	@FindBy(id = "ctl00_ctl00_masterContent_functionButtons_btn_ZoekvraagVersmallen")
+	private WebElement iconSearchWithinResults;
 
+	@FindBy(id = "ctl00_ctl00_masterContent_functionButtons_btn_ZoekvraagVerbreden")
+	private WebElement iconAddToResults;
+	
+	
 	public SimpleSearchResultsPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -64,11 +71,6 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	}
 
 	public void setSearchTerms(String term) {
-		
-		Integer c = Integer.valueOf(term);
-		String s = c.toString();
-		
-		
 		this.searchTerms.add(term);
 	}
 
@@ -159,6 +161,16 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		return null; 
 	}
 
+	public SimpleSearchPage clickIconSearchWithinResults() {
+		iconSearchWithinResults.click();
+		return new SimpleSearchPage(this.driver);
+	}
+	
+	public SimpleSearchPage clickIconAddToResults() {
+		iconAddToResults.click();
+		return new SimpleSearchPage(this.driver);
+	}
+	
 	public String getCompletePageURL() {	
 		if (this.PageUrlQueryString=="") {
 			return this.PageURL; 
@@ -184,52 +196,58 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	}
 
 	private void countResultRows() {
-        List<WebElement> rows = resultatenLijst.findElements(By.xpath("id('ctl00_ctl00_masterContent_ResultatenLijst')/tbody/tr"));
-        
-        this.resultRows=0;
+
+		this.resultRows=0;
         this.resultRowsWithMultiMedia=0;
         this.resultRowsWithModeration=0;
+        this.resultRowsWithAllTerms=0;
 
-        for(WebElement row : rows) {
-            if (!row.getAttribute("class").toLowerCase().contains("header") && !row.getAttribute("class").toLowerCase().contains("pager")) {
-            	boolean hasMM = false;
-            	boolean hasModeration = false;
-            	List<WebElement> images = row.findElements(By.cssSelector("img"));
-            	for(WebElement image : images) {
-            		if (image.getAttribute("title").trim().equals("One multimedia object") || image.getAttribute("title").trim().equals("Multiple multimedia objects")) {
-            			hasMM = true;
-            		}
-            		if (image.getAttribute("title").trim().equals("Document is moderated")) {
-            			hasModeration = true;
-            		}
-            	}
-            	if (hasMM) {
-            		this.resultRowsWithMultiMedia++;
-            	}
-            	if (hasModeration) {
-            		this.resultRowsWithModeration++;
-            	}
-            	
-            	boolean hasAllTerms = true;
-            	String temp="";
-            	List<WebElement> tds = row.findElements(By.cssSelector("td"));
-            	for(WebElement td : tds) {
-            		temp+=" "+td.getText().toLowerCase();
-            	}
-
-            	for(String e : searchTerms) {
-            		if (!temp.contains(e.toLowerCase())) {
-            			hasAllTerms = false;
-            		}
-            	}
-
-            	if (hasAllTerms) {
-            		this.resultRowsWithAllTerms++;
-            	}
-            	
-            	this.resultRows++;
-            }
-        } 
+		try {
+	        List<WebElement> rows = resultatenLijst.findElements(By.xpath("id('ctl00_ctl00_masterContent_ResultatenLijst')/tbody/tr"));
+	
+	        for(WebElement row : rows) {
+	            if (!row.getAttribute("class").toLowerCase().contains("header") && !row.getAttribute("class").toLowerCase().contains("pager")) {
+	            	boolean hasMM = false;
+	            	boolean hasModeration = false;
+	            	List<WebElement> images = row.findElements(By.cssSelector("img"));
+	            	for(WebElement image : images) {
+	            		if (image.getAttribute("title").trim().equals("One multimedia object") || image.getAttribute("title").trim().equals("Multiple multimedia objects")) {
+	            			hasMM = true;
+	            		}
+	            		if (image.getAttribute("title").trim().equals("Document is moderated")) {
+	            			hasModeration = true;
+	            		}
+	            	}
+	            	if (hasMM) {
+	            		this.resultRowsWithMultiMedia++;
+	            	}
+	            	if (hasModeration) {
+	            		this.resultRowsWithModeration++;
+	            	}
+	            	
+	            	boolean hasAllTerms = true;
+	            	String temp="";
+	            	List<WebElement> tds = row.findElements(By.cssSelector("td"));
+	            	for(WebElement td : tds) {
+	            		temp+=" "+td.getText().toLowerCase();
+	            	}
+	
+	            	for(String e : searchTerms) {
+	            		if (!temp.contains(e.toLowerCase())) {
+	            			hasAllTerms = false;
+	            		}
+	            	}
+	
+	            	if (hasAllTerms) {
+	            		this.resultRowsWithAllTerms++;
+	            	}
+	            	
+	            	this.resultRows++;
+	            }
+	        }
+		} catch (Exception e) {
+			//
+		}
 	}
 
 
