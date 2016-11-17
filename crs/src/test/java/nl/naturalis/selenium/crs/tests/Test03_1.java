@@ -36,7 +36,7 @@ import nl.naturalis.selenium.crs.utils.Report;
 import nl.naturalis.selenium.crs.utils.ToolKit;
 
 
-public class Test03 extends AbstractTest {
+public class Test03_1 extends AbstractTest {
 
 	private static String projectID = "CRS";
 	private static String testID = "Test 03";
@@ -50,18 +50,26 @@ public class Test03 extends AbstractTest {
 	private static String unitNumberCorrect;
 	private static String unitNumberIncorrect;	
 	private static int maxSecondsSimpleSearch;	
-	private static String simpleSearchURLQueryString;
+	private static String simpleSearchURLQueryString_01;
 	private static String simpleSearchSearch_01_Term;
 	private static int simpleSearchSearch_01_Results;
 	private static String simpleSearchSearch_02_Term;
 	private static int simpleSearchSearch_02_Results;
 	private static int simpleSearchSearch_02_ResultsWithVariants;
-	private static String simpleSearchSearchBreadcrumbBackLinkText;
-	private static List<Link> simpleSearchSearchBreadcrumb = new ArrayList<Link>();
+	private static String simpleSearchSearchBreadcrumb_01_BackLinkText;
+	private static String simpleSearchSearchBreadcrumb_02_BackLinkText;
+	private static List<Link> simpleSearchSearchBreadcrumb_01 = new ArrayList<Link>();
+	private static List<Link> simpleSearchSearchBreadcrumb_02 = new ArrayList<Link>();
 	private static List<String> searchResultsTemplates = new ArrayList<String>();
 	private static String simpleSearchSearch_03_Term;
+	private static String simpleSearchSearch_04_Term;
+	private static List<String> simpleSearchSearch_05_Term = new ArrayList<String>();
+	private static String simpleSearchURLQueryString_02;
+	private static String simpleSearchURLQueryString_03;
+	private static String simpleSearchSearch_06_Term;
+	private static List<String> simpleSearchTransformOptions = new ArrayList<String>();
+	private static String simpleSearchTransformOption;	
 	private WebElement waitFor; 
-	
 	
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
@@ -77,26 +85,6 @@ public class Test03 extends AbstractTest {
 		homePage = new HomePage(driver);
 	}
 
-	public static void amain(String[] args) {
-		try {
-			initializeDatabase();
-			initializeConfiguration(projectID);
-			initializeTestParameters();
-			initializeDriver();
-			initializeLogging();
-		} catch (Exception e) {
-		}
-
-		
-		driver.get("http://localhost/tools/fuck.html");
-
-		Select select = new Select(driver.findElement(By.id("fuck")));
-		WebElement fuck = select.getFirstSelectedOption();
-		System.out.println(fuck.getText());
-	
-	}
-	
-	
 	@AfterClass
 	private static void cleanUp() throws SQLException {
 		//tearDown();
@@ -120,7 +108,7 @@ public class Test03 extends AbstractTest {
 	public void tempStart() {
 		/*
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 		simpleSearchPage.clearEenvoudigInputText();
 		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_02_Term);
@@ -160,7 +148,7 @@ public class Test03 extends AbstractTest {
 	@Test(priority=6, dependsOnMethods = { "quickSearchCorrect" })
 	public void openSimpleSearch() {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 		Assert.assertEquals(driver.getCurrentUrl(),simpleSearchPage.getCompletePageURL(),"3.2.0. open simple search page");
 	}
@@ -184,7 +172,7 @@ public class Test03 extends AbstractTest {
 
 	public void doSimpleSearchQuery_01() {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 
 		// open concept tree by clicking image
@@ -231,7 +219,7 @@ public class Test03 extends AbstractTest {
 	@Test(priority=8, dependsOnMethods = { "doSimpleSearchQuery_01" })
 	public void doSimpleSearchQuery_02() {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 
 		driver.get(simpleSearchPage.getCompletePageURL());
 
@@ -261,21 +249,21 @@ public class Test03 extends AbstractTest {
 	}
 
 	@Test(priority=9, dependsOnMethods = { "doSimpleSearchQuery_02" })
-	public void simpleSearchQueryBreadcrumb() {
+	public void simpleSearchQueryBreadcrumb_01() {
 		Integer n=0;
 		List<Link> trail = simpleSearchResultsPage.getBreadcrumbTrail();
 
-		for (n=0;n<simpleSearchSearchBreadcrumb.size();n++) {
-			Link e = simpleSearchSearchBreadcrumb.get(n);
+		for (n=0;n<simpleSearchSearchBreadcrumb_01.size();n++) {
+			Link e = simpleSearchSearchBreadcrumb_01.get(n);
 			Link f = trail.get(n);
 			
 			Assert.assertEquals(f.getHref(),e.getHref(),"3.2.4. breadcrumb trail, \""+e.getText()+"\" (link)");
 			Assert.assertEquals(f.getText(),e.getText(),"3.2.4. breadcrumb trail, \""+e.getText()+"\" (text)");
 		}
 
-		for (n=0;n<simpleSearchSearchBreadcrumb.size();n++) {
+		for (n=0;n<simpleSearchSearchBreadcrumb_01.size();n++) {
 			Link f = trail.get(n);
-			if (f.getText().equals(simpleSearchSearchBreadcrumbBackLinkText)) {
+			if (f.getText().equals(simpleSearchSearchBreadcrumb_01_BackLinkText)) {
 				driver.get(f.getHref());
 				Assert.assertEquals(driver.getCurrentUrl(),f.getHref(),"3.2.4. breadcrumb trail back (href)");
 			}
@@ -283,7 +271,7 @@ public class Test03 extends AbstractTest {
 	}
 
 	
-	@Test(priority=10, dependsOnMethods = { "simpleSearchQueryBreadcrumb" })
+	@Test(priority=10, dependsOnMethods = { "simpleSearchQueryBreadcrumb_01" })
 	public void simpleSearchQuery_02_ParameterCheck() {
 		simpleSearchPage = new SimpleSearchPage(driver);
 		Assert.assertEquals(simpleSearchPage.getEenvoudigInputText(),simpleSearchSearch_02_Term,"3.2.5. previous search input present");
@@ -328,31 +316,30 @@ public class Test03 extends AbstractTest {
 
 		Assert.assertNotEquals(headersOne,headersTwo,"3.2.7. template change (column headers are the same after changing)");
 	}
-*/
+
 	
-//	@Test(priority=12, dependsOnMethods = { "simpleSearchQuery_03_TemplateChange" })
-	@Test(priority=11, dependsOnMethods = { "openSimpleSearch" })
+	@Test(priority=12, dependsOnMethods = { "simpleSearchQuery_03_TemplateChange" })
 	public void simpleSearchQuery_04() {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 		simpleSearchPage.clearEenvoudigInputText();
 		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_02_Term);
 		simpleSearchPage.toggleSpellingVariants(false);
 		simpleSearchPage.setMultimedia(0);
 
-		//toolKit.removeDomElement(driver,"ctl00_ctl00_masterContent_ResultatenLijst");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
 
 		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithMultiMediaCount(),0,"3.2.8. search without multimedia");
 	}
 
-	/*
+
 	@Test(priority=13, dependsOnMethods = { "simpleSearchQuery_04" })
 	public void simpleSearchQuery_05() {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 
 		simpleSearchPage.clearEenvoudigInputText();
@@ -361,7 +348,7 @@ public class Test03 extends AbstractTest {
 		simpleSearchPage.setMultimedia(2);
 		simpleSearchPage.setModeration(0);
 		
-		toolKit.removeDomElement(driver,"ctl00_ctl00_masterContent_ResultatenLijst");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
 
@@ -371,7 +358,7 @@ public class Test03 extends AbstractTest {
 	@Test(priority=14, dependsOnMethods = { "simpleSearchQuery_05" })
 	public void simpleSearchQuery_06() {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 
 		simpleSearchPage.clearEenvoudigInputText();
@@ -380,7 +367,7 @@ public class Test03 extends AbstractTest {
 		simpleSearchPage.setMultimedia(2);
 		simpleSearchPage.setModeration(1);
 		
-		toolKit.removeDomElement(driver,"ctl00_ctl00_masterContent_ResultatenLijst");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
 		
@@ -405,6 +392,8 @@ public class Test03 extends AbstractTest {
 		}
 	}
 
+
+
 	@Test(priority=15, dependsOnMethods = { "simpleSearchQuery_07_Thesaurus" })
 	public void simpleSearchQuery_07_Verbatim() {
 		this.simpleSearchQuery_07_Base("Verbatim",simpleSearchSearch_03_Term);
@@ -423,7 +412,6 @@ public class Test03 extends AbstractTest {
 		}
 	}
 	
-
 	@Test(priority=15, dependsOnMethods = { "simpleSearchQuery_07_Verbatim" })
 	public void simpleSearchQuery_07_Both() {
 		this.simpleSearchQuery_07_Base("Both",simpleSearchSearch_03_Term);
@@ -448,9 +436,156 @@ public class Test03 extends AbstractTest {
 		}
 	}
 
+	@Test(priority=15, dependsOnMethods = { "simpleSearchQuery_07_Both" })
+	public void simpleSearchQuery_08() {
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_04_Term);
+		simpleSearchPage.toggleSpellingVariants(false);
+		simpleSearchPage.setMultimedia(1);
+		simpleSearchPage.setModeration(0);
+		simpleSearchPage.setEnvironment("Verbatim");
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
+
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithMultiMediaCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.12. search with multimedia");
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithModerationCount(),0,"3.2.12. search for unmoderated documents");
+		
+		detailBeschrijvingenPage = simpleSearchResultsPage.clickDetailIcon(0);
+
+		WebElement link = detailBeschrijvingenPage.getNextPageLink();
+		int n=0;
+		while(link!=null) {
+			detailBeschrijvingenPage.clickFirstIdentificationEditIcon();
+			Assert.assertEquals(detailBeschrijvingenPage.getGenusInputValue(),simpleSearchSearch_04_Term,"3.2.12. search with verbatim (\""+simpleSearchSearch_04_Term+"\"; page "+(++n)+")");
+			detailBeschrijvingenPage.clickCloseButton();
+	
+			link = detailBeschrijvingenPage.getNextPageLink();
+			if (link!=null) {
+				driver.get(link.getAttribute("href"));
+			}
+		}
+	}
+	
+	@Test(priority=15, dependsOnMethods = { "simpleSearchQuery_08" })
+	public void simpleSearchQuery_09() {
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(String.join(" ",simpleSearchSearch_05_Term));
+		simpleSearchPage.toggleSpellingVariants(false);
+		simpleSearchPage.setMultimedia(2);
+		simpleSearchPage.setModeration(2);
+		simpleSearchPage.setEnvironment("Both");
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
+		
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_05_Term);
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.13. search with multiple terms");
+	}	
+	
+*/
+
+//	@Test(priority=15, dependsOnMethods = { "simpleSearchQuery_09" })
+	@Test(priority=11, dependsOnMethods = { "openSimpleSearch" })
+	public void simpleSearchQuery_10() {
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_03);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_06_Term);
+		simpleSearchPage.toggleSpellingVariants(false);
+		simpleSearchPage.setMultimedia(2);
+		simpleSearchPage.setModeration(2);
+		simpleSearchPage.setEnvironment("Both");
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
+		
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_06_Term);
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.14. search storage units");
+	}	
+	
+	@Test(priority=11, dependsOnMethods = { "simpleSearchQuery_10" })
+	public void simpleSearchQueryBreadcrumb_02() {
+		Integer n=0;
+		List<Link> trail = simpleSearchResultsPage.getBreadcrumbTrail();
+
+		for (n=0;n<simpleSearchSearchBreadcrumb_02.size();n++) {
+			Link e = simpleSearchSearchBreadcrumb_02.get(n);
+			Link f = trail.get(n);
+			
+			Assert.assertEquals(f.getHref(),e.getHref(),"3.2.15. breadcrumb trail, \""+e.getText()+"\" (link)");
+			Assert.assertEquals(f.getText(),e.getText(),"3.2.15. breadcrumb trail, \""+e.getText()+"\" (text)");
+		}
+
+		for (n=0;n<simpleSearchSearchBreadcrumb_02.size();n++) {
+			Link f = trail.get(n);
+			if (f.getText().equals(simpleSearchSearchBreadcrumb_02_BackLinkText)) {
+				driver.get(f.getHref());
+				Assert.assertEquals(driver.getCurrentUrl(),f.getHref(),"3.2.15. breadcrumb trail back (href)");
+			}
+		}
+	}
+	
+
+	@Test(priority=11, dependsOnMethods = { "simpleSearchQueryBreadcrumb_02" })
+	public void simpleSearchQuery_11() {
+
+		
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_03);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_06_Term);
+		simpleSearchPage.toggleSpellingVariants(false);
+		simpleSearchPage.setMultimedia(2);
+		simpleSearchPage.setModeration(2);
+		simpleSearchPage.setEnvironment("Both");
+
+		String nextOption = null;
+		for (String e : simpleSearchTransformOptions) {
+			if (e.equals(simpleSearchTransformOption)) {
+				nextOption=e;
+				break;
+			}
+		}
+		
+		simpleSearchPage.selectTransformationByName(nextOption);
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
+		
+
+//		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.14. search storage units");
+
+
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void simpleSearchQuery_07_Base(String environment, String searchString) {
 		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
 
 		simpleSearchPage.clearEenvoudigInputText();
@@ -460,27 +595,17 @@ public class Test03 extends AbstractTest {
 		simpleSearchPage.setModeration(2);
 		simpleSearchPage.setEnvironment(environment);
 		
-		toolKit.removeDomElement(driver,"ctl00_ctl00_masterContent_ResultatenLijst");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
 
 		detailBeschrijvingenPage = simpleSearchResultsPage.clickDetailIcon(0);
 	}
-	
-	
-	
-	
-	
-
-
-*/
-
-	
 
 	private static void initializeTestParameters() {
 		unitNumberCorrect="ZMA.MAM.5179";
 		unitNumberIncorrect="not.a.number";
-		simpleSearchURLQueryString="type=Vertebrates";
+		simpleSearchURLQueryString_01="type=Vertebrates";
 		
 		maxSecondsSimpleSearch=120;
 
@@ -490,20 +615,37 @@ public class Test03 extends AbstractTest {
 		simpleSearchSearch_02_Results=88;
 		simpleSearchSearch_02_ResultsWithVariants=109;
 		
-		simpleSearchSearchBreadcrumbBackLinkText="Search on Vertebrates";
-		simpleSearchSearchBreadcrumb.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
-		simpleSearchSearchBreadcrumb.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
-		simpleSearchSearchBreadcrumb.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true",simpleSearchSearchBreadcrumbBackLinkText));
-		simpleSearchSearchBreadcrumb.add(new Link(null,"Results"));
+		simpleSearchSearchBreadcrumb_01_BackLinkText="Search on Vertebrates";
+		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
+		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
+		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true",simpleSearchSearchBreadcrumb_01_BackLinkText));
+		simpleSearchSearchBreadcrumb_01.add(new Link(null,"Results"));
 		
 		searchResultsTemplates.add("Vertebrates");
 		searchResultsTemplates.add("Vertebrates Results Page");
 
 		simpleSearchSearch_03_Term="Profelis";
+		simpleSearchSearch_04_Term="Ficedula";
+		simpleSearchSearch_05_Term=Arrays.asList("felis","france");
+		
+		simpleSearchURLQueryString_02="type=Vertebrates+Storage+units";
+
+		simpleSearchURLQueryString_03="type=IM+Test+Storage+units";
+		simpleSearchSearch_06_Term="BE.123456789.se";
+
+		simpleSearchSearchBreadcrumb_02_BackLinkText="Search on IM Test Storage units";
+		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
+		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
+		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true","Search on Vertebrates"));
+		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=IM+Test+Storage+units&back=true",simpleSearchSearchBreadcrumb_02_BackLinkText));
+		simpleSearchSearchBreadcrumb_02.add(new Link(null,"Results"));	
+
+		simpleSearchTransformOption="Storage unit (IM Test) -> Specimen (IM Test)";
+		simpleSearchTransformOptions.add("IM Test Storage units");
+		simpleSearchTransformOptions.add(simpleSearchTransformOption);
+
 	
 	}
 
 
 }
-
-//driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);

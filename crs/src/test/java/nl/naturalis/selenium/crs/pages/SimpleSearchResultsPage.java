@@ -38,6 +38,8 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	private int resultRows=0;
 	private int resultRowsWithMultiMedia=0;
 	private int resultRowsWithModeration=0;
+	private int resultRowsWithAllTerms=0;
+	private List<String> searchTerms = new ArrayList<String>();
 
 	@FindBy(id = "ctl00_ctl00_masterContent_SpnAantalDocumenten")
 	private WebElement masterContent_SpnAantalDocumenten;
@@ -61,6 +63,19 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		this.PageUrlQueryString=queryString;
 	}
 
+	public void setSearchTerms(String term) {
+		
+		Integer c = Integer.valueOf(term);
+		String s = c.toString();
+		
+		
+		this.searchTerms.add(term);
+	}
+
+	public void setSearchTerms(List<String> terms) {
+		this.searchTerms=terms;
+	}
+
 	public int getNumberOfFoundDocuments() {
 		this.driver.switchTo().defaultContent();
 		return Integer.valueOf(this.masterContent_SpnAantalDocumenten.getText());
@@ -80,7 +95,12 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		this.countResultRows();
 		return this.resultRowsWithModeration;
 	}
-	
+
+	public int getResultRowWithWithAllTermsCount() {
+		this.countResultRows();
+		return this.resultRowsWithAllTerms;
+	}
+
 	public List<Link> getBreadcrumbTrail() {
 		List<WebElement> spans = siteMapPath.findElements(By.cssSelector("span"));
 		List<Link> links = new ArrayList<Link>(); 
@@ -189,6 +209,24 @@ public class SimpleSearchResultsPage extends AbstractPage {
             	if (hasModeration) {
             		this.resultRowsWithModeration++;
             	}
+            	
+            	boolean hasAllTerms = true;
+            	String temp="";
+            	List<WebElement> tds = row.findElements(By.cssSelector("td"));
+            	for(WebElement td : tds) {
+            		temp+=" "+td.getText().toLowerCase();
+            	}
+
+            	for(String e : searchTerms) {
+            		if (!temp.contains(e.toLowerCase())) {
+            			hasAllTerms = false;
+            		}
+            	}
+
+            	if (hasAllTerms) {
+            		this.resultRowsWithAllTerms++;
+            	}
+            	
             	this.resultRows++;
             }
         } 

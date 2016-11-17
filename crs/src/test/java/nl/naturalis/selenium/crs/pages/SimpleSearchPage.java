@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -72,6 +73,11 @@ public class SimpleSearchPage extends AbstractPage {
 	@FindBy(id = "ctl00_masterContent_EenvoudigSearchEnvironment_2")
 	private WebElement environmentBoth;	
 
+	@FindBy(id = "ctl00_masterContent_ddlTransformatiesEenvoudig")
+	private WebElement transformationSelect;	
+
+	
+
 	public SimpleSearchPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -124,6 +130,17 @@ public class SimpleSearchPage extends AbstractPage {
 
 	public boolean getSpellingVariantsSelected() {
 		return eenvoudigSpellingsVariantCheckbox.isSelected();
+	}
+
+	public String getSelectedTransformationName() {
+		Select select = new Select(transformationSelect);
+		WebElement option = select.getFirstSelectedOption();
+		return option.getText().trim();
+	}
+
+	public void selectTransformationByName(String name) {
+		Select select = new Select(transformationSelect);
+		select.selectByVisibleText(name);
 	}
 	
 	public void setMultimedia(Integer state) {
