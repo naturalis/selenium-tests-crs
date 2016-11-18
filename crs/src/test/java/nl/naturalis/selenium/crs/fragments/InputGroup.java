@@ -17,9 +17,7 @@ public class InputGroup {
 	private WebElement tIcon;
 	private WebElement conceptLink;
 	private WebElement overlay;
-	// private WebElement errorIcon;
-	private List<WebElement> errorIcon;
-	
+	private WebElement errorIcon;
 
 	public InputGroup() {
 		this.driver = null;
@@ -48,12 +46,6 @@ public class InputGroup {
 		this.tIcon = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*//span/input[1]"));
 		this.binIcon = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*//span/input[2]"));
 		this.conceptLink = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*//span/a[@class='conceptLink']"));
-		this.errorIcon = driver.findElements(By.xpath("//input[@id='" + id + "']/parent::*/img"));
-
-//		this.inputGroup = driver.findElement(By.xpath("//input[@id='uniqueID121917991']/parent::*"));
-//		this.tIcon = inputGroup.findElement(By.xpath("//input[@id='uniqueID121917991']/parent::*//span/input[1]"));
-//		this.binIcon = driver.findElement(By.xpath("//input[@id='uniqueID121917991']/parent::*//span/input[2]"));
-//		this.conceptLink = inputGroup.findElement(By.xpath("//span/a[@class='conceptLink']"));
 	}
 
 	public String toString() {
@@ -72,21 +64,34 @@ public class InputGroup {
 		return this.conceptLink.getText();
 	}
 	
+//	public String getWarningErrorIcon() {
+//		this.errorIcon = driver.findElements(By.xpath("//input[@id='" + id + "']/parent::*/img"));
+//		if (this.errorIcon.size() > 0) {
+//			return this.errorIcon.get(0).getAttribute("alt");
+//		} else {
+//			return "No error";
+//		}
+//	}
+
 	public String getWarningErrorIcon() {
-		if (this.errorIcon.size() > 0) {
-			return this.errorIcon.get(0).getAttribute("alt");
-		} else {
-			return "No error";
-		}
+		this.errorIcon = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*/img"));
+		return this.errorIcon.getAttribute("alt");
 	}
-	
+
+	public String getSrcErrorIconSrc() {
+		this.errorIcon = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*/img"));
+		return this.errorIcon.getAttribute("src");
+	}
+
 	public String getBinImageTitle() {
+		this.errorIcon = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*/img"));
 		return this.binIcon.getAttribute("title");
 	}
 	
-//	public String getErrorIconSrc() {
-//		return this.errorIcon.getAttribute("src");
-//	}
+	public String getThesaurusConcept() {
+		this.conceptLink = driver.findElement(By.xpath("//input[@id='" + id + "']/parent::*//span/a[@class='conceptLink']"));
+		return conceptLink.getText();
+	}
 	
 	public void clickInputField() {
 		this.inputField.click();
