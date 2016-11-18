@@ -16,7 +16,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 
-
 public class DetailBeschrijvingenPage extends AbstractPage {
 
 	private WebDriver driver;
@@ -88,6 +87,18 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
+	
+	@FindBy(xpath = "//input[@name='ko_unique_3']")
+	private WebElement number;	
+	
+	@FindBy(xpath = "//input[@name='ko_unique_4']")
+	private WebElement suffix;	
+	
+	@FindBy(id = "ko_unique_2")
+	private WebElement suffixErrorIcon;	
+
+	
+
 	
 	
 	// #1 Add multimedia
@@ -210,7 +221,26 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void deletePrefix() {
 		this.clearPrefix.click();
 	}
+	
+	public String getNumber() {
+		return number.getText();
+	}
 
+	public void setNumber(String text) {
+		this.switchToFrame_1();
+		this.number.sendKeys(text);
+	}
+
+	public String getPrefix() {
+		return number.getText();
+	}
+
+	public void setPrefix(String text) {
+		this.switchToFrame_1();
+		this.number.sendKeys(text);
+	}
+	
+	
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
