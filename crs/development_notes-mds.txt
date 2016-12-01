@@ -1,0 +1,63 @@
+server requirements
+- LAMP
+- Java
+- X (of Xvfb)
+- firefox
+- memory: groot
+- schijf: klein
+
+ 
+
+
+create database selenium;
+grant all on selenium.* to selenium_user@localhost identified by '7Adq5Kw3GnCCQB3s0CKd';
+use selenium;
+
+create table selenium_settings (
+	`project` varchar(32) not null,
+	`setting` varchar(32) not null,
+	`value` varchar(255) not null,
+	primary key key_1 (setting,project) 
+);
+
+truncate selenium_settings;
+
+insert into selenium_settings values
+	('CRS','homepage','https://crspl.naturalis.nl/AtlantisWeb/pages/publiek/Login.aspx'),
+	('CRS','domain','https://crspl.naturalis.nl'),
+	('CRS','crs_username','TestColvert'),
+	('CRS','crs_password','7Adq5Kw3GnCCQB3s0CKd'),
+	('CRS','crs_instance','NCB PL omgeving')
+;
+
+/* --> maarten */
+insert into selenium_settings values
+	('CRS','browser_type','Firefox')
+	('CRS','browser_path','C:/ZoneOfFreedom/Program Files/FireFox/firefox.exe')
+;
+
+            	private static String crs_instance;
+           	 
+
+
+create table selenium_tests (
+	`project` varchar(32) not null,
+	`test_name` varchar(128) not null,
+	`jar_path` varchar(512),
+	`gdocs_url` varchar(1024),
+	`author` varchar(128) not null,
+	primary key key_1 (project,test_name) 
+); 
+
+insert into selenium_tests values (
+	'CRS',
+	'1. Selenium scenario - in- en uitloggen',
+	'/bin/selenium/tests/Test01.jar',
+	'https://docs.google.com/spreadsheets/d/1rMQol8b26-_3lXHHgMIGHQzMKrKD5NC7u-TozsDf2e4/',
+	'Maarten Schermer (maarten.schermer@naturalis.nl)'
+);
+
+	
+insert into selenium_test_parameters values ('CRS','Test 02','2. selenium scenario - invoeren nieuw specimen','https://docs.google.com/spreadsheets/d/18iyTyK0UoDcG3Mkx2xJ8dGlYJWQ0QT6oTDhAWZYMIDg/edit#gid=0','Maarten Schermer (maarten.schermer@naturalis.nl)','{"menus":{"AddMenu":{"items":["Employee","Add","Specimen","Vertebrates"]}}}');
+
+

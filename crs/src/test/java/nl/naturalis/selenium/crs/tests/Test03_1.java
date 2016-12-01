@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.bcel.generic.LNEG;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
@@ -62,8 +63,9 @@ public class Test03_1 extends AbstractTest {
 	private static List<Link> simpleSearchSearchBreadcrumb_02 = new ArrayList<Link>();
 	private static List<String> searchResultsTemplates = new ArrayList<String>();
 	private static String simpleSearchSearch_03_Term;
-	private static String simpleSearchSearch_03b_Term;
-	private static String simpleSearchSearch_03c_Term;
+	private static String simpleSearchSearch_07_Term;
+	private static String simpleSearchSearch_08_Term;
+	private static String simpleSearchSearch_09_Term;
 	private static String simpleSearchSearch_04_Term;
 	private static List<String> simpleSearchSearch_05_Term = new ArrayList<String>();
 	private static String simpleSearchURLQueryString_02;
@@ -573,6 +575,7 @@ public class Test03_1 extends AbstractTest {
 	}	
 */	
 
+
 	
 	@Test(priority=11, dependsOnMethods = { "openSimpleSearch" })
 //	@Test(priority=23, dependsOnMethods = { "simpleSearchQuery_11" })
@@ -583,7 +586,7 @@ public class Test03_1 extends AbstractTest {
 		driver.get(simpleSearchPage.getCompletePageURL());
 
 		simpleSearchPage.clearEenvoudigInputText();
-		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_03_Term);
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_07_Term);
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
@@ -592,62 +595,69 @@ public class Test03_1 extends AbstractTest {
 		prevResultCount = simpleSearchResultsPage.getNumberOfFoundDocuments();
 		simpleSearchPage = simpleSearchResultsPage.clickIconSearchWithinResults();
 	
-		Assert.assertEquals(simpleSearchPage.getEenvoudigInputText(),simpleSearchSearch_03_Term,"3.2.17. search within results remembers search term (1)");
+		Assert.assertEquals(simpleSearchPage.getEenvoudigInputText(),simpleSearchSearch_07_Term,"3.2.17. search within results remembers search term ("+simpleSearchSearch_07_Term+")");
 	}	
 
 	@Test(priority=24, dependsOnMethods = { "simpleSearchQuery_12" })
 	public void simpleSearchQuery_13() {
 
 		simpleSearchPage.clearEenvoudigInputText();
-		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_03b_Term);
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_08_Term);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
-		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_LblZoekvraag"));
-	
-		Assert.assertEquals(prevResultCount>simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.18. search within results: less results (1)");
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
+
+		Assert.assertEquals(prevResultCount>simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.18. search within results: less results ("+simpleSearchSearch_07_Term+" && "+simpleSearchSearch_08_Term+")");
 	}	
 
 
 	@Test(priority=25, dependsOnMethods = { "simpleSearchQuery_13" })
 	public void simpleSearchQuery_14() {
-	
 		List<Link> trail = simpleSearchResultsPage.getBreadcrumbTrail();
 		driver.get(trail.get(trail.size()-2).getHref());
 		
 		simpleSearchPage.clearEenvoudigInputText();
-		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_03c_Term);
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_09_Term);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_LblZoekvraag"));
 	
-		Assert.assertEquals(prevResultCount>simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.19. search within results: less results (2)");
+		Assert.assertEquals(prevResultCount>simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.19. search within results: less results ("+simpleSearchSearch_07_Term+" && "+simpleSearchSearch_09_Term+")");
 	}	
 
 	@Test(priority=26, dependsOnMethods = { "simpleSearchQuery_14" })
 	public void simpleSearchQuery_15() {
+		prevResultCount = simpleSearchResultsPage.getNumberOfFoundDocuments();
 		simpleSearchPage = simpleSearchResultsPage.clickIconAddToResults();
-		Assert.assertEquals(simpleSearchPage.getEenvoudigInputText(),simpleSearchSearch_03c_Term,"3.2.20. search within results remembers search term (2)");
+		Assert.assertEquals(simpleSearchPage.getEenvoudigInputText(),simpleSearchSearch_09_Term,"3.2.20. search within results remembers search term");
 	}	
-
+	
 	@Test(priority=27, dependsOnMethods = { "simpleSearchQuery_15" })
 	public void simpleSearchQuery_16() {
 		simpleSearchPage.clearEenvoudigInputText();
-		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_03b_Term+" "+simpleSearchSearch_03c_Term);
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_08_Term+" "+simpleSearchSearch_09_Term);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_LblZoekvraag"));
 	
-		Assert.assertEquals(prevResultCount<simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.21. add to results: more results");
+		Assert.assertEquals(prevResultCount<=simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.21. add to results: more results ("+simpleSearchSearch_08_Term+" || "+simpleSearchSearch_09_Term+")");
 	}	
+
+
 	
 	
+
 	
 	
+
+	// RMNH.AVES.145784
+	// RMNH.AVES.195823
 	
-	
+
+
 	
 	private void simpleSearchQuery_07_Base(String environment, String searchString) {
 		simpleSearchPage = new SimpleSearchPage(driver);
@@ -691,8 +701,7 @@ public class Test03_1 extends AbstractTest {
 		searchResultsTemplates.add("Vertebrates Results Page");
 
 		simpleSearchSearch_03_Term="Profelis";
-		simpleSearchSearch_03b_Term="Uganda";
-		simpleSearchSearch_03c_Term="Gabon";
+	
 		simpleSearchSearch_04_Term="Ficedula";
 		simpleSearchSearch_05_Term=Arrays.asList("felis","france");
 		
@@ -701,6 +710,11 @@ public class Test03_1 extends AbstractTest {
 		simpleSearchURLQueryString_03="type=IM+Test+Storage+units";
 		simpleSearchSearch_06_Term="BE.123456789.se";
 
+		simpleSearchSearch_07_Term="Uganda";
+		simpleSearchSearch_08_Term="Teso";
+		simpleSearchSearch_09_Term="Damaraland";
+		
+		
 		simpleSearchSearchBreadcrumb_02_BackLinkText="Search on IM Test Storage units";
 		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
 		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
