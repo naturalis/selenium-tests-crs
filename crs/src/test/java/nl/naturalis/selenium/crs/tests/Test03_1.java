@@ -42,6 +42,7 @@ public class Test03_1 extends AbstractTest {
 	private static String projectID = "CRS";
 	private static String testID = "Test 03";
 	private static ToolKit toolKit; 
+	private static String plusIconSrc;
 	private static MenuItems addMenu;
 	private static HomePage homePage;
 	private static SimpleSearchPage simpleSearchPage;
@@ -52,6 +53,8 @@ public class Test03_1 extends AbstractTest {
 	private static String unitNumberIncorrect;	
 	private static int maxSecondsSimpleSearch;	
 	private static String simpleSearchURLQueryString_01;
+	private static String simpleSearchURLQueryString_02;
+	private static String simpleSearchURLQueryString_03;
 	private static String simpleSearchSearch_01_Term;
 	private static int simpleSearchSearch_01_Results;
 	private static String simpleSearchSearch_02_Term;
@@ -63,19 +66,21 @@ public class Test03_1 extends AbstractTest {
 	private static List<Link> simpleSearchSearchBreadcrumb_02 = new ArrayList<Link>();
 	private static List<String> searchResultsTemplates = new ArrayList<String>();
 	private static String simpleSearchSearch_03_Term;
+	private static String simpleSearchSearch_04_Term;
+	private static List<String> simpleSearchSearch_05_Term = new ArrayList<String>();
+	private static String simpleSearchSearch_06_Term;
 	private static String simpleSearchSearch_07_Term;
 	private static String simpleSearchSearch_08_Term;
 	private static String simpleSearchSearch_09_Term;
-	private static String simpleSearchSearch_04_Term;
-	private static List<String> simpleSearchSearch_05_Term = new ArrayList<String>();
-	private static String simpleSearchURLQueryString_02;
-	private static String simpleSearchURLQueryString_03;
-	private static String simpleSearchSearch_06_Term;
+	private static String simpleSearchSearch_10_Term;
+	private static String simpleSearchSearch_11_Term;
+	private static String simpleSearchSearch_12_Term;
+	private static String simpleSearchSearch_13A_Term;
+	private static String simpleSearchSearch_13B_Term;
 	private static List<String> simpleSearchTransformOptions = new ArrayList<String>();
 	private static String simpleSearchTransformOption;	
 	private WebElement waitFor; 
 	private int prevResultCount=0;
-	
 	
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
@@ -93,7 +98,7 @@ public class Test03_1 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() throws SQLException {
-		//tearDown();
+		tearDown();
 		Report.LogTestEnd();
 	}
 	
@@ -109,34 +114,16 @@ public class Test03_1 extends AbstractTest {
 		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL());
 	}
 
-	
-//	@Test(priority=11, dependsOnMethods = { "homePageDoLogin" })
-	public void tempStart() {
-		/*
-		simpleSearchPage = new SimpleSearchPage(driver);
-		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
-		driver.get(simpleSearchPage.getCompletePageURL());
-		simpleSearchPage.clearEenvoudigInputText();
-		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_02_Term);
-		simpleSearchPage.toggleSpellingVariants(false);
-		simpleSearchPage.setMultimedia(0);
-		simpleSearchPage.setWaitUntil(maxSecondsSimpleSearch);
-		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
-		simpleSearchPage.setWaitUntil(0);
-		*/
-	}
-
-
 	@Test(priority=3, dependsOnMethods = { "homePageDoLogin" })
 	public void startPageTitle() {
 		Assert.assertEquals(driver.getTitle().trim(),startPage.getPageTitle());
 	}
 
-	// mention the removed spaces!
 	@Test(priority=4, dependsOnMethods = { "startPageTitle" })
 	public void quickSearchIncorrect() {
 		startPage.doDetailSearch(unitNumberIncorrect);
 		String failMessageActual = startPage.getSearchFailureMessage().replace("  "," ");
+		// mention the removed spaces!
 		String failMessageExpected = Constants.SEARCH_FAILURE_MESSAGE.replace("%s",Configuration.getInstance()); 
 		Assert.assertEquals(failMessageExpected,failMessageActual,"3.1.2. detail search error message");
 		//startPage.quickSearchErrorPopupButtonClick(); // not working
@@ -158,24 +145,19 @@ public class Test03_1 extends AbstractTest {
 		driver.get(simpleSearchPage.getCompletePageURL());
 		Assert.assertEquals(driver.getCurrentUrl(),simpleSearchPage.getCompletePageURL(),"3.2.0. open simple search page");
 	}
-/*
+
 	@Test(priority=7, dependsOnMethods = { "openSimpleSearch" })
 	public void doSimpleSearchNoQuery() {
 		simpleSearchPage.clearEenvoudigFilterText();
-		
 		LoadTimer loadTimer = new LoadTimer();
 		loadTimer.start();
-		
 		simpleSearchPage.clickEenvoudigZoeken();
-	
 		loadTimer.finish();
 		Report.LogLine("3.2.1. simple search w/o query took " + loadTimer.tookSeconds() + " seconds");
-		
 		Assert.assertEquals(loadTimer.tookSeconds()<maxSecondsSimpleSearch,true,"3.2.1. simple search w/o query timeout");
 	}
 
 	@Test(priority=7, dependsOnMethods = { "doSimpleSearchNoQuery" })
-
 	public void doSimpleSearchQuery_01() {
 		simpleSearchPage = new SimpleSearchPage(driver);
 		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
@@ -194,7 +176,7 @@ public class Test03_1 extends AbstractTest {
 			elements = tree.findElements(By.cssSelector("img"));
 			n=0;
 			for (WebElement plusImage : elements) {
-				if (n.equals(openAt) && plusImage.getAttribute("src").equals("https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/thesaurus/obout/style/Classic/plusik_l.gif"))	{
+				if (n.equals(openAt) && plusImage.getAttribute("src").equals(plusIconSrc))	{
 					plusImage.click();
 					n++;
 				}	
@@ -221,7 +203,6 @@ public class Test03_1 extends AbstractTest {
 		Assert.assertEquals(simpleSearchResultsPage.getNumberOfFoundDocuments(),simpleSearchSearch_01_Results,"3.2.2. simple search with query");
 	}
 
-
 	@Test(priority=8, dependsOnMethods = { "doSimpleSearchQuery_01" })
 	public void doSimpleSearchQuery_02() {
 		simpleSearchPage = new SimpleSearchPage(driver);
@@ -229,6 +210,8 @@ public class Test03_1 extends AbstractTest {
 
 		driver.get(simpleSearchPage.getCompletePageURL());
 
+		
+		simpleSearchPage.clearEenvoudigFilterText();
 		simpleSearchPage.clearEenvoudigInputText();
 		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_02_Term);
 		simpleSearchPage.toggleSpellingVariants(false);
@@ -238,7 +221,7 @@ public class Test03_1 extends AbstractTest {
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));		
 
 		int resultCount = simpleSearchResultsPage.getNumberOfFoundDocuments();
-		
+
 		driver.get(simpleSearchPage.getCompletePageURL());
 		simpleSearchPage.clearEenvoudigInputText();
 		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_02_Term);
@@ -275,7 +258,6 @@ public class Test03_1 extends AbstractTest {
 			}
 		}
 	}
-
 	
 	@Test(priority=10, dependsOnMethods = { "simpleSearchQueryBreadcrumb_01" })
 	public void simpleSearchQuery_02_ParameterCheck() {
@@ -284,7 +266,6 @@ public class Test03_1 extends AbstractTest {
 		Assert.assertEquals(simpleSearchPage.getSpellingVariantsSelected(),true,"3.2.5. previous spelling variant setting present");
 	}
 	
-	//checking first page of results only
 	@Test(priority=11, dependsOnMethods = { "simpleSearchQuery_02_ParameterCheck" })
 	public void simpleSearchQuery_03() {
 		simpleSearchPage.clearEenvoudigInputText();
@@ -295,14 +276,14 @@ public class Test03_1 extends AbstractTest {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
 		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
-
+		
+		//checking first page of results only
 		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithMultiMediaCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.6. search with multimedia");
 	}
 
-
-	//if the two template have the same columns in the same order, this causes a possible false negative 
 	@Test(priority=11, dependsOnMethods = { "simpleSearchQuery_03" })
 	public void simpleSearchQuery_03_TemplateChange() {
+		//if the two template have the same columns in the same order, this causes a possible false negative
 		List<String> headersOne = simpleSearchResultsPage.getResultTableHeaders();
 		String currentTemplate = simpleSearchResultsPage.getSelectedTemplateName();
 		String nextTemplate = null;
@@ -322,7 +303,6 @@ public class Test03_1 extends AbstractTest {
 
 		Assert.assertNotEquals(headersOne,headersTwo,"3.2.7. template change (column headers are the same after changing)");
 	}
-
 	
 	@Test(priority=12, dependsOnMethods = { "simpleSearchQuery_03_TemplateChange" })
 	public void simpleSearchQuery_04() {
@@ -340,7 +320,6 @@ public class Test03_1 extends AbstractTest {
 
 		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithMultiMediaCount(),0,"3.2.8. search without multimedia");
 	}
-
 
 	@Test(priority=13, dependsOnMethods = { "simpleSearchQuery_04" })
 	public void simpleSearchQuery_05() {
@@ -397,8 +376,6 @@ public class Test03_1 extends AbstractTest {
 			}
 		}
 	}
-
-
 
 	@Test(priority=16, dependsOnMethods = { "simpleSearchQuery_07_Thesaurus" })
 	public void simpleSearchQuery_07_Verbatim() {
@@ -499,7 +476,6 @@ public class Test03_1 extends AbstractTest {
 		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.13. search with multiple terms");
 	}	
 
-
 	@Test(priority=20, dependsOnMethods = { "simpleSearchQuery_09" })
 	public void simpleSearchQuery_10() {
 		simpleSearchPage = new SimpleSearchPage(driver);
@@ -573,12 +549,8 @@ public class Test03_1 extends AbstractTest {
 
 		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.16. all results have storage unit");
 	}	
-*/	
 
-
-	
-	@Test(priority=11, dependsOnMethods = { "openSimpleSearch" })
-//	@Test(priority=23, dependsOnMethods = { "simpleSearchQuery_11" })
+	@Test(priority=23, dependsOnMethods = { "simpleSearchQuery_11" })
 	public void simpleSearchQuery_12() {
 
 		simpleSearchPage = new SimpleSearchPage(driver);
@@ -606,11 +578,10 @@ public class Test03_1 extends AbstractTest {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
-		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_ResultatenLijst"));
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
 
 		Assert.assertEquals(prevResultCount>simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.18. search within results: less results ("+simpleSearchSearch_07_Term+" && "+simpleSearchSearch_08_Term+")");
 	}	
-
 
 	@Test(priority=25, dependsOnMethods = { "simpleSearchQuery_13" })
 	public void simpleSearchQuery_14() {
@@ -646,20 +617,88 @@ public class Test03_1 extends AbstractTest {
 		Assert.assertEquals(prevResultCount<=simpleSearchResultsPage.getNumberOfFoundDocuments(),true,"3.2.21. add to results: more results ("+simpleSearchSearch_08_Term+" || "+simpleSearchSearch_09_Term+")");
 	}	
 
+	@Test(priority=28, dependsOnMethods = { "simpleSearchQuery_16" })
+	public void simpleSearchQuery_17() {
 
-	
-	
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
+		driver.get(simpleSearchPage.getCompletePageURL());
 
-	
-	
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_10_Term+" OR "+simpleSearchSearch_11_Term);
 
-	// RMNH.AVES.145784
-	// RMNH.AVES.195823
-	
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
+		
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_10_Term);
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_11_Term);
+		
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithOneOfTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.22. search with multiple terms (OR)");
+	}	
 
+	@Test(priority=29, dependsOnMethods = { "simpleSearchQuery_17" })
+	public void simpleSearchQuery_18() {
 
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_11_Term+" AND "+simpleSearchSearch_12_Term);
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
+		
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_11_Term);
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_12_Term);
+		
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.24. search with multiple terms (AND)");
+	}	
+
+	@Test(priority=29, dependsOnMethods = { "simpleSearchQuery_18" })
+	public void simpleSearchQuery_19() {
+
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_13A_Term);
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
+		
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_13B_Term);
+		
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.25. search with wildcard (?)");
+	}		
+
+	@Test(priority=31, dependsOnMethods = { "simpleSearchQuery_19" })
+	public void simpleSearchQuery_21() {
+
+		simpleSearchPage = new SimpleSearchPage(driver);
+		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
+		driver.get(simpleSearchPage.getCompletePageURL());
+
+		simpleSearchPage.clearEenvoudigInputText();
+		simpleSearchPage.setEenvoudigInputText(simpleSearchSearch_11_Term+" +"+simpleSearchSearch_12_Term);
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		simpleSearchResultsPage = simpleSearchPage.clickEenvoudigZoeken();
+		waitFor = driver.findElement(By.id("ctl00_ctl00_masterContent_SpnAantalDocumenten"));
+		
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_11_Term);
+		simpleSearchResultsPage.setSearchTerms(simpleSearchSearch_12_Term);
+		
+		Assert.assertEquals(simpleSearchResultsPage.getResultRowWithWithAllTermsCount(),simpleSearchResultsPage.getResultRowCount(),"3.2.27. search with multiple terms (+)");
+	}
 	
 	private void simpleSearchQuery_07_Base(String environment, String searchString) {
+
 		simpleSearchPage = new SimpleSearchPage(driver);
 		simpleSearchPage.setPageUrlQueryString(simpleSearchURLQueryString_01);
 		driver.get(simpleSearchPage.getCompletePageURL());
@@ -683,6 +722,8 @@ public class Test03_1 extends AbstractTest {
 		unitNumberIncorrect="not.a.number";
 		simpleSearchURLQueryString_01="type=Vertebrates";
 		
+		plusIconSrc=Configuration.getDomain() + "/AtlantisWeb/App_Themes/Base/thesaurus/obout/style/Classic/plusik_l.gif";
+		
 		maxSecondsSimpleSearch=120;
 
 		simpleSearchSearch_01_Term="East African";
@@ -701,20 +742,22 @@ public class Test03_1 extends AbstractTest {
 		searchResultsTemplates.add("Vertebrates Results Page");
 
 		simpleSearchSearch_03_Term="Profelis";
-	
 		simpleSearchSearch_04_Term="Ficedula";
 		simpleSearchSearch_05_Term=Arrays.asList("felis","france");
 		
 		simpleSearchURLQueryString_02="type=Vertebrates+Storage+units";
-
 		simpleSearchURLQueryString_03="type=IM+Test+Storage+units";
+		
 		simpleSearchSearch_06_Term="BE.123456789.se";
-
 		simpleSearchSearch_07_Term="Uganda";
 		simpleSearchSearch_08_Term="Teso";
 		simpleSearchSearch_09_Term="Damaraland";
-		
-		
+		simpleSearchSearch_10_Term="RMNH.AVES.145784";
+		simpleSearchSearch_11_Term="RMNH.AVES.195823";
+		simpleSearchSearch_12_Term="senegalensis";
+		simpleSearchSearch_13A_Term="Gam?ia";
+		simpleSearchSearch_13B_Term="Gambia";
+
 		simpleSearchSearchBreadcrumb_02_BackLinkText="Search on IM Test Storage units";
 		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
 		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
@@ -725,10 +768,7 @@ public class Test03_1 extends AbstractTest {
 		simpleSearchTransformOption="Storage unit (IM Test) -> Specimen (IM Test)";
 		simpleSearchTransformOptions.add("IM Test Storage units");
 		simpleSearchTransformOptions.add(simpleSearchTransformOption);
-		
-
 	
 	}
-
 
 }

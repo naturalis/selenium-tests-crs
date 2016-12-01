@@ -277,8 +277,8 @@ public class Test01 extends AbstractTest {
 		detailBeschrijvingenPageQueryStringNok="xmlbeschrijvingid=23838308";
 		detailBeschrijvingenPageExpectedResultNumber=1;
 
-		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),1));
-		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),1));
+		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),9));
+		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),9));
 
 		loggedOutUrl = config.getDomain() + "/AtlantisWeb/pages/publiek/Login.aspx?restart=true&action=afmelden";
 	}

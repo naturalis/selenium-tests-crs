@@ -39,6 +39,11 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	private int resultRowsWithMultiMedia=0;
 	private int resultRowsWithModeration=0;
 	private int resultRowsWithAllTerms=0;
+	private int resultRowsWithOneOfTerms=0;
+	private int resultRowsMatchSpecificColumn=0;
+	private int columnToCheck=-1;
+	
+	
 	private List<String> searchTerms = new ArrayList<String>();
 
 	@FindBy(id = "ctl00_ctl00_masterContent_SpnAantalDocumenten")
@@ -78,6 +83,14 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		this.searchTerms=terms;
 	}
 
+	public void setColumnToCheck(int n) {
+		this.columnToCheck=n;
+	}
+
+	public int getColumnToCheck() {
+		return this.columnToCheck;
+	}
+
 	public int getNumberOfFoundDocuments() {
 		this.driver.switchTo().defaultContent();
 		return Integer.valueOf(this.masterContent_SpnAantalDocumenten.getText());
@@ -102,7 +115,18 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		this.countResultRows();
 		return this.resultRowsWithAllTerms;
 	}
+	
+	public int getResultRowWithWithOneOfTermsCount() {
+		this.countResultRows();
+		return this.resultRowsWithOneOfTerms;
+	}
 
+	public int getResultRowsWithMatchInSpecificColumn(String columnHeader) {
+		this.setColumnToCheck(this.getResultTableHeaders().indexOf(columnHeader));
+		this.countResultRows();
+		return this.resultRowsMatchSpecificColumn;
+	}
+	
 	public List<Link> getBreadcrumbTrail() {
 		List<WebElement> spans = siteMapPath.findElements(By.cssSelector("span"));
 		List<Link> links = new ArrayList<Link>(); 
@@ -201,6 +225,8 @@ public class SimpleSearchResultsPage extends AbstractPage {
         this.resultRowsWithMultiMedia=0;
         this.resultRowsWithModeration=0;
         this.resultRowsWithAllTerms=0;
+        this.resultRowsWithOneOfTerms=0;
+        this.resultRowsMatchSpecificColumn=0;
 
 		try {
 	        List<WebElement> rows = resultatenLijst.findElements(By.xpath("id('ctl00_ctl00_masterContent_ResultatenLijst')/tbody/tr"));
@@ -226,20 +252,45 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	            	}
 	            	
 	            	boolean hasAllTerms = true;
+	            	boolean hasOneOfTerms = false;
+
 	            	String temp="";
 	            	List<WebElement> tds = row.findElements(By.cssSelector("td"));
+	            	Integer n=0;
 	            	for(WebElement td : tds) {
 	            		temp+=" "+td.getText().toLowerCase();
+
+	            		if (n.equals(this.getColumnToCheck()+1)) {
+	    	            	for(String e : searchTerms) {
+
+	    	            		System.out.println(td.getText().toLowerCase());
+	    	            		System.out.println(e.toLowerCase());
+	    	            		
+	    	            		if (td.getText().toLowerCase().contains(e.toLowerCase())) {
+	    	            			this.resultRowsMatchSpecificColumn++;
+	    	            			
+	    	            			System.out.println(this.resultRowsMatchSpecificColumn);
+	    	            		}
+	    	            	}
+	            		}
+            			n++;
 	            	}
 	
 	            	for(String e : searchTerms) {
 	            		if (!temp.contains(e.toLowerCase())) {
 	            			hasAllTerms = false;
 	            		}
+	            		else {
+	            			hasOneOfTerms = true;
+	            		}
 	            	}
 	
 	            	if (hasAllTerms) {
 	            		this.resultRowsWithAllTerms++;
+	            	}
+
+	            	if (hasOneOfTerms) {
+	            		this.resultRowsWithOneOfTerms++;
 	            	}
 	            	
 	            	this.resultRows++;

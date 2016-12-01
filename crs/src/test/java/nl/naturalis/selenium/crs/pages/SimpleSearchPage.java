@@ -3,6 +3,7 @@ package nl.naturalis.selenium.crs.pages;
 import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.StartPage;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -76,7 +77,20 @@ public class SimpleSearchPage extends AbstractPage {
 	@FindBy(id = "ctl00_masterContent_ddlTransformatiesEenvoudig")
 	private WebElement transformationSelect;	
 
+	@FindBy(id = "ctl00_masterContent_LinkButton2")
+	private WebElement advancedSearchTab;	
 	
+	@FindBy(id = "ctl00_masterContent_UitgebreidZoekenCriteriaGrid_ctl03_DDL_veld")
+	private WebElement advSearchFieldSelect;	
+	
+	@FindBy(id = "ctl00_masterContent_UitgebreidZoekenCriteriaGrid_ctl03_DDL_voorwaarde")
+	private WebElement advSearchConditionSelect;	
+
+	@FindBy(id = "ctl00_masterContent_UitgebreidZoekenCriteriaGrid_ctl03_tb_waarde")
+	private WebElement advSearchValueInput;	
+
+	@FindBy(id = "ctl00_masterContent_BTN_uitgebreidzoeken")
+	private WebElement advSearchButton;	
 
 	public SimpleSearchPage(WebDriver driver) {
 		this.driver = driver;
@@ -118,6 +132,11 @@ public class SimpleSearchPage extends AbstractPage {
 		return new SimpleSearchResultsPage(this.driver);
 	}
 	
+	public SimpleSearchResultsPage clickAdvSearchButton() {
+		advSearchButton.click();
+		return new SimpleSearchResultsPage(this.driver);
+	}
+
 	public void toggleSpellingVariants() {
 		eenvoudigSpellingsVariantCheckbox.click();
 	}
@@ -164,7 +183,7 @@ public class SimpleSearchPage extends AbstractPage {
 			moderatedMaybeRadioButton.click();
 		}
 	}
-
+	
 	public void setEnvironment(String state) {
 		if (state.equals("Verbatim")) {
 			environmentVerbatim.click();
@@ -175,7 +194,37 @@ public class SimpleSearchPage extends AbstractPage {
 			environmentBoth.click();
 		}
 	}
+
+	public void clickAdvancedSearchTab() {
+		this.advancedSearchTab.click();
+	}
+
+	public String getSelectedFieldName() {
+		Select select = new Select(advSearchFieldSelect);
+		WebElement option = select.getFirstSelectedOption();
+		return option.getText().trim();
+	}
+
+	public void selectFieldByName(String name) {
+		Select select = new Select(advSearchFieldSelect);
+		select.selectByVisibleText(name);
+	}
+
+	public String getSelectedConditionName() {
+		Select select = new Select(advSearchConditionSelect);
+		WebElement option = select.getFirstSelectedOption();
+		return option.getText().trim();
+	}
+
+	public void selectConditionByName(String name) {
+		Select select = new Select(advSearchConditionSelect);
+		select.selectByVisibleText(name);
+	}
 	
+	public void setAdvSearchValueInput(String text) {
+		advSearchValueInput.sendKeys(text);
+	}
+
 	public String getCompletePageURL() {	
 		if (this.PageUrlQueryString=="") {
 			return this.PageURL; 
