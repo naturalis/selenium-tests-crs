@@ -71,8 +71,7 @@ public class Test02 extends AbstractTest {
 		// tearDown();
 		Report.LogTestEnd();
 	}
-	
-	
+
 	/**
 	 * Make a screenshot whenever a test fails.
 	 */
@@ -494,5 +493,40 @@ public class Test02 extends AbstractTest {
 		prefix.enterThesaurusValue("n", "NCBN");
 		Assert.assertEquals(prefix.getThesaurusConcept(), "NCBN");
 	}
+
+	/**
+	 * 2.1.8 Losse scripts (afhandeling registratienummer).
+	 * 
+	 * 1. Voer het veld Number in met een alfanummerieke waarde. 
+	 * 2. Klopt het dat dit niet geaccepteerd wordt?
+	 * 
+	 */
+	@Test(priority = 28, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void checkNumber() {
+		Test02.detailBeschrijvingenPage.setNumber("abc");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getNumber(), "", "Fout in 2.1.8");
+	}
+	
+	/**
+	 * 2.1.9 Losse scripts (afhandeling registratienummer).
+	 * 
+	 * 1. Voer het veld Suffix in met een ongeldige waarde (geldige waarde: één of twee kleine letters). 
+	 * 2. Verschijnt er direct een rood uitroepteken achter het veld?  
+	 *   
+	 */
+	@Test(priority = 29, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	public void checkSuffix() {
+		Test02.detailBeschrijvingenPage.setSuffix("abc");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getSuffix(), "", "Fout in 2.1.9");
+		Test02.detailBeschrijvingenPage.deleteSuffix();
+	}
+	
+	/**
+	 * 2.1.10	"Losse scripts (afhandeling registratienummer). 
+	 * 
+	 * Voer het veld  Registratienummer in met: 
+	 * 1. minimaal een ongeldige prefix of suffix of zonder nummeriek deel. 
+	 * 2. Verschijnt er een uitroepteken achter het veld?"
+	 */
 
 }

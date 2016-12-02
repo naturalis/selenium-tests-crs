@@ -31,75 +31,83 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "tbody>tr>td>span>span.huidige")
 	private WebElement numberSpan;
 
-	@FindBy(id = "ctl00_masterContent_ddl_fomulieren")
+	@FindBy(name="ctl00$masterContent$ddl_fomulieren")
 	private WebElement formulierenSelect;
 
-	@FindBy(id = "ctl00_masterContent_btn_formulieren")
+	@FindBy(name="ctl00$masterContent$btn_formulieren")
 	private WebElement buttonFormulierenSelect;
 
-	@FindBy(id = "ctl00_QuickSearchTextBox")
+	@FindBy(name = "ctl00_QuickSearchTextBox")
 	private WebElement QuickSearchTextBox;
 
 	@FindBy(id = "ctl00_QuickSearchButton")
 	private WebElement QuickSearchButton;
 
+	@FindBy(xpath = "//input[@name='ko_unique_2']/parent::*/span[@class='CSContainer']/input[@title='Clear']")
+	private WebElement prefixDeleteIcon;
+
+	@FindBy(name="ko_unique_3")
+	private WebElement number;	
+	
+	@FindBy(name = "ko_unique_4")
+	private WebElement suffix;	
+
+	@FindBy(xpath = "//input[@name='ko_unique_61']/parent::td/img")
+	private WebElement suffixErrorIcon;	
+
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
 
-	@FindBy(id = "uniqueID321918013")
-	private WebElement SourceInstitute;
+	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/input")
+	private WebElement registrationNumberErrorMessage;
+	
+	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/img")
+	private WebElement registrationNumberErrorIcon;
 
-	@FindBy(id = "uniqueID0219179827")
+	@FindBy(id = "//input[@conceptfield='SOURCEINSTITUTE']")
+	private WebElement sourceInstitute;
+
+	@FindBy(name = "ko_unique_58")
 	private WebElement currentCollectionName;
 	
-	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@name='ko_unique_58']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearCurrentCollectionName;
 
-	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='ko_unique_58']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkCurrentCollectionName;
 
-	@FindBy(xpath = "//input[@id='uniqueID1219179928']/parent::*/span[@class='CSContainer']/input[2]")
-	private WebElement clearPrefix;
-	
-	@FindBy(id = "uniqueID3219180130")
+	@FindBy(name="ko_unique_64")
 	private WebElement basisOfRecord;
 	
-	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@name='ko_unique_64']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearBasisOfRecord;
 
-	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='ko_unique_64']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkBasisOfRecord;
 
-	@FindBy(css = "input#uniqueID4219180231")
+	@FindBy(name = "SPECIMENMOUNT")
 	private WebElement mount;
 
-	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@name='SPECIMENMOUNT']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearMount;
 
-	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='SPECIMENMOUNT']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkMount;
 
-	@FindBy(css ="input#uniqueID6219180333")
+	@FindBy(name = "PRESERVEDPART")
 	private WebElement preservedPart;
 
-	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@name='PRESERVEDPART']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearPreservedPart;
 
-	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='PRESERVEDPART']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
 	
-	@FindBy(xpath = "//input[@name='ko_unique_3']")
-	private WebElement number;	
-	
-	@FindBy(xpath = "//input[@name='ko_unique_4']")
-	private WebElement suffix;	
-	
-	@FindBy(id = "ko_unique_2")
-	private WebElement suffixErrorIcon;	
+	@FindBy(name = "ko_unique_10")
+	private WebElement remarks;
 
 	
-
-	
+	// Buttons, icons, ...
 	
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
@@ -217,19 +225,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.currentCollectionName.click();
 		this.clearCurrentCollectionName.click();
 	}
-	
-	public void deletePrefix() {
-		this.clearPrefix.click();
-	}
-	
-	public String getNumber() {
-		return number.getText();
-	}
-
-	public void setNumber(String text) {
-		this.switchToFrame_1();
-		this.number.sendKeys(text);
-	}
+		
 
 	public String getPrefix() {
 		return number.getText();
@@ -239,7 +235,75 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.switchToFrame_1();
 		this.number.sendKeys(text);
 	}
+
+	public void deletePrefix() {
+		this.prefixDeleteIcon.click();
+	}
+
+	public String getNumber() {
+		return number.getText();
+	}
+
+	public void setNumber(String text) {
+		this.switchToFrame_1();
+		this.number.sendKeys(text);
+	}
+
+	public void deleteNumber() {
+		this.number.clear();
+	}
+
+	public String getSuffix() {
+		return suffix.getText();
+	}
+
+	public void setSuffix(String text) {
+		this.switchToFrame_1();
+		this.suffix.sendKeys(text);
+	}
+
+	public void deleteSuffix() {
+		this.switchToFrame_1();
+		this.suffix.clear();
+	}
+
+	public String getRegistrationNumber() {
+		this.switchToFrame_1();
+		return this.registrationNumber.getText();
+	}
+
+	public void setRegistrationNumber(String text) {
+		this.switchToFrame_1();
+		this.registrationNumber.sendKeys(text);
+	}
+
+	public void deleteRegistrationNumber() {
+		this.switchToFrame_1();
+		this.registrationNumber.clear();
+	}
+
+	public String getAltRegistrationNumberErrorMessage() {
+		return this.registrationNumberErrorMessage.getAttribute("value");
+	}
 	
+	public String getAltRegistrationNumberErrorIcon() {
+		return this.registrationNumberErrorIcon.getAttribute("alt");
+	}
+
+	public String getSourceInstitute() {
+		this.switchToFrame_1();
+		return this.sourceInstitute.getText();
+	}
+
+	public void setSourceInstitute(String text) {
+		this.switchToFrame_1();
+		this.sourceInstitute.sendKeys(text);
+	}
+
+	public void deleteSourceInstitute() {
+		this.switchToFrame_1();
+		this.sourceInstitute.clear();
+	}
 	
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
@@ -251,17 +315,17 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.findElement(By.partialLinkText(selectText)).click();
 	}
 
-	public String getBasisOfRecordTlink() {
-		this.switchToFrame_1();
-		return this.tlinkBasisOfRecord.getText();
-	}
-
 	public void deleteBasisOfRecord() {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
 		this.clearBasisOfRecord.click();
 	}
-	
+
+	public String getBasisOfRecordTlink() {
+		this.switchToFrame_1();
+		return this.tlinkBasisOfRecord.getText();
+	}
+
 	public void setMount(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.mount.click();
@@ -272,16 +336,17 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.findElement(By.partialLinkText(selectText)).click();
 	}
 
-	public String getMountTlink() {
-		this.switchToFrame_1();
-		return this.tlinkMount.getText();
-	}
-
 	public void deleteMount() {
 		this.switchToFrame_1();
 		this.mount.click();
 		this.clearMount.click();
 	}
+	
+	public String getMountTlink() {
+		this.switchToFrame_1();
+		return this.tlinkMount.getText();
+	}
+
 	
 	public void setPreservedPart(String enterText, String selectText) {
 		this.switchToFrame_1();
@@ -293,19 +358,31 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.findElement(By.partialLinkText(selectText)).click();
 	}
 
-	public String getPreservedPartTlink() {
-		this.switchToFrame_1();
-		return this.tlinkPreservedPart.getText();
-	}
-	
 	public void deletePreservedPart() {
 		this.switchToFrame_1();
 		this.preservedPart.click();
 		this.preservedPart.click();
 	}
 
-
+	public String getPreservedPartTlink() {
+		this.switchToFrame_1();
+		return this.tlinkPreservedPart.getText();
+	}
 	
+	public String getRemarks() {
+		return remarks.getText();
+	}
+
+	public void setRemarks(String text) {
+		this.switchToFrame_1();
+		this.remarks.sendKeys(text);
+	}
+
+	public void deleteRemarks() {
+		this.switchToFrame_1();
+		this.remarks.clear();
+	}
+
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
@@ -440,11 +517,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		Select dropDown = new Select(formulierenSelect);
 		String selected = dropDown.getFirstSelectedOption().getText();
 		return selected;
-	}
-
-	public String getRegistrationNumber() {
-		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
-		return registrationNumber.getAttribute("value");
 	}
 
 	public void doDetailSearch(String searchterm) {
