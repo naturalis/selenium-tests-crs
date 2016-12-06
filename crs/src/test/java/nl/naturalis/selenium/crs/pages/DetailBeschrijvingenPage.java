@@ -28,6 +28,21 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "ctl00_masterContent_tbl_navigatie")
 	private WebElement resultNumberTable;
 
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']")
+	private WebElement prefix;
+	
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/input[@title='Select']")
+	private WebElement prefixThesaurusIcon;
+	
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*//span/input[1]")
+	private WebElement prefixThesaurusList;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/input[@title='Clear']")
+	private WebElement prefixDeleteIcon;
+	
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	private WebElement prefixConceptLink;
+	
 	@FindBy(css = "tbody>tr>td>span>span.huidige")
 	private WebElement numberSpan;
 
@@ -43,16 +58,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "ctl00_QuickSearchButton")
 	private WebElement QuickSearchButton;
 
-	@FindBy(xpath = "//input[@name='ko_unique_2']/parent::*/span[@class='CSContainer']/input[@title='Clear']")
-	private WebElement prefixDeleteIcon;
-
-	@FindBy(name="ko_unique_3")
-	private WebElement number;	
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_catalognumber?numberfield']")
+	private WebElement number;
 	
-	@FindBy(name = "ko_unique_4")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']")
 	private WebElement suffix;	
 
-	@FindBy(xpath = "//input[@name='ko_unique_61']/parent::td/img")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']/parent::td/img[@class='errorImage']")
 	private WebElement suffixErrorIcon;	
 
 	@FindBy(id = "registrationNumber")
@@ -67,13 +79,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "//input[@conceptfield='SOURCEINSTITUTE']")
 	private WebElement sourceInstitute;
 
-	@FindBy(name = "ko_unique_58")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']")
 	private WebElement currentCollectionName;
 	
-	@FindBy(xpath = "//input[@name='ko_unique_58']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearCurrentCollectionName;
 
-	@FindBy(xpath = "//input[@name='ko_unique_58']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkCurrentCollectionName;
 
 	@FindBy(name="ko_unique_64")
@@ -103,9 +115,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//input[@name='PRESERVEDPART']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
 	
-	@FindBy(name = "ko_unique_10")
+	@FindBy(xpath = "//textarea[@atfid='add_ncrs_specimen_remarks?defaultfield']")
 	private WebElement remarks;
-
 	
 	// Buttons, icons, ...
 	
@@ -166,7 +177,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement iconBinGatheringSiteCountry;
 
 	// #15 Warning
-	@FindBy(css = "img#ko_unique_58")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::span/parent::td/img[@class='errorImage']")
 	private WebElement invalidCollectionName;
 
 	// #16 Warning Basis of Record
@@ -225,15 +236,33 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.currentCollectionName.click();
 		this.clearCurrentCollectionName.click();
 	}
-		
 
 	public String getPrefix() {
-		return number.getText();
+		if (prefix.getText().length() > 0) {
+			return prefix.getText();
+		} else {
+			return prefix.getAttribute("lastval");
+		}
 	}
 
 	public void setPrefix(String text) {
 		this.switchToFrame_1();
-		this.number.sendKeys(text);
+		if (text == "TAB") {
+			this.prefix.sendKeys(Keys.TAB);
+		} else {
+			this.prefix.sendKeys(text);
+		}
+	}
+
+	public void setPrefixThesaurus(String text) {
+		this.setPrefix(text);
+//		this.switchToFrame_1();
+		// this.prefixThesaurusIcon.click();
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		this.driver.findElement(By.partialLinkText(text  + "(Prefix)")).click();
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("iframe_1");		
 	}
 
 	public void deletePrefix() {
@@ -241,7 +270,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public String getNumber() {
-		return number.getText();
+		if (number.getText().length() > 0) {
+			return number.getText();
+		} else {
+			return number.getAttribute("innerHTML");
+		}
 	}
 
 	public void setNumber(String text) {
@@ -269,12 +302,16 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	public String getRegistrationNumber() {
 		this.switchToFrame_1();
-		return this.registrationNumber.getText();
+		return this.registrationNumber.getAttribute("lastval");
 	}
 
 	public void setRegistrationNumber(String text) {
 		this.switchToFrame_1();
-		this.registrationNumber.sendKeys(text);
+		if (text == "TAB") {
+			this.registrationNumber.sendKeys(Keys.TAB);
+		} else {
+			this.registrationNumber.sendKeys(text);
+		}
 	}
 
 	public void deleteRegistrationNumber() {

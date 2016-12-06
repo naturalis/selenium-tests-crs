@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
@@ -41,6 +42,7 @@ public class Test02 extends AbstractTest {
 
 	private static String projectID = "CRS";
 	private static String testID = "Test 02";
+	private static String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 
 	private static MenuItems addMenu;
 	private static HomePage homePage;
@@ -525,8 +527,114 @@ public class Test02 extends AbstractTest {
 	 * 2.1.10	"Losse scripts (afhandeling registratienummer). 
 	 * 
 	 * Voer het veld  Registratienummer in met: 
-	 * 1. minimaal een ongeldige prefix of suffix of zonder nummeriek deel. 
+	 * 1. minimaal een ongeldige (a) prefix of (b) suffix of (c) zonder nummeriek deel. 
 	 * 2. Verschijnt er een uitroepteken achter het veld?"
 	 */
+	@Test(priority = 30, dependsOnMethods = { "checkSuffix" })
+	public void checkRegistrationNumber() {
+//		ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
+		// (a)
+		Test02.detailBeschrijvingenPage.setPrefix("abc");
+		Test02.detailBeschrijvingenPage.setNumber("1234");
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
+		Test02.detailBeschrijvingenPage.setRemarks("hello there");
+		Test02.detailBeschrijvingenPage.deleteRemarks();
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect prefix", "Fout in 2.1.10");
+		Test02.detailBeschrijvingenPage.deletePrefix();
+		Test02.detailBeschrijvingenPage.deleteNumber();
+		Test02.detailBeschrijvingenPage.deleteRegistrationNumber();
 
+		// (b)
+		Test02.detailBeschrijvingenPage.setPrefixThesaurus("TEST");
+		Test02.detailBeschrijvingenPage.setNumber("1234");
+		Test02.detailBeschrijvingenPage.setSuffix("abc");
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
+		Test02.detailBeschrijvingenPage.setRemarks("hello there");
+		Test02.detailBeschrijvingenPage.deleteRemarks();
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect suffix", "Fout in 2.1.10");
+
+		// (c)
+		Test02.detailBeschrijvingenPage.deleteNumber();
+		Test02.detailBeschrijvingenPage.deleteRegistrationNumber();
+		Test02.detailBeschrijvingenPage.deleteSuffix();
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
+		Test02.detailBeschrijvingenPage.setRemarks("hello there");
+		Test02.detailBeschrijvingenPage.deleteRemarks();
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Invalid", "Fout in 2.1.10");
+	}
+
+	/**
+	 *  2.1.11 Losse scripts (afhandeling registratienummer).
+	 * 
+	 *  Voer de velden Prefix, Number en Suffix in met een juiste waarde (Prefix anders dan 'e'). 
+	 *  Wordt het veld Registrationnumber automatisch gevuld met de samengestelde waarde uit de 
+	 *  hiervoor genoemde velden nadat deze velden zijn verlaten?
+	 */
+	@Test(priority = 31, dependsOnMethods = { "checkRegistrationNumber" })
+	public void checkCreateRegistrationNumber() {
+		
+		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
+		Test02.detailBeschrijvingenPage.deleteCurrentCollectionName();
+		Test02.detailBeschrijvingenPage.setCurrentCollectionName("Vert", "Vert");
+		Test02.detailBeschrijvingenPage.deletePrefix();
+		Test02.detailBeschrijvingenPage.setPrefix("TEST");
+		Test02.detailBeschrijvingenPage.setPrefix("TAB");
+		Test02.detailBeschrijvingenPage.setNumber(testNumber);
+		Test02.detailBeschrijvingenPage.setSuffix("se"); // "se" : Selenium test suffix
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(), "TEST" + "." + testNumber + "." + "se", "Fout in 2.1.11");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Valid", "Fout in 2.1.11");
+	}
+	
+	/**
+	 *  2.1.12 Losse scripts (afhandeling registratienummer).
+	 *  
+	 *  Voer de velden Prefix en Number in waar Prefix een kleine letter e is, 
+	 *  1. verschijnt er geen punt tussen de e en het nummeriek deel in het veld registratienummer?
+	 */
+	@Test(priority = 32, dependsOnMethods = { "checkCreateRegistrationNumber" })
+	public void checkCreateRegistrationNumberWithE() {		
+		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
+		Test02.detailBeschrijvingenPage.deletePrefix();
+		Test02.detailBeschrijvingenPage.setPrefix("TAB");
+		Test02.detailBeschrijvingenPage.setPrefix("e");
+		Test02.detailBeschrijvingenPage.setPrefix("TAB");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(), "e" + testNumber + "." + "se", "Fout in 2.1.12");
+	}
+
+	/**
+	 * 2.1.13 Losse scripts (afhandeling registratienummer).
+	 * 
+	 *  Leeg het veld Registrationnumer en voer een juiste waarde in met prefix 'e'. 
+	 *  Wordt dit juist uitelkaar getrokken naar de velden Prefix, Number en Suffix 
+	 *  nadat het veld Registrationnumber is verlaten?
+	 */
+	@Test(priority = 32, dependsOnMethods = { "checkCreateRegistrationNumber" })
+	public void checkEnterRegistrationNumberWithE() {
+		Test02.detailBeschrijvingenPage.deletePrefix();
+		Test02.detailBeschrijvingenPage.deleteNumber();
+		Test02.detailBeschrijvingenPage.deleteSuffix();
+		Test02.detailBeschrijvingenPage.deleteRegistrationNumber();
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("e" + Test02.testNumber + ".se");
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
+		/* Prefix */
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "e", "Fout in 2.1.13");
+
+		/* Catalog Number
+		 * The catalog number cannot be accessed directly and needs to be retrieved from the DOM
+		 * using JavaScript:
+		 * document.querySelectorAll('[atfid="add_ncrs_specimen_catalognumber?numberfield"]')[0].value 
+		*/
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String catalogNumber = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
+		Assert.assertEquals(catalogNumber, Test02.testNumber, "Fout in 2.1.13");
+
+		/* Suffix 
+		 * document.querySelectorAll('[atfid="add_ncrs_specimen_suffix?suffixfield"]')[0].value
+		 */
+		String suffix = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
+		Assert.assertEquals(suffix, "se", "Fout in 2.1.13");
+	}
+
+	
 }

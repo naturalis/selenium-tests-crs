@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -42,6 +43,7 @@ public class ProtoTest extends AbstractTest {
 
 	private static String projectID = "CRS";
 	private static String testID = "Test 02";
+	private static String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 
 	private static MenuItems addMenu;
 	private static HomePage homePage;
@@ -159,13 +161,13 @@ public class ProtoTest extends AbstractTest {
 	 * 2. Verschijnt er direct een rood uitroepteken achter het veld?  
 	 *   
 	 */
-//	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
-//	public void checkSuffix() {
-//		ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
-//		ProtoTest.detailBeschrijvingenPage.setSuffix("abc");
-//		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getSuffix(), "", "Fout in 2.1.9");
-//		ProtoTest.detailBeschrijvingenPage.deleteSuffix();
-//	}
+	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
+	public void checkSuffix() {
+		ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
+		ProtoTest.detailBeschrijvingenPage.setSuffix("abc");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getSuffix(), "", "Fout in 2.1.9");
+		ProtoTest.detailBeschrijvingenPage.deleteSuffix();
+	}
 	
 	/**
 	 * 2.1.10	"Losse scripts (afhandeling registratienummer). 
@@ -176,51 +178,108 @@ public class ProtoTest extends AbstractTest {
 	 */
 	@Test(priority = 9, dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkRegistrationNumber() {
-		// Test met InputGroupExt
-		InputGroup prefix = new InputGroup(driver, "uniqueID1219179928");
-
-
-		ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
+//		ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
 		// (a)
 		ProtoTest.detailBeschrijvingenPage.setPrefix("abc");
 		ProtoTest.detailBeschrijvingenPage.setNumber("1234");
 		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("abc");
-//		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
+		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
 		ProtoTest.detailBeschrijvingenPage.deleteRemarks();
 		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect prefix", "Fout in 2.1.10");
 		ProtoTest.detailBeschrijvingenPage.deletePrefix();
 		ProtoTest.detailBeschrijvingenPage.deleteNumber();
 		ProtoTest.detailBeschrijvingenPage.deleteRegistrationNumber();
-		prefix.enterThesaurusValue("T", "TEST");
-		// prefix.clickBin();
-		
 
 		// (b)
-//		ProtoTest.detailBeschrijvingenPage.setPrefix("TEST");
-//		ProtoTest.detailBeschrijvingenPage.setNumber("1234");
-//		ProtoTest.detailBeschrijvingenPage.setSuffix("abc");
-//		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("abc");
-//		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
-//		ProtoTest.detailBeschrijvingenPage.deleteRemarks();
-//		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect suffix", "Fout in 2.1.10");
-//		ProtoTest.detailBeschrijvingenPage.deletePrefix();
-//		ProtoTest.detailBeschrijvingenPage.deleteNumber();
-//		ProtoTest.detailBeschrijvingenPage.deleteSuffix();
-//		ProtoTest.detailBeschrijvingenPage.deleteRegistrationNumber();
+		ProtoTest.detailBeschrijvingenPage.setPrefixThesaurus("TEST");
+		ProtoTest.detailBeschrijvingenPage.setNumber("1234");
+		ProtoTest.detailBeschrijvingenPage.setSuffix("abc");
+		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("abc");
+		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
+		ProtoTest.detailBeschrijvingenPage.deleteRemarks();
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect suffix", "Fout in 2.1.10");
 
 		// (c)
-//		ProtoTest.detailBeschrijvingenPage.setPrefix("TEST");
-//		ProtoTest.detailBeschrijvingenPage.setNumber("1234");
-//		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("abc");
-//		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
-//		ProtoTest.detailBeschrijvingenPage.deleteRemarks();
-//		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Invalid", "Fout in 2.1.10");
-//		ProtoTest.detailBeschrijvingenPage.deletePrefix();
-//		ProtoTest.detailBeschrijvingenPage.deleteNumber();
-//		ProtoTest.detailBeschrijvingenPage.deleteRegistrationNumber();
+		ProtoTest.detailBeschrijvingenPage.deleteNumber();
+		ProtoTest.detailBeschrijvingenPage.deleteRegistrationNumber();
+		ProtoTest.detailBeschrijvingenPage.deleteSuffix();
+		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("abc");
+		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
+		ProtoTest.detailBeschrijvingenPage.deleteRemarks();
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Invalid", "Fout in 2.1.10");
+		ProtoTest.detailBeschrijvingenPage.deleteRegistrationNumber();
+		ProtoTest.detailBeschrijvingenPage.deleteSuffix();
+		ProtoTest.detailBeschrijvingenPage.deleteNumber();
+		ProtoTest.detailBeschrijvingenPage.deletePrefix();
+	}
 
+	/**
+	 *  2.1.11 Losse scripts (afhandeling registratienummer).
+	 * 
+	 *  Voer de velden Prefix, Number en Suffix in met een juiste waarde (Prefix anders dan 'e'). 
+	 *  Wordt het veld Registrationnumber automatisch gevuld met de samengestelde waarde uit de 
+	 *  hiervoor genoemde velden nadat deze velden zijn verlaten?
+	 */
+	@Test(priority = 31, dependsOnMethods = { "checkRegistrationNumber" })
+	public void checkCreateRegistrationNumber() {
+		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
+		ProtoTest.detailBeschrijvingenPage.setCurrentCollectionName("Vert", "Vert");
+		ProtoTest.detailBeschrijvingenPage.setPrefix("TEST");
+		ProtoTest.detailBeschrijvingenPage.setPrefix("TAB");
+		ProtoTest.detailBeschrijvingenPage.setNumber(testNumber);
+		ProtoTest.detailBeschrijvingenPage.setSuffix("se"); // "se" : Selenium test suffix
+		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("TAB");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getRegistrationNumber(), "TEST" + "." + testNumber + "." + "se", "Fout in 2.1.11");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Valid", "Fout in 2.1.11");
+	}
+	
+	/**
+	 *  2.1.12 Losse scripts (afhandeling registratienummer).
+	 *  
+	 *  Voer de velden Prefix en Number in waar Prefix een kleine letter e is, 
+	 *  1. verschijnt er geen punt tussen de e en het nummeriek deel in het veld registratienummer?
+	 */
+	@Test(priority = 32, dependsOnMethods = { "checkCreateRegistrationNumber" })
+	public void checkCreateRegistrationNumberWithE() {		
+		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
+		ProtoTest.detailBeschrijvingenPage.deletePrefix();
+		ProtoTest.detailBeschrijvingenPage.setPrefix("TAB");
+		ProtoTest.detailBeschrijvingenPage.setPrefix("e");
+		ProtoTest.detailBeschrijvingenPage.setPrefix("TAB");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getRegistrationNumber(), "e" + testNumber + "." + "se", "Fout in 2.1.12");
+	}
+
+	/**
+	 * 2.1.13 Losse scripts (afhandeling registratienummer).
+	 * 
+	 *  Leeg het veld Registrationnumer en voer een juiste waarde in met prefix 'e'. 
+	 *  Wordt dit juist uitelkaar getrokken naar de velden Prefix, Number en Suffix 
+	 *  nadat het veld Registrationnumber is verlaten?
+	 */
+	@Test(priority = 32, dependsOnMethods = { "checkCreateRegistrationNumber" })
+	public void checkEnterRegistrationNumberWithE() {
+		ProtoTest.detailBeschrijvingenPage.deletePrefix();
+		ProtoTest.detailBeschrijvingenPage.deleteNumber();
+		ProtoTest.detailBeschrijvingenPage.deleteSuffix();
+		ProtoTest.detailBeschrijvingenPage.deleteRegistrationNumber();
+		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("e" + ProtoTest.testNumber + ".se");
+		ProtoTest.detailBeschrijvingenPage.setRegistrationNumber("TAB");
+		// Prefix
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getPrefix(), "e", "Fout in 2.1.13");
+
+		// Catalog Number
+		// The catalog number cannot be accessed directly and needs to be retrieved from the DOM
+		// using JavaScript:
+		// document.querySelectorAll('[atfid="add_ncrs_specimen_catalognumber?numberfield"]')[0].value
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String catalogNumber = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
+		Assert.assertEquals(catalogNumber, ProtoTest.testNumber, "Fout in 2.1.13");
+
+		// Suffix 
+		// document.querySelectorAll('[atfid="add_ncrs_specimen_suffix?suffixfield"]')[0].value
+		String suffix = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
+		Assert.assertEquals(suffix, "se", "Fout in 2.1.13");
 	}
 
 	
-
 }
