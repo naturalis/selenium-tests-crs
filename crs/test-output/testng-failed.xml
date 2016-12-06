@@ -3,22 +3,23 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="nl.naturalis.selenium.crs.tests.Test02">
+      <class name="nl.naturalis.selenium.crs.tests.ProtoTest">
         <methods>
-          <include name="detailPageOpen"/>
+          <include name="smallDelay"/>
           <include name="takeScreenShotOnFailure"/>
-          <include name="clickAddSpecimen"/>
-          <include name="openFormSelect"/>
-          <include name="checkIncorrectSubmissionValueTest1A"/>
-          <include name="initalize"/>
+          <include name="startPageTitle"/>
           <include name="cleanUp"/>
           <include name="homePageOpen"/>
-          <include name="startPageTitle"/>
-          <include name="selectSpecifiedForm"/>
+          <include name="checkIllegalValuesStorageUnit"/>
           <include name="homePageDoLogin"/>
-          <include name="checkThesaurusAndBinIcons"/>
+          <include name="checkAutosuggestStorageUnit"/>
+          <include name="detailPageOpen"/>
+          <include name="openFormSelect"/>
+          <include name="selectSpecifiedForm"/>
+          <include name="initalize"/>
+          <include name="clickAddSpecimen"/>
         </methods>
-      </class> <!-- nl.naturalis.selenium.crs.tests.Test02 -->
+      </class> <!-- nl.naturalis.selenium.crs.tests.ProtoTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

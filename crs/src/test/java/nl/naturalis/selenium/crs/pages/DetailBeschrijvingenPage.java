@@ -118,6 +118,20 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//textarea[@atfid='add_ncrs_specimen_remarks?defaultfield']")
 	private WebElement remarks;
 	
+	@FindBy(name = "CURRENTCOLLECTIONUNIT")
+	private WebElement standardStorageUnit;
+	
+	@FindBy (xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@type='image']")
+	private WebElement standardStorageUnitErrorIcon;
+	
+	@FindBy(name = "USUALCOLLECTIONUNIT")
+	private WebElement temporaryStorageUnit;
+	
+	@FindBy (xpath = "//input[@name='USUALCOLLECTIONUNIT']/parent::td/input[@type='image']")
+	private WebElement temporaryStorageUnitErrorIcon;
+	
+	
+	
 	// Buttons, icons, ...
 	
 	// #1 Add multimedia
@@ -420,6 +434,52 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.remarks.clear();
 	}
 
+	public String getStandardStorageUnit() {
+		return this.standardStorageUnit.getText();
+	}
+	
+	public void setStandardStorageUnit(String text) {
+		if (text == "TAB") {
+			this.prefix.sendKeys(Keys.TAB);
+		} else {
+			this.standardStorageUnit.sendKeys(text);
+		}
+	}
+	
+	public void deleteStandardStorageUnit() {
+		this.standardStorageUnit.clear();
+	}
+	
+	public int autosuggestStandardStorageUnit(String text) {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		return driver.findElements(By.partialLinkText(text)).size();
+	}
+	
+	public String getWarningStandardStorageUnitErrorIcon() {
+		return this.standardStorageUnitErrorIcon.getAttribute("alt");
+	}
+
+	public String getTemporaryStorageUnit() {
+		return this.temporaryStorageUnit.getText();
+	}
+	
+	public void setTemporaryStorageUnit(String text) {
+		if (text == "TAB") {
+			this.prefix.sendKeys(Keys.TAB);
+		} else {
+			this.temporaryStorageUnit.sendKeys(text);
+		}
+	}
+	
+	public void deleteTemporaryStorageUnit() {
+		this.temporaryStorageUnit.clear();
+	}
+
+	public String getWarningTemporaryStorageUnitErrorIcon() {
+		return this.temporaryStorageUnitErrorIcon.getAttribute("alt");
+	}
+	
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}

@@ -618,7 +618,7 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("e" + Test02.testNumber + ".se");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
 		/* Prefix */
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "e", "Fout in 2.1.13");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "e", "Fout in 2.1.13.01");
 
 		/* Catalog Number
 		 * The catalog number cannot be accessed directly and needs to be retrieved from the DOM
@@ -627,14 +627,66 @@ public class Test02 extends AbstractTest {
 		*/
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		String catalogNumber = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
-		Assert.assertEquals(catalogNumber, Test02.testNumber, "Fout in 2.1.13");
+		Assert.assertEquals(catalogNumber, Test02.testNumber, "Fout in 2.1.13.02");
 
 		/* Suffix 
 		 * document.querySelectorAll('[atfid="add_ncrs_specimen_suffix?suffixfield"]')[0].value
 		 */
 		String suffix = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
-		Assert.assertEquals(suffix, "se", "Fout in 2.1.13");
+		Assert.assertEquals(suffix, "se", "Fout in 2.1.13.03");
 	}
 
+	/**
+	 * 2.1.14 Losse scripts (afhandeling registratienummer).
+	 * 
+	 * Leeg het veld Registrationnumer en voer een juiste waarde in met prefix anders dan 'e'. 
+	 * Wordt dit juist uit elkaar getrokken naar de velden Prefix, Number en Suffix 
+	 * nadat het veld Registrationnumber is verlaten?
+	 */
+	@Test(priority = 33, dependsOnMethods = { "checkEnterRegistrationNumberWithE" })
+	public void checkEnterRegistrationNumberWithoutE() {
+		Test02.detailBeschrijvingenPage.deletePrefix();
+		Test02.detailBeschrijvingenPage.deleteNumber();
+		Test02.detailBeschrijvingenPage.deleteSuffix();
+		Test02.detailBeschrijvingenPage.deleteRegistrationNumber();
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("TEST" + "." + Test02.testNumber + ".se");
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
+		/* Prefix */
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "TEST", "Fout in 2.1.14.01");
+
+		/* Catalog Number
+		 * The catalog number cannot be accessed directly and needs to be retrieved from the DOM
+		 * using JavaScript:
+		 * document.querySelectorAll('[atfid="add_ncrs_specimen_catalognumber?numberfield"]')[0].value 
+		*/
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String catalogNumber = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
+		Assert.assertEquals(catalogNumber, Test02.testNumber, "Fout in 2.1.14.02");
+
+		/* Suffix 
+		 * document.querySelectorAll('[atfid="add_ncrs_specimen_suffix?suffixfield"]')[0].value
+		 */
+		String suffix = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
+		Assert.assertEquals(suffix, "se", "Fout in 2.1.14.03");
+	}
 	
+	/**
+	 * 2.1.15 
+	 * 
+	 * Vul Standard of Temporary storage unit in met een onjuiste waarde 
+	 * (juiste waarde is BE. gevolgd door een nummer). 
+	 * Verschijnt er een waarschuwingsteken met 'invalid value' bij het verlaten van het veld?
+	 * 
+	 */
+	@Test(priority = 34, dependsOnMethods = { "checkEnterRegistrationNumberWithoutE" })
+	public void checkIllegalValuesStorageUnit() {
+		Test02.detailBeschrijvingenPage.setStandardStorageUnit("illegal-text");
+		Test02.detailBeschrijvingenPage.setStandardStorageUnit("TAB");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningStandardStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.01");
+		
+		Test02.detailBeschrijvingenPage.setTemporaryStorageUnit("illegal-text");
+		Test02.detailBeschrijvingenPage.setTemporaryStorageUnit("TAB");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningTemporaryStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.02");
+	}
+
 }
