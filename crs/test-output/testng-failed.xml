@@ -5,17 +5,29 @@
     <classes>
       <class name="nl.naturalis.selenium.crs.tests.Test02">
         <methods>
-          <include name="detailPageOpen"/>
           <include name="takeScreenShotOnFailure"/>
           <include name="clickAddSpecimen"/>
-          <include name="openFormSelect"/>
-          <include name="checkIncorrectSubmissionValueTest1A"/>
-          <include name="initalize"/>
+          <include name="checkRegistrationNumber"/>
           <include name="cleanUp"/>
           <include name="homePageOpen"/>
           <include name="startPageTitle"/>
-          <include name="selectSpecifiedForm"/>
           <include name="homePageDoLogin"/>
+          <include name="checkAutosuggestStorageUnit"/>
+          <include name="checkSuffix"/>
+          <include name="checkEnterStorageUnits"/>
+          <include name="detailPageOpen"/>
+          <include name="checkIncorrectSubmissionValueTest1C"/>
+          <include name="openFormSelect"/>
+          <include name="checkIncorrectSubmissionValueTest1B"/>
+          <include name="checkIncorrectSubmissionValueTest2C"/>
+          <include name="checkIncorrectSubmissionValueTest1A"/>
+          <include name="checkIncorrectSubmissionValueTest3C"/>
+          <include name="checkEnterRegistrationNumberWithoutE"/>
+          <include name="initalize"/>
+          <include name="checkCreateRegistrationNumber"/>
+          <include name="checkEnterRegistrationNumberWithE"/>
+          <include name="selectSpecifiedForm"/>
+          <include name="checkIllegalValuesStorageUnit"/>
           <include name="checkThesaurusAndBinIcons"/>
         </methods>
       </class> <!-- nl.naturalis.selenium.crs.tests.Test02 -->

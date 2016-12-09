@@ -47,7 +47,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "tbody>tr>td>span>span.huidige")
 	private WebElement numberSpan;
 
-	@FindBy(name="ctl00$masterContent$ddl_fomulieren")
+	@FindBy(xpath = "//div[@id='ctl00_masterContent_txt_FormulierenUpdatePanel']/select")
 	private WebElement formulierenSelect;
 
 	@FindBy(name="ctl00$masterContent$btn_formulieren")
@@ -134,11 +134,20 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(name = "CURRENTSTORAGELOCATION")
 	private WebElement standardStorageLocation;
 
+	@FindBy (xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	private WebElement standardStorageLocationBinIcon;
+
 	@FindBy (xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@class='errorImage']")
 	private WebElement standardStorageLocationErrorIcon;
 	
 	@FindBy(name = "USUALSTORAGELOCATION")
 	private WebElement temporaryStorageLocation;
+
+	@FindBy (xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	private WebElement temporaryStorageLocationBinIcon;
+	
+	@FindBy (xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	private WebElement temporaryStorageLocationErrorIcon;
 	
 	// Buttons, icons, ...
 	
@@ -278,8 +287,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	public void setPrefixThesaurus(String text) {
 		this.setPrefix(text);
-//		this.switchToFrame_1();
-		// this.prefixThesaurusIcon.click();
 		this.driver.switchTo().defaultContent();
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		this.driver.findElement(By.partialLinkText(text  + "(Prefix)")).click();
@@ -491,6 +498,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		}
 	}
 
+	public void deleteStandardStorageLocation() {
+		this.standardStorageLocationBinIcon.click();
+	}
+
 	public String getAttributeStandardStorageLocation(String attribute) {
 		return this.standardStorageLocation.getCssValue(attribute);
 	}
@@ -499,6 +510,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return this.standardStorageLocation.isEnabled();
 	}
 
+	public String getWarningStandardStorageLocationErrorIcon() {
+		return this.standardStorageLocationErrorIcon.getAttribute("alt");
+	}
 	
 	
 	// Temporary Storage Unit
@@ -518,7 +532,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void selectTemporaryStorageUnit(String text) {
 		this.temporaryStorageUnit.sendKeys(text);
 		WebElement autoSuggest = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
-		driver.findElement(By.partialLinkText(text)).click();
+		autoSuggest.click();
+		// driver.findElement(By.partialLinkText(text)).click();
 	}
 
 	public void deleteTemporaryStorageUnit() {
@@ -550,6 +565,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		}
 	}
 
+	public void deleteTemporaryStorageLocation() {
+		this.temporaryStorageLocationBinIcon.click();
+	}
+	
 	public String getAttributeTemporaryStorageLocation(String attribute) {
 		return this.temporaryStorageLocation.getCssValue(attribute);
 	}
@@ -558,8 +577,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return this.temporaryStorageLocation.isEnabled();
 	}
 	
+	public String getWarningTemporaryStorageLocationErrorIcon() {
+		return this.standardStorageLocationErrorIcon.getAttribute("alt");
+	}
 
 	
+	
+	// ***
 	
 
 	public Integer getNumberOfResults() {
@@ -568,6 +592,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	
 	
+
 	public List<WebElement> clickFormulierenSelect() {
 		Actions action = new Actions(driver);
 		action.moveToElement(this.formulierenSelect).perform();
@@ -582,6 +607,16 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		select.getFirstSelectedOption().click();
 		buttonFormulierenSelect.click();
 	}
+	
+	public String findSelectedFormulier() {
+		driver.switchTo().defaultContent();
+		Select dropDown = new Select(formulierenSelect);
+//		WebElement options = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='ctl00_masterContent_ddl_fomulieren']/option[@selected]")));
+		String selected = dropDown.getFirstSelectedOption().getText();
+		return selected;
+	}
+	
+	
 
 	public void enterValueToField(String fieldname, String value) {
 		this.switchToMainFrame();
@@ -691,13 +726,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			}
 			driver.switchTo().defaultContent();
 		}
-	}
-
-	public String findSelectedFormulier() {
-		driver.switchTo().defaultContent();
-		Select dropDown = new Select(formulierenSelect);
-		String selected = dropDown.getFirstSelectedOption().getText();
-		return selected;
 	}
 
 	public void doDetailSearch(String searchterm) {

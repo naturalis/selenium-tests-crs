@@ -232,6 +232,30 @@ public class ProtoTest extends AbstractTest {
 		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isTemporaryStorageLocationEnabled(), "Fout in 2.1.17.04");
 	}
 	
+	/**
+	 * 2.1.18
+	 * 
+	 * Vul Standard of Temporary storage location in met een onjuiste waarde. 
+	 * Verschijnt  er een uitroepteken met 'invalid value' achter het veld?
+	 * 
+	 */
+	@Test(priority = 35, dependsOnMethods = { "checkAutosuggestStorageUnit" })
+	public void checkIllegalValuesStorageLocations() {
+		String illegalTestValue = "illegal-text";
+		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
+		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageUnit();
 
+		ProtoTest.detailBeschrijvingenPage.setStandardStorageLocation(illegalTestValue);
+		ProtoTest.detailBeschrijvingenPage.setStandardStorageLocation("TAB");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningStandardStorageLocationErrorIcon(), "Invalid value", "Fout in 2.1.18.01");
+
+		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageLocation(illegalTestValue);
+		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageLocation("TAB");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningTemporaryStorageLocationErrorIcon(), "Invalid value", "Fout in 2.1.18.02");
+
+		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageLocation();
+		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
+
+	}
 	
 }

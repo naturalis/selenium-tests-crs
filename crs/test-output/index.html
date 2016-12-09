@@ -23,7 +23,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 1 failed test</span>
+      <span class="top-banner-font-1">1 suite, 2 failed tests</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -90,7 +90,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">37 methods, 1 failed,   36 passed</span>
+                    <span class="method-stats">38 methods, 2 failed,   36 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title failed">Failed methods</span>
@@ -99,6 +99,11 @@
                       <a href="#" panel-name="suite-Default_suite" class="show-methods failed suite-Default_suite"> (show)</a> <!-- show-methods failed suite-Default_suite -->
                     </span>
                     <div class="method-list-content failed suite-Default_suite">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="nl.naturalis.selenium.crs.tests.Test02" hash-for-method="checkEnterStorageUnits">checkEnterStorageUnits</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
                       <span>
                         <img width="3%" src="failed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="nl.naturalis.selenium.crs.tests.Test02" hash-for-method="checkIncorrectSubmissionValueTest1A">checkIncorrectSubmissionValueTest1A</a> <!-- method navigator-link -->
@@ -145,12 +150,12 @@
                       <br/>
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="nl.naturalis.selenium.crs.tests.Test02" hash-for-method="checkEnterStorageUnits">checkEnterStorageUnits</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="nl.naturalis.selenium.crs.tests.Test02" hash-for-method="checkIconInfo">checkIconInfo</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="nl.naturalis.selenium.crs.tests.Test02" hash-for-method="checkIconInfo">checkIconInfo</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="nl.naturalis.selenium.crs.tests.Test02" hash-for-method="checkIllegalValuesStorageLocations">checkIllegalValuesStorageLocations</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
@@ -313,6 +318,111 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
+                  <a name="checkEnterStorageUnits">
+                  </a> <!-- checkEnterStorageUnits -->
+                  <span class="method-name">checkEnterStorageUnits</span>
+                  <div class="stack-trace"><b>"org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;partial link text&quot;,&quot;selector&quot;:&quot;BE.0000001&quot;}
+  (Session info: chrome=55.0.2883.75)
+  (Driver info: chromedriver=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3),platform=Linux 4.4.0-53-generic x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 1.04 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;LT005461&apos;, ip: &apos;127.0.1.1&apos;, os.name: &apos;Linux&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;4.4.0-53-generic&apos;, java.version: &apos;1.8.0_111&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.EsXb8g}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: c57705868af38606afd56ffb9a51eed1
+*** Element info: {Using=partial link text, value=BE.0000001}
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByPartialLinkText(RemoteWebDriver.java:436)
+	at org.openqa.selenium.By$ByPartialLinkText.findElement(By.java:273)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.selectStandardStorageUnit(DetailBeschrijvingenPage.java:470)
+	at nl.naturalis.selenium.crs.tests.Test02.checkEnterStorageUnits(Test02.java:727)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+<br/> org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;partial link text&quot;,&quot;selector&quot;:&quot;BE.0000001&quot;}
+  (Session info: chrome=55.0.2883.75)
+  (Driver info: chromedriver=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3),platform=Linux 4.4.0-53-generic x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 1.04 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;LT005461&apos;, ip: &apos;127.0.1.1&apos;, os.name: &apos;Linux&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;4.4.0-53-generic&apos;, java.version: &apos;1.8.0_111&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.EsXb8g}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: c57705868af38606afd56ffb9a51eed1
+*** Element info: {Using=partial link text, value=BE.0000001}
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByPartialLinkText(RemoteWebDriver.java:436)
+	at org.openqa.selenium.By$ByPartialLinkText.findElement(By.java:273)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.selectStandardStorageUnit(DetailBeschrijvingenPage.java:470)
+	at nl.naturalis.selenium.crs.tests.Test02.checkEnterStorageUnits(Test02.java:727)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+"</b><br>sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br>sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)<br>sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br>java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br>org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br>org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br>org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br>org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)<br>org.openqa.selenium.remote.RemoteWebDriver.findElementByPartialLinkText(RemoteWebDriver.java:436)<br>org.openqa.selenium.By$ByPartialLinkText.findElement(By.java:273)<br>org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)<br>nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.selectStandardStorageUnit(DetailBeschrijvingenPage.java:470)<br>nl.naturalis.selenium.crs.tests.Test02.checkEnterStorageUnits(Test02.java:727)<br>sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br>sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>java.lang.reflect.Method.invoke(Method.java:498)<br>org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br>org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br>org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br>org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br>org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br>org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br>org.testng.TestRunner.privateRun(TestRunner.java:767)<br>org.testng.TestRunner.run(TestRunner.java:617)<br>org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br>org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br>org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br>org.testng.SuiteRunner.run(SuiteRunner.java:240)<br>org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br>org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br>org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br>org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br>org.testng.TestNG.run(TestNG.java:1031)<br>org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br>org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)<br>org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)<br>
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
                   <a name="checkIncorrectSubmissionValueTest1A">
                   </a> <!-- checkIncorrectSubmissionValueTest1A -->
                   <span class="method-name">checkIncorrectSubmissionValueTest1A</span>
@@ -324,8 +434,8 @@ For documentation on this error, please visit: http://seleniumhq.org/exceptions/
 Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
 System info: host: &apos;LT005461&apos;, ip: &apos;127.0.1.1&apos;, os.name: &apos;Linux&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;4.4.0-53-generic&apos;, java.version: &apos;1.8.0_111&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.lrp9zv}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
-Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.EsXb8g}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: c57705868af38606afd56ffb9a51eed1
 *** Element info: {Using=xpath, value=//input[@atfid=&apos;add_ncrs_specimen_inst_coll_subcoll?selectfield&apos;]/parent::span/parent::td/img[@class=&apos;errorImage&apos;]}
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
@@ -341,7 +451,7 @@ Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
 	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
 	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
 	at com.sun.proxy.$Proxy8.getAttribute(Unknown Source)
-	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:793)
+	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:821)
 	at nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1A(Test02.java:292)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -375,8 +485,8 @@ For documentation on this error, please visit: http://seleniumhq.org/exceptions/
 Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
 System info: host: &apos;LT005461&apos;, ip: &apos;127.0.1.1&apos;, os.name: &apos;Linux&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;4.4.0-53-generic&apos;, java.version: &apos;1.8.0_111&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.lrp9zv}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
-Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.EsXb8g}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: c57705868af38606afd56ffb9a51eed1
 *** Element info: {Using=xpath, value=//input[@atfid=&apos;add_ncrs_specimen_inst_coll_subcoll?selectfield&apos;]/parent::span/parent::td/img[@class=&apos;errorImage&apos;]}
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
@@ -392,7 +502,7 @@ Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
 	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
 	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
 	at com.sun.proxy.$Proxy8.getAttribute(Unknown Source)
-	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:793)
+	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:821)
 	at nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1A(Test02.java:292)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -418,7 +528,7 @@ Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-"</b><br>sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br>sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)<br>sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br>java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br>org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br>org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br>org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br>org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)<br>org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)<br>org.openqa.selenium.By$ByXPath.findElement(By.java:361)<br>org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)<br>org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)<br>org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)<br>com.sun.proxy.$Proxy8.getAttribute(Unknown Source)<br>nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:793)<br>nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1A(Test02.java:292)<br>sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br>sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>java.lang.reflect.Method.invoke(Method.java:498)<br>org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br>org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br>org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br>org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br>org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br>org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br>org.testng.TestRunner.privateRun(TestRunner.java:767)<br>org.testng.TestRunner.run(TestRunner.java:617)<br>org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br>org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br>org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br>org.testng.SuiteRunner.run(SuiteRunner.java:240)<br>org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br>org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br>org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br>org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br>org.testng.TestNG.run(TestNG.java:1031)<br>org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br>org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)<br>org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)<br>
+"</b><br>sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br>sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)<br>sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br>java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br>org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br>org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br>org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br>org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)<br>org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)<br>org.openqa.selenium.By$ByXPath.findElement(By.java:361)<br>org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)<br>org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)<br>org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)<br>com.sun.proxy.$Proxy8.getAttribute(Unknown Source)<br>nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:821)<br>nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1A(Test02.java:292)<br>sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br>sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>java.lang.reflect.Method.invoke(Method.java:498)<br>org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br>org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br>org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br>org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br>org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br>org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br>org.testng.TestRunner.privateRun(TestRunner.java:767)<br>org.testng.TestRunner.run(TestRunner.java:617)<br>org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br>org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br>org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br>org.testng.SuiteRunner.run(SuiteRunner.java:240)<br>org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br>org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br>org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br>org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br>org.testng.TestNG.run(TestNG.java:1031)<br>org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br>org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)<br>org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)<br>
 </div> <!-- stack-trace -->
                 </div> <!-- method-content -->
               </div> <!-- method -->
@@ -474,16 +584,16 @@ Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="checkEnterStorageUnits">
-                  </a> <!-- checkEnterStorageUnits -->
-                  <span class="method-name">checkEnterStorageUnits</span>
+                  <a name="checkIconInfo">
+                  </a> <!-- checkIconInfo -->
+                  <span class="method-name">checkIconInfo</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="checkIconInfo">
-                  </a> <!-- checkIconInfo -->
-                  <span class="method-name">checkIconInfo</span>
+                  <a name="checkIllegalValuesStorageLocations">
+                  </a> <!-- checkIllegalValuesStorageLocations -->
+                  <span class="method-name">checkIllegalValuesStorageLocations</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
@@ -687,7 +797,7 @@ Session ID: 9f495b0a88e6525f1ff3f26ceb8a8054
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">/tmp/testng-eclipse-1107760101/testng-customsuite.xml</span>
+            <span class="header-content">/tmp/testng-eclipse--977063970/testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -736,160 +846,164 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(37);
+data.addRows(38);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'checkEnterStorageUnits')
+data.setCell(0, 1, 'checkRegistrationNumber')
 data.setCell(0, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(0, 3, 4548);
+data.setCell(0, 3, 2934);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'checkRegistrationNumber')
+data.setCell(1, 1, 'clickAddSpecimen')
 data.setCell(1, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(1, 3, 2962);
+data.setCell(1, 3, 2749);
 data.setCell(2, 0, 2)
-data.setCell(2, 1, 'clickAddSpecimen')
+data.setCell(2, 1, 'checkIncorrectSubmissionValueTest1A')
 data.setCell(2, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(2, 3, 2585);
+data.setCell(2, 3, 2253);
 data.setCell(3, 0, 3)
-data.setCell(3, 1, 'checkIncorrectSubmissionValueTest1A')
+data.setCell(3, 1, 'checkIllegalValuesStorageUnit')
 data.setCell(3, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(3, 3, 2256);
+data.setCell(3, 3, 2209);
 data.setCell(4, 0, 4)
 data.setCell(4, 1, 'checkContextDisplay')
 data.setCell(4, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(4, 3, 2187);
+data.setCell(4, 3, 2170);
 data.setCell(5, 0, 5)
-data.setCell(5, 1, 'checkIllegalValuesStorageUnit')
+data.setCell(5, 1, 'checkThesaurusAndBinIcons')
 data.setCell(5, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(5, 3, 2130);
+data.setCell(5, 3, 2097);
 data.setCell(6, 0, 6)
-data.setCell(6, 1, 'checkThesaurusAndBinIcons')
+data.setCell(6, 1, 'checkCreateRegistrationNumber')
 data.setCell(6, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(6, 3, 2110);
+data.setCell(6, 3, 2088);
 data.setCell(7, 0, 7)
-data.setCell(7, 1, 'checkCreateRegistrationNumber')
+data.setCell(7, 1, 'checkPrefix')
 data.setCell(7, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(7, 3, 2072);
+data.setCell(7, 3, 2080);
 data.setCell(8, 0, 8)
-data.setCell(8, 1, 'checkPrefix')
+data.setCell(8, 1, 'checkIconInfo')
 data.setCell(8, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(8, 3, 2054);
+data.setCell(8, 3, 1893);
 data.setCell(9, 0, 9)
-data.setCell(9, 1, 'checkIconInfo')
+data.setCell(9, 1, 'checkIllegalValuesStorageLocations')
 data.setCell(9, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(9, 3, 1920);
+data.setCell(9, 3, 1862);
 data.setCell(10, 0, 10)
 data.setCell(10, 1, 'checkIncorrectSubmissionValueTest1B')
 data.setCell(10, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(10, 3, 1777);
+data.setCell(10, 3, 1768);
 data.setCell(11, 0, 11)
-data.setCell(11, 1, 'checkIncorrectSubmissionValueTest3B')
+data.setCell(11, 1, 'checkIncorrectSubmissionValueTest2B')
 data.setCell(11, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(11, 3, 1734);
+data.setCell(11, 3, 1736);
 data.setCell(12, 0, 12)
 data.setCell(12, 1, 'checkIncorrectSubmissionValueTest4B')
 data.setCell(12, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(12, 3, 1727);
+data.setCell(12, 3, 1713);
 data.setCell(13, 0, 13)
-data.setCell(13, 1, 'checkIncorrectSubmissionValueTest2B')
+data.setCell(13, 1, 'checkIncorrectSubmissionValueTest3B')
 data.setCell(13, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(13, 3, 1714);
+data.setCell(13, 3, 1700);
 data.setCell(14, 0, 14)
-data.setCell(14, 1, 'checkTextEntryPreservedPart')
+data.setCell(14, 1, 'checkTextEntryBasisOfRecord')
 data.setCell(14, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(14, 3, 1391);
+data.setCell(14, 3, 1408);
 data.setCell(15, 0, 15)
-data.setCell(15, 1, 'homePageDoLogin')
+data.setCell(15, 1, 'checkTextEntryMount')
 data.setCell(15, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(15, 3, 1380);
+data.setCell(15, 3, 1379);
 data.setCell(16, 0, 16)
 data.setCell(16, 1, 'checkTextEntryCurrentCollectionName')
 data.setCell(16, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(16, 3, 1372);
+data.setCell(16, 3, 1370);
 data.setCell(17, 0, 17)
-data.setCell(17, 1, 'checkTextEntryBasisOfRecord')
+data.setCell(17, 1, 'checkTextEntryPreservedPart')
 data.setCell(17, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(17, 3, 1367);
+data.setCell(17, 3, 1350);
 data.setCell(18, 0, 18)
-data.setCell(18, 1, 'checkTextEntryMount')
+data.setCell(18, 1, 'homePageDoLogin')
 data.setCell(18, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(18, 3, 1363);
+data.setCell(18, 3, 1246);
 data.setCell(19, 0, 19)
 data.setCell(19, 1, 'checkIncorrectSubmissionValueTest2A')
 data.setCell(19, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(19, 3, 1253);
+data.setCell(19, 3, 1241);
 data.setCell(20, 0, 20)
 data.setCell(20, 1, 'checkIncorrectSubmissionValueTest3A')
 data.setCell(20, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(20, 3, 1226);
+data.setCell(20, 3, 1239);
 data.setCell(21, 0, 21)
 data.setCell(21, 1, 'checkIncorrectSubmissionValueTest4A')
 data.setCell(21, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(21, 3, 1220);
+data.setCell(21, 3, 1237);
 data.setCell(22, 0, 22)
 data.setCell(22, 1, 'checkIncorrectSubmissionValueTest1C')
 data.setCell(22, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(22, 3, 1115);
+data.setCell(22, 3, 1106);
 data.setCell(23, 0, 23)
 data.setCell(23, 1, 'checkIncorrectSubmissionValueTest4C')
 data.setCell(23, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(23, 3, 1108);
+data.setCell(23, 3, 1105);
 data.setCell(24, 0, 24)
-data.setCell(24, 1, 'checkIncorrectSubmissionValueTest3C')
+data.setCell(24, 1, 'checkEnterStorageUnits')
 data.setCell(24, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(24, 3, 1104);
+data.setCell(24, 3, 1102);
 data.setCell(25, 0, 25)
-data.setCell(25, 1, 'checkIncorrectSubmissionValueTest2C')
+data.setCell(25, 1, 'checkIncorrectSubmissionValueTest3C')
 data.setCell(25, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(25, 3, 1100);
+data.setCell(25, 3, 1099);
 data.setCell(26, 0, 26)
-data.setCell(26, 1, 'checkEnterRegistrationNumberWithE')
+data.setCell(26, 1, 'checkIncorrectSubmissionValueTest2C')
 data.setCell(26, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(26, 3, 506);
+data.setCell(26, 3, 1098);
 data.setCell(27, 0, 27)
-data.setCell(27, 1, 'checkEnterRegistrationNumberWithoutE')
+data.setCell(27, 1, 'checkEnterRegistrationNumberWithE')
 data.setCell(27, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(27, 3, 474);
+data.setCell(27, 3, 488);
 data.setCell(28, 0, 28)
-data.setCell(28, 1, 'checkCreateRegistrationNumberWithE')
+data.setCell(28, 1, 'checkEnterRegistrationNumberWithoutE')
 data.setCell(28, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(28, 3, 382);
+data.setCell(28, 3, 467);
 data.setCell(29, 0, 29)
-data.setCell(29, 1, 'selectSpecifiedForm')
+data.setCell(29, 1, 'checkCreateRegistrationNumberWithE')
 data.setCell(29, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(29, 3, 276);
+data.setCell(29, 3, 390);
 data.setCell(30, 0, 30)
 data.setCell(30, 1, 'openFormSelect')
 data.setCell(30, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(30, 3, 275);
+data.setCell(30, 3, 329);
 data.setCell(31, 0, 31)
-data.setCell(31, 1, 'checkAutosuggestStorageUnit')
+data.setCell(31, 1, 'selectSpecifiedForm')
 data.setCell(31, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(31, 3, 207);
+data.setCell(31, 3, 276);
 data.setCell(32, 0, 32)
-data.setCell(32, 1, 'checkSuffix')
+data.setCell(32, 1, 'checkAutosuggestStorageUnit')
 data.setCell(32, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(32, 3, 159);
+data.setCell(32, 3, 228);
 data.setCell(33, 0, 33)
-data.setCell(33, 1, 'checkNumber')
+data.setCell(33, 1, 'checkSuffix')
 data.setCell(33, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(33, 3, 107);
+data.setCell(33, 3, 177);
 data.setCell(34, 0, 34)
-data.setCell(34, 1, 'detailPageOpen')
+data.setCell(34, 1, 'checkNumber')
 data.setCell(34, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(34, 3, 45);
+data.setCell(34, 3, 106);
 data.setCell(35, 0, 35)
-data.setCell(35, 1, 'homePageOpen')
+data.setCell(35, 1, 'detailPageOpen')
 data.setCell(35, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(35, 3, 27);
+data.setCell(35, 3, 60);
 data.setCell(36, 0, 36)
-data.setCell(36, 1, 'startPageTitle')
+data.setCell(36, 1, 'homePageOpen')
 data.setCell(36, 2, 'nl.naturalis.selenium.crs.tests.Test02')
-data.setCell(36, 3, 13);
+data.setCell(36, 3, 25);
+data.setCell(37, 0, 37)
+data.setCell(37, 1, 'startPageTitle')
+data.setCell(37, 2, 'nl.naturalis.selenium.crs.tests.Test02')
+data.setCell(37, 3, 8);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 49 seconds</span>
+              <span class="suite-total-time">Total running time: 47 seconds</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -922,305 +1036,315 @@ return data;
               </div> <!-- configuration-class before -->
               <div class="test-method">
                 <span class="method-name">homePageOpen</span>
-                <span class="method-start">2503 ms</span>
+                <span class="method-start">2411 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=homePageOpen status=SUCCESS method=Test02.homePageOpen()[pri:0, instance:nl.natural...)</span>
-                <span class="method-start">2533 ms</span>
+                <span class="method-start">2438 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">homePageDoLogin</span>
-                <span class="method-start">2536 ms</span>
+                <span class="method-start">2448 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=homePageDoLogin status=SUCCESS method=Test02.homePageDoLogin()[pri:0, instance:nl.n...)</span>
-                <span class="method-start">3918 ms</span>
+                <span class="method-start">3695 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">startPageTitle</span>
-                <span class="method-start">3921 ms</span>
+                <span class="method-start">3696 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=startPageTitle status=SUCCESS method=Test02.startPageTitle()[pri:0, instance:nl.nat...)</span>
-                <span class="method-start">3935 ms</span>
+                <span class="method-start">3705 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">clickAddSpecimen</span>
-                <span class="method-start">3935 ms</span>
+                <span class="method-start">3706 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=clickAddSpecimen status=SUCCESS method=Test02.clickAddSpecimen()[pri:0, instance:nl...)</span>
-                <span class="method-start">6521 ms</span>
+                <span class="method-start">6460 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">detailPageOpen</span>
-                <span class="method-start">6522 ms</span>
+                <span class="method-start">6462 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=detailPageOpen status=SUCCESS method=Test02.detailPageOpen()[pri:0, instance:nl.nat...)</span>
-                <span class="method-start">6568 ms</span>
+                <span class="method-start">6523 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">openFormSelect</span>
-                <span class="method-start">6569 ms</span>
+                <span class="method-start">6526 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=openFormSelect status=SUCCESS method=Test02.openFormSelect()[pri:0, instance:nl.nat...)</span>
-                <span class="method-start">6847 ms</span>
+                <span class="method-start">6856 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">selectSpecifiedForm</span>
-                <span class="method-start">6850 ms</span>
+                <span class="method-start">6856 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=selectSpecifiedForm status=SUCCESS method=Test02.selectSpecifiedForm()[pri:0, insta...)</span>
-                <span class="method-start">7126 ms</span>
+                <span class="method-start">7133 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIconInfo</span>
-                <span class="method-start">7127 ms</span>
+                <span class="method-start">7134 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIconInfo status=SUCCESS method=Test02.checkIconInfo()[pri:0, instance:nl.natur...)</span>
-                <span class="method-start">9047 ms</span>
+                <span class="method-start">9028 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkContextDisplay</span>
-                <span class="method-start">9048 ms</span>
+                <span class="method-start">9028 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkContextDisplay status=SUCCESS method=Test02.checkContextDisplay()[pri:0, insta...)</span>
-                <span class="method-start">11235 ms</span>
+                <span class="method-start">11199 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkThesaurusAndBinIcons</span>
-                <span class="method-start">11236 ms</span>
+                <span class="method-start">11200 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkThesaurusAndBinIcons status=SUCCESS method=Test02.checkThesaurusAndBinIcons()[...)</span>
-                <span class="method-start">13347 ms</span>
+                <span class="method-start">13297 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">checkIncorrectSubmissionValueTest1A</span>
-                <span class="method-start">13348 ms</span>
+                <span class="method-start">13298 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest1A status=FAILURE method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">15607 ms</span>
+                <span class="method-start">15554 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest1B</span>
-                <span class="method-start">15886 ms</span>
+                <span class="method-start">15799 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest1B status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">17664 ms</span>
+                <span class="method-start">17568 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest1C</span>
-                <span class="method-start">17664 ms</span>
+                <span class="method-start">17569 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest1C status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">18780 ms</span>
+                <span class="method-start">18676 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest2A</span>
-                <span class="method-start">18781 ms</span>
+                <span class="method-start">18677 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest2A status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">20035 ms</span>
+                <span class="method-start">19919 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest2B</span>
-                <span class="method-start">20035 ms</span>
+                <span class="method-start">19920 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest2B status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">21750 ms</span>
+                <span class="method-start">21656 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest2C</span>
-                <span class="method-start">21751 ms</span>
+                <span class="method-start">21657 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest2C status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">22851 ms</span>
+                <span class="method-start">22756 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest3A</span>
-                <span class="method-start">22852 ms</span>
+                <span class="method-start">22757 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest3A status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">24078 ms</span>
+                <span class="method-start">23996 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest3B</span>
-                <span class="method-start">24079 ms</span>
+                <span class="method-start">23997 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest3B status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">25814 ms</span>
+                <span class="method-start">25698 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest3C</span>
-                <span class="method-start">25814 ms</span>
+                <span class="method-start">25698 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest3C status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">26919 ms</span>
+                <span class="method-start">26798 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest4A</span>
-                <span class="method-start">26919 ms</span>
+                <span class="method-start">26799 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest4A status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">28140 ms</span>
+                <span class="method-start">28036 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest4B</span>
-                <span class="method-start">28140 ms</span>
+                <span class="method-start">28037 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest4B status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">29868 ms</span>
+                <span class="method-start">29751 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIncorrectSubmissionValueTest4C</span>
-                <span class="method-start">29868 ms</span>
+                <span class="method-start">29751 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIncorrectSubmissionValueTest4C status=SUCCESS method=Test02.checkIncorrectSubm...)</span>
-                <span class="method-start">30977 ms</span>
+                <span class="method-start">30856 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkTextEntryCurrentCollectionName</span>
-                <span class="method-start">30977 ms</span>
+                <span class="method-start">30857 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkTextEntryCurrentCollectionName status=SUCCESS method=Test02.checkTextEntryCurr...)</span>
-                <span class="method-start">32349 ms</span>
+                <span class="method-start">32228 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkTextEntryBasisOfRecord</span>
-                <span class="method-start">32350 ms</span>
+                <span class="method-start">32229 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkTextEntryBasisOfRecord status=SUCCESS method=Test02.checkTextEntryBasisOfRecor...)</span>
-                <span class="method-start">33718 ms</span>
+                <span class="method-start">33638 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkTextEntryMount</span>
-                <span class="method-start">33719 ms</span>
+                <span class="method-start">33638 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkTextEntryMount status=SUCCESS method=Test02.checkTextEntryMount()[pri:0, insta...)</span>
-                <span class="method-start">35082 ms</span>
+                <span class="method-start">35017 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkTextEntryPreservedPart</span>
-                <span class="method-start">35083 ms</span>
+                <span class="method-start">35018 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkTextEntryPreservedPart status=SUCCESS method=Test02.checkTextEntryPreservedPar...)</span>
-                <span class="method-start">36474 ms</span>
+                <span class="method-start">36369 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkPrefix</span>
-                <span class="method-start">36475 ms</span>
+                <span class="method-start">36370 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkPrefix status=SUCCESS method=Test02.checkPrefix()[pri:0, instance:nl.naturalis...)</span>
-                <span class="method-start">38529 ms</span>
+                <span class="method-start">38450 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkNumber</span>
-                <span class="method-start">38530 ms</span>
+                <span class="method-start">38451 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkNumber status=SUCCESS method=Test02.checkNumber()[pri:0, instance:nl.naturalis...)</span>
-                <span class="method-start">38638 ms</span>
+                <span class="method-start">38557 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkSuffix</span>
-                <span class="method-start">38638 ms</span>
+                <span class="method-start">38558 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkSuffix status=SUCCESS method=Test02.checkSuffix()[pri:0, instance:nl.naturalis...)</span>
-                <span class="method-start">38797 ms</span>
+                <span class="method-start">38735 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkRegistrationNumber</span>
-                <span class="method-start">38798 ms</span>
+                <span class="method-start">38736 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkRegistrationNumber status=SUCCESS method=Test02.checkRegistrationNumber()[pri:...)</span>
-                <span class="method-start">41760 ms</span>
+                <span class="method-start">41671 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkCreateRegistrationNumber</span>
-                <span class="method-start">41761 ms</span>
+                <span class="method-start">41671 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkCreateRegistrationNumber status=SUCCESS method=Test02.checkCreateRegistrationN...)</span>
-                <span class="method-start">43833 ms</span>
+                <span class="method-start">43759 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkCreateRegistrationNumberWithE</span>
-                <span class="method-start">43835 ms</span>
+                <span class="method-start">43760 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkCreateRegistrationNumberWithE status=SUCCESS method=Test02.checkCreateRegistra...)</span>
-                <span class="method-start">44217 ms</span>
+                <span class="method-start">44151 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkEnterRegistrationNumberWithE</span>
-                <span class="method-start">44217 ms</span>
+                <span class="method-start">44151 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkEnterRegistrationNumberWithE status=SUCCESS method=Test02.checkEnterRegistrati...)</span>
-                <span class="method-start">44724 ms</span>
+                <span class="method-start">44640 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkEnterRegistrationNumberWithoutE</span>
-                <span class="method-start">44724 ms</span>
+                <span class="method-start">44640 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkEnterRegistrationNumberWithoutE status=SUCCESS method=Test02.checkEnterRegistr...)</span>
-                <span class="method-start">45199 ms</span>
+                <span class="method-start">45107 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkIllegalValuesStorageUnit</span>
-                <span class="method-start">45199 ms</span>
+                <span class="method-start">45107 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIllegalValuesStorageUnit status=SUCCESS method=Test02.checkIllegalValuesStorag...)</span>
-                <span class="method-start">47330 ms</span>
+                <span class="method-start">47316 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
                 <span class="method-name">checkAutosuggestStorageUnit</span>
-                <span class="method-start">47330 ms</span>
+                <span class="method-start">47317 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">takeScreenShotOnFailure([TestResult name=checkAutosuggestStorageUnit status=SUCCESS method=Test02.checkAutosuggestStorageUni...)</span>
-                <span class="method-start">47538 ms</span>
+                <span class="method-start">47545 ms</span>
               </div> <!-- configuration-method after -->
               <div class="test-method">
+                <img src="failed.png">
+                </img>
                 <span class="method-name">checkEnterStorageUnits</span>
-                <span class="method-start">47538 ms</span>
+                <span class="method-start">47546 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
-                <span class="method-name">takeScreenShotOnFailure([TestResult name=checkEnterStorageUnits status=SUCCESS method=Test02.checkEnterStorageUnits()[pri:0,...)</span>
-                <span class="method-start">52086 ms</span>
+                <span class="method-name">takeScreenShotOnFailure([TestResult name=checkEnterStorageUnits status=FAILURE method=Test02.checkEnterStorageUnits()[pri:0,...)</span>
+                <span class="method-start">48649 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="test-method">
+                <span class="method-name">checkIllegalValuesStorageLocations</span>
+                <span class="method-start">48819 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">takeScreenShotOnFailure([TestResult name=checkIllegalValuesStorageLocations status=SUCCESS method=Test02.checkIllegalValuesS...)</span>
+                <span class="method-start">50681 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-class after">
                 <span class="method-name">cleanUp</span>
-                <span class="method-start">52087 ms</span>
+                <span class="method-start">50682 ms</span>
               </div> <!-- configuration-class after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
