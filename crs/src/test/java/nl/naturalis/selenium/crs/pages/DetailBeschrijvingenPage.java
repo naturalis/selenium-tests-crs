@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
+import nl.naturalis.selenium.crs.tests.ProtoTest;
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
@@ -121,7 +122,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(name = "CURRENTCOLLECTIONUNIT")
 	private WebElement standardStorageUnit;
 	
-	@FindBy (xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@type='image']")
+	@FindBy (xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@class='errorImage']")
 	private WebElement standardStorageUnitErrorIcon;
 	
 	@FindBy(name = "USUALCOLLECTIONUNIT")
@@ -130,7 +131,14 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy (xpath = "//input[@name='USUALCOLLECTIONUNIT']/parent::td/input[@type='image']")
 	private WebElement temporaryStorageUnitErrorIcon;
 	
+	@FindBy(name = "CURRENTSTORAGELOCATION")
+	private WebElement standardStorageLocation;
+
+	@FindBy (xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	private WebElement standardStorageLocationErrorIcon;
 	
+	@FindBy(name = "USUALSTORAGELOCATION")
+	private WebElement temporaryStorageLocation;
 	
 	// Buttons, icons, ...
 	
@@ -434,56 +442,132 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.remarks.clear();
 	}
 
+	// STORAGE
+
+	// Standard Storage Unit
+	
 	public String getStandardStorageUnit() {
 		return this.standardStorageUnit.getText();
 	}
-	
+		
 	public void setStandardStorageUnit(String text) {
 		if (text == "TAB") {
-			this.prefix.sendKeys(Keys.TAB);
+			this.standardStorageUnit.sendKeys(Keys.TAB);
 		} else {
 			this.standardStorageUnit.sendKeys(text);
 		}
+	}
+	
+	public void selectStandardStorageUnit(String text) {
+		this.standardStorageUnit.sendKeys(text);
+		driver.findElement(By.partialLinkText(text)).click();
 	}
 	
 	public void deleteStandardStorageUnit() {
 		this.standardStorageUnit.clear();
 	}
 	
-	public int autosuggestStandardStorageUnit(String text) {
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame("ctl00_masterContent_iframe_1");
-		return driver.findElements(By.partialLinkText(text)).size();
+	public int numberOfSuggestsStandardStorageUnit(String text) {
+		setStandardStorageUnit(text);
+		List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
+		return suggestsList.size();
 	}
 	
 	public String getWarningStandardStorageUnitErrorIcon() {
 		return this.standardStorageUnitErrorIcon.getAttribute("alt");
 	}
 
+	// Standard Storage Location
+	
+	public String getStandardStorageLocation() {
+		return this.standardStorageLocation.getText();
+	}
+		
+	public void setStandardStorageLocation(String text) {
+		if (text == "TAB") {
+			this.standardStorageLocation.sendKeys(Keys.TAB);
+		} else {
+			this.standardStorageLocation.sendKeys(text);
+		}
+	}
+
+	public String getAttributeStandardStorageLocation(String attribute) {
+		return this.standardStorageLocation.getCssValue(attribute);
+	}
+	
+	public Boolean isStandardStorageLocationEnabled() {
+		return this.standardStorageLocation.isEnabled();
+	}
+
+	
+	
+	// Temporary Storage Unit
+	
 	public String getTemporaryStorageUnit() {
 		return this.temporaryStorageUnit.getText();
 	}
 	
 	public void setTemporaryStorageUnit(String text) {
 		if (text == "TAB") {
-			this.prefix.sendKeys(Keys.TAB);
+			this.temporaryStorageUnit.sendKeys(Keys.TAB);
 		} else {
 			this.temporaryStorageUnit.sendKeys(text);
 		}
 	}
 	
+	public void selectTemporaryStorageUnit(String text) {
+		this.temporaryStorageUnit.sendKeys(text);
+		WebElement autoSuggest = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+		driver.findElement(By.partialLinkText(text)).click();
+	}
+
 	public void deleteTemporaryStorageUnit() {
 		this.temporaryStorageUnit.clear();
+	}
+
+	public int numberOfSuggestsTemporaryStorageUnit(String text) {
+		setStandardStorageUnit(text);
+		List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
+		return suggestsList.size();
 	}
 
 	public String getWarningTemporaryStorageUnitErrorIcon() {
 		return this.temporaryStorageUnitErrorIcon.getAttribute("alt");
 	}
+
+
+	// Temporary Storage Location
+
+	public String getTemporaryStorageLocation() {
+		return this.temporaryStorageLocation.getText();
+	}
+		
+	public void setTemporaryStorageLocation(String text) {
+		if (text == "TAB") {
+			this.temporaryStorageLocation.sendKeys(Keys.TAB);
+		} else {
+			this.temporaryStorageLocation.sendKeys(text);
+		}
+	}
+
+	public String getAttributeTemporaryStorageLocation(String attribute) {
+		return this.temporaryStorageLocation.getCssValue(attribute);
+	}
 	
+	public Boolean isTemporaryStorageLocationEnabled() {
+		return this.temporaryStorageLocation.isEnabled();
+	}
+	
+
+	
+	
+
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
 
+	
+	
 	public List<WebElement> clickFormulierenSelect() {
 		Actions action = new Actions(driver);
 		action.moveToElement(this.formulierenSelect).perform();

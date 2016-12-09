@@ -20,6 +20,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -162,8 +164,9 @@ public class ProtoTest extends AbstractTest {
 
 	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
 	public void smallDelay() {
-		ProtoTest.detailBeschrijvingenPage.setRemarks("hello there");
-		ProtoTest.detailBeschrijvingenPage.deleteRemarks();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("registrationNumber")));
 	}
 	
 	/**
@@ -197,15 +200,37 @@ public class ProtoTest extends AbstractTest {
 	public void checkAutosuggestStorageUnit() {
 		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
 		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageUnit();
-		System.out.println("Items: " + ProtoTest.detailBeschrijvingenPage.autosuggestStandardStorageUnit("BE"));
-		// ProtoTest.detailBeschrijvingenPage.setStandardStorageUnit("TAB");
-		// Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningStandardStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.01");
-		
-		// ProtoTest.detailBeschrijvingenPage.setTemporaryStorageUnit("BE");
-		// ProtoTest.detailBeschrijvingenPage.setTemporaryStorageUnit("TAB");
-		// Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningTemporaryStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.02");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfSuggestsStandardStorageUnit("BE"), 10, "Fout in 2.1.16");
+		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
 	}
 	
+	/**
+	 * 2.1.17
+	 * 
+	 * Losse scripts (afhandeling Storage)
+	 * 
+	 * Zodra  er een waarde ingevoerd is in Standard  storage unit
+	 * 1. kleurt het veld Standard storage location dan grijs en 
+	 * 2. kan niet worden ingevoerd? Of,
+	 * bij het  invoeren van Temporary storage unit 
+	 * 3. kleurt dan Temporary storage location grijs en 
+	 * 4. kan niet worden ingevoerd?
+	 */
+	@Test(priority = 35, dependsOnMethods = { "checkAutosuggestStorageUnit" })
+	public void checkEnterStorageUnits() {
+		String standardStorageUnitTestValue = "BE.0000001";
+		String temporaryStorageUnitTestValue = "BE.0000002";
+		ProtoTest.detailBeschrijvingenPage.selectStandardStorageUnit(standardStorageUnitTestValue);
+		// 1. kleurt het veld Standard storage location grijs?
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAttributeStandardStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.01");
+		// 2. kan niet worden ingevoerd?
+		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isStandardStorageLocationEnabled(), "Fout in 2.1.17.02");
+		ProtoTest.detailBeschrijvingenPage.selectTemporaryStorageUnit(temporaryStorageUnitTestValue);
+		// 3. kleurt het veld Temporary storage location grijs?
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAttributeTemporaryStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.03");
+		// 4. kan niet worden ingevoerd?
+		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isTemporaryStorageLocationEnabled(), "Fout in 2.1.17.04");
+	}
 	
 
 	

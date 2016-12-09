@@ -688,5 +688,60 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setTemporaryStorageUnit("TAB");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningTemporaryStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.02");
 	}
+	
+	/**
+	 * 2.1.16
+	 * 
+	 * Vul Standard of Temporary storage unit in met een juiste waarde 
+	 * (juiste waarde is BE. gevolgd door een nummer). 
+	 * Verschijnt  de autosuggest?
+	 *  
+	 */
+	@Test(priority = 35, dependsOnMethods = { "checkIllegalValuesStorageUnit" })
+	public void checkAutosuggestStorageUnit() {
+		Test02.detailBeschrijvingenPage.deleteStandardStorageUnit();
+		Test02.detailBeschrijvingenPage.deleteTemporaryStorageUnit();
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsStandardStorageUnit("BE"), 10, "Fout in 2.1.16");
+		Test02.detailBeschrijvingenPage.deleteStandardStorageUnit();
+	}
+	
+	/**
+	 * 2.1.17
+	 * 
+	 * Losse scripts (afhandeling Storage)
+	 * 
+	 * Zodra  er een waarde ingevoerd is in Standard  storage unit
+	 * 1. kleurt het veld Standard storage location dan grijs en 
+	 * 2. kan niet worden ingevoerd? Of,
+	 * 
+	 * bij het  invoeren van Temporary storage unit 
+	 * 3. kleurt dan Temporary storage location grijs en 
+	 * 4. kan niet worden ingevoerd?
+	 */
+	@Test(priority = 35, dependsOnMethods = { "checkAutosuggestStorageUnit" })
+	public void checkEnterStorageUnits() {
+		String standardStorageUnitTestValue = "BE.0000001";
+		String temporaryStorageUnitTestValue = "BE.0000002";
+		
+		Test02.detailBeschrijvingenPage.selectStandardStorageUnit(standardStorageUnitTestValue);
+		// 1. kleurt het veld Standard storage location grijs?
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeStandardStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.01");
+		// 2. kan niet worden ingevoerd?
+		Assert.assertFalse(Test02.detailBeschrijvingenPage.isStandardStorageLocationEnabled(), "Fout in 2.1.17.02");
+		
+		Test02.detailBeschrijvingenPage.selectTemporaryStorageUnit(temporaryStorageUnitTestValue);
+		// 3. kleurt het veld Temporary storage location grijs?
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeTemporaryStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.03");
+		// 4. kan niet worden ingevoerd?
+		Assert.assertFalse(Test02.detailBeschrijvingenPage.isTemporaryStorageLocationEnabled(), "Fout in 2.1.17.04");
+	}
+
+	/**
+	 * 2.1.18
+	 * 
+	 * 
+	 * 
+	 */
+	
 
 }
