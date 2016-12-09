@@ -216,7 +216,7 @@ public class ProtoTest extends AbstractTest {
 	 * 3. kleurt dan Temporary storage location grijs en 
 	 * 4. kan niet worden ingevoerd?
 	 */
-	@Test(priority = 35, dependsOnMethods = { "checkAutosuggestStorageUnit" })
+	@Test(priority = 36, dependsOnMethods = { "checkAutosuggestStorageUnit" })
 	public void checkEnterStorageUnits() {
 		String standardStorageUnitTestValue = "BE.0000001";
 		String temporaryStorageUnitTestValue = "BE.0000002";
@@ -239,7 +239,7 @@ public class ProtoTest extends AbstractTest {
 	 * Verschijnt  er een uitroepteken met 'invalid value' achter het veld?
 	 * 
 	 */
-	@Test(priority = 35, dependsOnMethods = { "checkAutosuggestStorageUnit" })
+	@Test(priority = 37, dependsOnMethods = { "checkEnterStorageUnits" })
 	public void checkIllegalValuesStorageLocations() {
 		String illegalTestValue = "illegal-text";
 		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
@@ -257,5 +257,22 @@ public class ProtoTest extends AbstractTest {
 		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
 
 	}
+	
+	/**
+	 * 2.1.19
+	 * 
+	 * Vul Standard of Temporary storage location in met een juiste waarde. 
+	 * Verschijnt de autosuggest ? 
+	 */
+	@Test(priority = 38, dependsOnMethods = { "checkIllegalValuesStorageLocations" })
+	public void checkAutosuggestStorageLocations() {
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfSuggestsStandardStorageLocation("DW"), 10, "Fout in 2.1.19.01");
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfSuggestsTemporaryStorageLocation("DW"), 10, "Fout in 2.1.19.01");
+
+		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageLocation();
+		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
+	}
+
+	
 	
 }

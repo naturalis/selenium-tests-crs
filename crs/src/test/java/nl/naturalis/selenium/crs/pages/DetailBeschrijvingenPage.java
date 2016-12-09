@@ -467,7 +467,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	public void selectStandardStorageUnit(String text) {
 		this.standardStorageUnit.sendKeys(text);
-		driver.findElement(By.partialLinkText(text)).click();
+		WebElement autoSuggest = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+		autoSuggest.click();
 	}
 	
 	public void deleteStandardStorageUnit() {
@@ -497,6 +498,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			this.standardStorageLocation.sendKeys(text);
 		}
 	}
+	
+	public int numberOfSuggestsStandardStorageLocation(String text) {
+			setStandardStorageLocation(text);
+			List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+			return suggestsList.size();
+		}
 
 	public void deleteStandardStorageLocation() {
 		this.standardStorageLocationBinIcon.click();
@@ -533,7 +540,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.temporaryStorageUnit.sendKeys(text);
 		WebElement autoSuggest = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
 		autoSuggest.click();
-		// driver.findElement(By.partialLinkText(text)).click();
 	}
 
 	public void deleteTemporaryStorageUnit() {
@@ -563,6 +569,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		} else {
 			this.temporaryStorageLocation.sendKeys(text);
 		}
+	}
+
+	public int numberOfSuggestsTemporaryStorageLocation(String text) {
+		setTemporaryStorageLocation(text);
+		List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+		return suggestsList.size();
 	}
 
 	public void deleteTemporaryStorageLocation() {
