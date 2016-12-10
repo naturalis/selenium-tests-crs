@@ -776,5 +776,14 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.deleteStandardStorageLocation();
 		Test02.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
 	}
+	
+	/**
+	 * 2.1.20
+	 * 
+	 * Klik op het calculator Icoon achter 1 van de 2 storage location velden. 
+	 * 1. Verschijnt er een pop-up (storage location selectie scherm) 
+	 * a. met daarin de storage location boom  
+	 * b. met achter elke storage location de naam? 
+	 */
 
 }

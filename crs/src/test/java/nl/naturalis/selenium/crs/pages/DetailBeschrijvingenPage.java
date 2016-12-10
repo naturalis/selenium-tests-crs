@@ -1,6 +1,7 @@
 package nl.naturalis.selenium.crs.pages;
 
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -15,7 +16,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
-import nl.naturalis.selenium.crs.tests.ProtoTest;
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
@@ -25,32 +25,32 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private String PageTitle = "NCB PL omgeving - ";
 	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
 	private String PageUrlQueryString = "";
-	
+
 	@FindBy(id = "ctl00_masterContent_tbl_navigatie")
 	private WebElement resultNumberTable;
 
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']")
 	private WebElement prefix;
-	
+
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/input[@title='Select']")
 	private WebElement prefixThesaurusIcon;
-	
+
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*//span/input[1]")
 	private WebElement prefixThesaurusList;
 
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/input[@title='Clear']")
 	private WebElement prefixDeleteIcon;
-	
+
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement prefixConceptLink;
-	
+
 	@FindBy(css = "tbody>tr>td>span>span.huidige")
 	private WebElement numberSpan;
 
 	@FindBy(xpath = "//div[@id='ctl00_masterContent_txt_FormulierenUpdatePanel']/select")
 	private WebElement formulierenSelect;
 
-	@FindBy(name="ctl00$masterContent$btn_formulieren")
+	@FindBy(name = "ctl00$masterContent$btn_formulieren")
 	private WebElement buttonFormulierenSelect;
 
 	@FindBy(name = "ctl00_QuickSearchTextBox")
@@ -61,19 +61,19 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_catalognumber?numberfield']")
 	private WebElement number;
-	
+
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']")
-	private WebElement suffix;	
+	private WebElement suffix;
 
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']/parent::td/img[@class='errorImage']")
-	private WebElement suffixErrorIcon;	
+	private WebElement suffixErrorIcon;
 
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
 
 	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/input")
 	private WebElement registrationNumberErrorMessage;
-	
+
 	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/img")
 	private WebElement registrationNumberErrorIcon;
 
@@ -82,16 +82,16 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']")
 	private WebElement currentCollectionName;
-	
+
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearCurrentCollectionName;
 
 	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkCurrentCollectionName;
 
-	@FindBy(name="ko_unique_64")
+	@FindBy(name = "ko_unique_64")
 	private WebElement basisOfRecord;
-	
+
 	@FindBy(xpath = "//input[@name='ko_unique_64']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearBasisOfRecord;
 
@@ -115,42 +115,48 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(xpath = "//input[@name='PRESERVEDPART']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
-	
+
 	@FindBy(xpath = "//textarea[@atfid='add_ncrs_specimen_remarks?defaultfield']")
 	private WebElement remarks;
-	
+
 	@FindBy(name = "CURRENTCOLLECTIONUNIT")
 	private WebElement standardStorageUnit;
-	
-	@FindBy (xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@class='errorImage']")
+
+	@FindBy(xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@class='errorImage']")
 	private WebElement standardStorageUnitErrorIcon;
-	
+
 	@FindBy(name = "USUALCOLLECTIONUNIT")
 	private WebElement temporaryStorageUnit;
-	
-	@FindBy (xpath = "//input[@name='USUALCOLLECTIONUNIT']/parent::td/input[@type='image']")
+
+	@FindBy(xpath = "//input[@name='USUALCOLLECTIONUNIT']/parent::td/input[@type='image']")
 	private WebElement temporaryStorageUnitErrorIcon;
-	
+
 	@FindBy(name = "CURRENTSTORAGELOCATION")
 	private WebElement standardStorageLocation;
 
-	@FindBy (xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Clear']")
 	private WebElement standardStorageLocationBinIcon;
 
-	@FindBy (xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Select']")
+	private WebElement standardStorageLocationSelectIcon;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@class='errorImage']")
 	private WebElement standardStorageLocationErrorIcon;
-	
+
 	@FindBy(name = "USUALSTORAGELOCATION")
 	private WebElement temporaryStorageLocation;
 
-	@FindBy (xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Clear']")
 	private WebElement temporaryStorageLocationBinIcon;
-	
-	@FindBy (xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Select']")
+	private WebElement temporaryStorageLocationSelectIcon;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
 	private WebElement temporaryStorageLocationErrorIcon;
-	
+
 	// Buttons, icons, ...
-	
+
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
 	private WebElement iconAddMultimedia;
@@ -214,7 +220,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #16 Warning Basis of Record
 	@FindBy(css = "img#ko_unique_64")
 	private WebElement invalidBasisOfRecord;
-	
+
 	// #17 Warning Mount
 	@FindBy(css = "img#SPECIMENMOUNT")
 	private WebElement invalidMount;
@@ -222,8 +228,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #18 Warning Preserved Part
 	@FindBy(css = "img#PRESERVEDPART")
 	private WebElement invalidPreservedPart;
-	
-	
+
 	@FindBy(id = "scrolldiv")
 	private WebElement contextDisplay;
 
@@ -236,13 +241,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
 
-	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
-		this.PageURL=Configuration.getDomain() + this.PageURL;
-	}	
-	
+		this.PageURL = Configuration.getDomain() + this.PageURL;
+	}
+
 	public void setPageUrlQueryString(String queryString) {
 		this.PageUrlQueryString = queryString;
 	}
@@ -289,9 +293,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.setPrefix(text);
 		this.driver.switchTo().defaultContent();
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
-		this.driver.findElement(By.partialLinkText(text  + "(Prefix)")).click();
+		this.driver.findElement(By.partialLinkText(text + "(Prefix)")).click();
 		this.driver.switchTo().defaultContent();
-		this.driver.switchTo().frame("iframe_1");		
+		this.driver.switchTo().frame("iframe_1");
 	}
 
 	public void deletePrefix() {
@@ -351,7 +355,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public String getAltRegistrationNumberErrorMessage() {
 		return this.registrationNumberErrorMessage.getAttribute("value");
 	}
-	
+
 	public String getAltRegistrationNumberErrorIcon() {
 		return this.registrationNumberErrorIcon.getAttribute("alt");
 	}
@@ -370,7 +374,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.switchToFrame_1();
 		this.sourceInstitute.clear();
 	}
-	
+
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
@@ -407,13 +411,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.mount.click();
 		this.clearMount.click();
 	}
-	
+
 	public String getMountTlink() {
 		this.switchToFrame_1();
 		return this.tlinkMount.getText();
 	}
 
-	
 	public void setPreservedPart(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.preservedPart.click();
@@ -434,7 +437,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.switchToFrame_1();
 		return this.tlinkPreservedPart.getText();
 	}
-	
+
 	public String getRemarks() {
 		return remarks.getText();
 	}
@@ -452,11 +455,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// STORAGE
 
 	// Standard Storage Unit
-	
+
 	public String getStandardStorageUnit() {
 		return this.standardStorageUnit.getText();
 	}
-		
+
 	public void setStandardStorageUnit(String text) {
 		if (text == "TAB") {
 			this.standardStorageUnit.sendKeys(Keys.TAB);
@@ -464,33 +467,34 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			this.standardStorageUnit.sendKeys(text);
 		}
 	}
-	
+
 	public void selectStandardStorageUnit(String text) {
 		this.standardStorageUnit.sendKeys(text);
-		WebElement autoSuggest = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+		WebElement autoSuggest = (new WebDriverWait(driver, 3))
+				.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
 		autoSuggest.click();
 	}
-	
+
 	public void deleteStandardStorageUnit() {
 		this.standardStorageUnit.clear();
 	}
-	
+
 	public int numberOfSuggestsStandardStorageUnit(String text) {
 		setStandardStorageUnit(text);
 		List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
 		return suggestsList.size();
 	}
-	
+
 	public String getWarningStandardStorageUnitErrorIcon() {
 		return this.standardStorageUnitErrorIcon.getAttribute("alt");
 	}
 
 	// Standard Storage Location
-	
+
 	public String getStandardStorageLocation() {
 		return this.standardStorageLocation.getText();
 	}
-		
+
 	public void setStandardStorageLocation(String text) {
 		if (text == "TAB") {
 			this.standardStorageLocation.sendKeys(Keys.TAB);
@@ -498,12 +502,31 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			this.standardStorageLocation.sendKeys(text);
 		}
 	}
-	
+
+	public void selectStandardStorageLocation() {		
+		// Click on the Button "New Message Window"
+		this.standardStorageLocationSelectIcon.click();
+		driver.switchTo().defaultContent();
+
+		Set<String> AllWindowHandles = driver.getWindowHandles();
+		String mainWindow = (String) AllWindowHandles.toArray()[0];
+		String popupWindow = (String) AllWindowHandles.toArray()[1];
+		
+		// Switching from main window to popup window
+		driver.switchTo().window(popupWindow);
+		System.out.println("Title popup: " + driver.getTitle());
+
+		// Close the Pop Up window
+		// driver.close();
+
+
+	}
+
 	public int numberOfSuggestsStandardStorageLocation(String text) {
-			setStandardStorageLocation(text);
-			List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
-			return suggestsList.size();
-		}
+		setStandardStorageLocation(text);
+		List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+		return suggestsList.size();
+	}
 
 	public void deleteStandardStorageLocation() {
 		this.standardStorageLocationBinIcon.click();
@@ -512,7 +535,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public String getAttributeStandardStorageLocation(String attribute) {
 		return this.standardStorageLocation.getCssValue(attribute);
 	}
-	
+
 	public Boolean isStandardStorageLocationEnabled() {
 		return this.standardStorageLocation.isEnabled();
 	}
@@ -520,14 +543,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public String getWarningStandardStorageLocationErrorIcon() {
 		return this.standardStorageLocationErrorIcon.getAttribute("alt");
 	}
-	
-	
+
 	// Temporary Storage Unit
-	
+
 	public String getTemporaryStorageUnit() {
 		return this.temporaryStorageUnit.getText();
 	}
-	
+
 	public void setTemporaryStorageUnit(String text) {
 		if (text == "TAB") {
 			this.temporaryStorageUnit.sendKeys(Keys.TAB);
@@ -535,10 +557,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			this.temporaryStorageUnit.sendKeys(text);
 		}
 	}
-	
+
 	public void selectTemporaryStorageUnit(String text) {
 		this.temporaryStorageUnit.sendKeys(text);
-		WebElement autoSuggest = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+		WebElement autoSuggest = (new WebDriverWait(driver, 3))
+				.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
 		autoSuggest.click();
 	}
 
@@ -556,13 +579,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return this.temporaryStorageUnitErrorIcon.getAttribute("alt");
 	}
 
-
 	// Temporary Storage Location
 
 	public String getTemporaryStorageLocation() {
 		return this.temporaryStorageLocation.getText();
 	}
-		
+
 	public void setTemporaryStorageLocation(String text) {
 		if (text == "TAB") {
 			this.temporaryStorageLocation.sendKeys(Keys.TAB);
@@ -580,30 +602,24 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void deleteTemporaryStorageLocation() {
 		this.temporaryStorageLocationBinIcon.click();
 	}
-	
+
 	public String getAttributeTemporaryStorageLocation(String attribute) {
 		return this.temporaryStorageLocation.getCssValue(attribute);
 	}
-	
+
 	public Boolean isTemporaryStorageLocationEnabled() {
 		return this.temporaryStorageLocation.isEnabled();
 	}
-	
+
 	public String getWarningTemporaryStorageLocationErrorIcon() {
 		return this.standardStorageLocationErrorIcon.getAttribute("alt");
 	}
 
-	
-	
 	// ***
-	
 
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
-
-	
-	
 
 	public List<WebElement> clickFormulierenSelect() {
 		Actions action = new Actions(driver);
@@ -619,38 +635,37 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		select.getFirstSelectedOption().click();
 		buttonFormulierenSelect.click();
 	}
-	
+
 	public String findSelectedFormulier() {
 		driver.switchTo().defaultContent();
 		Select dropDown = new Select(formulierenSelect);
-//		WebElement options = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='ctl00_masterContent_ddl_fomulieren']/option[@selected]")));
+		// WebElement options = (new WebDriverWait(driver,
+		// 3)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='ctl00_masterContent_ddl_fomulieren']/option[@selected]")));
 		String selected = dropDown.getFirstSelectedOption().getText();
 		return selected;
 	}
-	
-	
 
 	public void enterValueToField(String fieldname, String value) {
 		this.switchToMainFrame();
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		WebElement field = null;
 
-		switch (fieldname) {         
-        case "currentcollectionname":
+		switch (fieldname) {
+		case "currentcollectionname":
 			field = currentCollectionName;
 			break;
-        case "basisofrecord":
-        	field = basisOfRecord;
-        	break;
-        case "mount":
-        	field = mount;
-        	break;
-        case "preservedpart":
-        	field = preservedPart;
-        	break;
-        default:
-        	field = null;
-        }
+		case "basisofrecord":
+			field = basisOfRecord;
+			break;
+		case "mount":
+			field = mount;
+			break;
+		case "preservedpart":
+			field = preservedPart;
+			break;
+		default:
+			field = null;
+		}
 
 		// Position the cursor in the input field ...
 		Actions builder = new Actions(driver);
@@ -666,29 +681,29 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			field.sendKeys(value);
 		}
 	}
-	
+
 	public String readValueFromField(String fieldname) {
 		WebElement field = null;
-		switch (fieldname) {         
-        case "basisofrecord":
-        	field = basisOfRecord;
-        	break;
-        case "currentcollectionname":
+		switch (fieldname) {
+		case "basisofrecord":
+			field = basisOfRecord;
+			break;
+		case "currentcollectionname":
 			field = currentCollectionName;
 			break;
-        case "preservedpart":
+		case "preservedpart":
 			field = preservedPart;
 			break;
-        case "mount":
-        	field = mount;
-        	break;
-        default:
-        	field = null;
-        }
+		case "mount":
+			field = mount;
+			break;
+		default:
+			field = null;
+		}
 		return field.getAttribute("value");
-		
+
 	}
-	
+
 	public void switchToMainFrame() {
 		driver.switchTo().defaultContent();
 	}
@@ -704,7 +719,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.driver.switchTo().frame("iframe_1");
 	}
 
-	
 	/**
 	 * 
 	 */
@@ -766,8 +780,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		iconValues[1] = iconAttachAllMultimediaFromGlobalSelection.getAttribute("title").trim();
 		return iconValues;
 	}
-	
-	
+
 	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
 		switch (choice) {
@@ -828,7 +841,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		default:
 			icon = null;
 		}
-	
+
 		EditIcon thisIcon = new EditIcon();
 		thisIcon.getSrc(icon.getAttribute("src").trim());
 		thisIcon.getAlt(icon.getAttribute("alt").trim());

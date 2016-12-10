@@ -1,675 +1,231 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" total="39" passed="38">
+<testng-results skipped="0" failed="0" total="14" passed="14">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="57912" started-at="2016-12-09T14:53:33Z" finished-at="2016-12-09T14:54:30Z">
+  <suite name="Default suite" duration-ms="15918" started-at="2016-12-09T19:35:56Z" finished-at="2016-12-09T19:36:12Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="57912" started-at="2016-12-09T14:53:33Z" finished-at="2016-12-09T14:54:30Z">
-      <class name="nl.naturalis.selenium.crs.tests.Test02">
-        <test-method status="PASS" signature="initalize()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="initalize" is-config="true" duration-ms="2865" started-at="2016-12-09T15:53:33Z" finished-at="2016-12-09T15:53:35Z">
+    <test name="Default test" duration-ms="15918" started-at="2016-12-09T19:35:56Z" finished-at="2016-12-09T19:36:12Z">
+      <class name="nl.naturalis.selenium.crs.tests.ProtoTest">
+        <test-method status="PASS" signature="initalize()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="initalize" is-config="true" duration-ms="2790" started-at="2016-12-09T20:35:56Z" finished-at="2016-12-09T20:35:59Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initalize -->
-        <test-method status="PASS" signature="homePageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="homePageOpen" duration-ms="29" started-at="2016-12-09T15:53:35Z" finished-at="2016-12-09T15:53:35Z">
+        <test-method status="PASS" signature="homePageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="homePageOpen" duration-ms="26" started-at="2016-12-09T20:35:59Z" finished-at="2016-12-09T20:35:59Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- homePageOpen -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:53:35Z" finished-at="2016-12-09T15:53:35Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="3" started-at="2016-12-09T20:35:59Z" finished-at="2016-12-09T20:35:59Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=homePageOpen status=SUCCESS method=Test02.homePageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=homePageOpen status=SUCCESS method=ProtoTest.homePageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="homePageDoLogin()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="homePageDoLogin" duration-ms="1346" started-at="2016-12-09T15:53:35Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.homePageOpen" finished-at="2016-12-09T15:53:37Z">
+        <test-method status="PASS" signature="homePageDoLogin()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="homePageDoLogin" duration-ms="1102" started-at="2016-12-09T20:35:59Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.homePageOpen" finished-at="2016-12-09T20:36:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- homePageDoLogin -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:53:37Z" finished-at="2016-12-09T15:53:37Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:00Z" finished-at="2016-12-09T20:36:00Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=homePageDoLogin status=SUCCESS method=Test02.homePageDoLogin()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=homePageDoLogin status=SUCCESS method=ProtoTest.homePageDoLogin()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="startPageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="startPageTitle" duration-ms="15" started-at="2016-12-09T15:53:37Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.homePageDoLogin" finished-at="2016-12-09T15:53:37Z">
+        <test-method status="PASS" signature="startPageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="startPageTitle" duration-ms="4" started-at="2016-12-09T20:36:00Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.homePageDoLogin" finished-at="2016-12-09T20:36:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startPageTitle -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:37Z" finished-at="2016-12-09T15:53:37Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T20:36:00Z" finished-at="2016-12-09T20:36:00Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=startPageTitle status=SUCCESS method=Test02.startPageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=startPageTitle status=SUCCESS method=ProtoTest.startPageTitle()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="clickAddSpecimen()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="clickAddSpecimen" duration-ms="2844" started-at="2016-12-09T15:53:37Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.startPageTitle" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="clickAddSpecimen()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="clickAddSpecimen" duration-ms="2367" started-at="2016-12-09T20:36:00Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.startPageTitle" finished-at="2016-12-09T20:36:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- clickAddSpecimen -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:53:40Z" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T20:36:02Z" finished-at="2016-12-09T20:36:02Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=clickAddSpecimen status=SUCCESS method=Test02.clickAddSpecimen()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=clickAddSpecimen status=SUCCESS method=ProtoTest.clickAddSpecimen()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="detailPageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="detailPageOpen" duration-ms="50" started-at="2016-12-09T15:53:40Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.clickAddSpecimen" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="detailPageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="detailPageOpen" duration-ms="37" started-at="2016-12-09T20:36:02Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.clickAddSpecimen" finished-at="2016-12-09T20:36:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- detailPageOpen -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="3" started-at="2016-12-09T15:53:40Z" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:02Z" finished-at="2016-12-09T20:36:02Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=detailPageOpen status=SUCCESS method=Test02.detailPageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=detailPageOpen status=SUCCESS method=ProtoTest.detailPageOpen()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="openFormSelect()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="openFormSelect" duration-ms="325" started-at="2016-12-09T15:53:40Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.detailPageOpen" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="openFormSelect()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="openFormSelect" duration-ms="234" started-at="2016-12-09T20:36:02Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.detailPageOpen" finished-at="2016-12-09T20:36:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- openFormSelect -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:40Z" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:02Z" finished-at="2016-12-09T20:36:02Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=openFormSelect status=SUCCESS method=Test02.openFormSelect()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=openFormSelect status=SUCCESS method=ProtoTest.openFormSelect()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="selectSpecifiedForm()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="selectSpecifiedForm" duration-ms="285" started-at="2016-12-09T15:53:40Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.openFormSelect" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="selectSpecifiedForm()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="selectSpecifiedForm" duration-ms="238" started-at="2016-12-09T20:36:02Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.openFormSelect" finished-at="2016-12-09T20:36:03Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- selectSpecifiedForm -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:53:40Z" finished-at="2016-12-09T15:53:40Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:03Z" finished-at="2016-12-09T20:36:03Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=selectSpecifiedForm status=SUCCESS method=Test02.selectSpecifiedForm()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=selectSpecifiedForm status=SUCCESS method=ProtoTest.selectSpecifiedForm()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIconInfo()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIconInfo" duration-ms="1956" started-at="2016-12-09T15:53:40Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.selectSpecifiedForm" finished-at="2016-12-09T15:53:42Z">
+        <test-method status="PASS" signature="smallDelay()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="smallDelay" duration-ms="1307" started-at="2016-12-09T20:36:03Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.selectSpecifiedForm" finished-at="2016-12-09T20:36:04Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- checkIconInfo -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:42Z" finished-at="2016-12-09T15:53:42Z">
+        </test-method> <!-- smallDelay -->
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:04Z" finished-at="2016-12-09T20:36:04Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=checkIconInfo status=SUCCESS method=Test02.checkIconInfo()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=smallDelay status=SUCCESS method=ProtoTest.smallDelay()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkContextDisplay()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkContextDisplay" duration-ms="2176" started-at="2016-12-09T15:53:42Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.selectSpecifiedForm" finished-at="2016-12-09T15:53:44Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkContextDisplay -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:44Z" finished-at="2016-12-09T15:53:44Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkContextDisplay status=SUCCESS method=Test02.checkContextDisplay()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkThesaurusAndBinIcons()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkThesaurusAndBinIcons" duration-ms="2154" started-at="2016-12-09T15:53:44Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.selectSpecifiedForm" finished-at="2016-12-09T15:53:47Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkThesaurusAndBinIcons -->
-        <test-method status="FAIL" signature="checkIncorrectSubmissionValueTest1A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest1A" duration-ms="2259" started-at="2016-12-09T15:53:47Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkThesaurusAndBinIcons" finished-at="2016-12-09T15:53:49Z">
-          <exception class="org.openqa.selenium.NoSuchElementException">
-            <message>
-              <![CDATA[no such element: Unable to locate element: {"method":"xpath","selector":"//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::span/parent::td/img[@class='errorImage']"}
-  (Session info: chrome=55.0.2883.75)
-  (Driver info: chromedriver=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3),platform=Linux 4.4.0-53-generic x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 1.06 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'LT005461', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '4.4.0-53-generic', java.version: '1.8.0_111'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.tMLjet}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
-Session ID: 7c9b5ccd22a640b2d01e384425452852
-*** Element info: {Using=xpath, value=//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::span/parent::td/img[@class='errorImage']}]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::span/parent::td/img[@class='errorImage']"}
-  (Session info: chrome=55.0.2883.75)
-  (Driver info: chromedriver=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3),platform=Linux 4.4.0-53-generic x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 1.06 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'LT005461', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '4.4.0-53-generic', java.version: '1.8.0_111'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417424 (c5c5ea873213ee72e3d0929b47482681555340c3), userDataDir=/tmp/.org.chromium.Chromium.tMLjet}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=55.0.2883.75, platform=LINUX, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
-Session ID: 7c9b5ccd22a640b2d01e384425452852
-*** Element info: {Using=xpath, value=//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::span/parent::td/img[@class='errorImage']}
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
-	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
-	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
-	at com.sun.proxy.$Proxy8.getAttribute(Unknown Source)
-	at nl.naturalis.selenium.crs.pages.DetailBeschrijvingenPage.getIconInfo(DetailBeschrijvingenPage.java:835)
-	at nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1A(Test02.java:292)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.NoSuchElementException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest1A -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:47Z" finished-at="2016-12-09T15:53:47Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkThesaurusAndBinIcons status=SUCCESS method=Test02.checkThesaurusAndBinIcons()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="246" started-at="2016-12-09T15:53:49Z" finished-at="2016-12-09T15:53:49Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest1A status=FAILURE method=Test02.checkIncorrectSubmissionValueTest1A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest1B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest1B" duration-ms="1749" started-at="2016-12-09T15:53:49Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkThesaurusAndBinIcons" finished-at="2016-12-09T15:53:51Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest1B -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:51Z" finished-at="2016-12-09T15:53:51Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest1B status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest1B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest1C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest1C" duration-ms="1118" started-at="2016-12-09T15:53:51Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1B" finished-at="2016-12-09T15:53:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest1C -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:52Z" finished-at="2016-12-09T15:53:52Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest1C status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest1C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest2A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest2A" duration-ms="1247" started-at="2016-12-09T15:53:52Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1C" finished-at="2016-12-09T15:53:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest2A -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:53Z" finished-at="2016-12-09T15:53:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest2A status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest2A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest2B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest2B" duration-ms="1748" started-at="2016-12-09T15:53:53Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1C" finished-at="2016-12-09T15:53:55Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest2B -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:55Z" finished-at="2016-12-09T15:53:55Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest2B status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest2B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest2C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest2C" duration-ms="1100" started-at="2016-12-09T15:53:55Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest1C" finished-at="2016-12-09T15:53:56Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest2C -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:53:56Z" finished-at="2016-12-09T15:53:56Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest2C status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest2C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest3A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest3A" duration-ms="1225" started-at="2016-12-09T15:53:56Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest2C" finished-at="2016-12-09T15:53:57Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest3A -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:53:57Z" finished-at="2016-12-09T15:53:57Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest3A status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest3A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest3B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest3B" duration-ms="1751" started-at="2016-12-09T15:53:57Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest2C" finished-at="2016-12-09T15:53:59Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest3B -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:53:59Z" finished-at="2016-12-09T15:53:59Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest3B status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest3B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest3C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest3C" duration-ms="1117" started-at="2016-12-09T15:53:59Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest2C" finished-at="2016-12-09T15:54:00Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest3C -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:00Z" finished-at="2016-12-09T15:54:00Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest3C status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest3C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest4A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest4A" duration-ms="1218" started-at="2016-12-09T15:54:00Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:01Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest4A -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:01Z" finished-at="2016-12-09T15:54:01Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest4A status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest4A()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest4B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest4B" duration-ms="1737" started-at="2016-12-09T15:54:01Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:03Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest4B -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:54:03Z" finished-at="2016-12-09T15:54:03Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest4B status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest4B()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIncorrectSubmissionValueTest4C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIncorrectSubmissionValueTest4C" duration-ms="1105" started-at="2016-12-09T15:54:03Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:04Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkIncorrectSubmissionValueTest4C -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:04Z" finished-at="2016-12-09T15:54:04Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIncorrectSubmissionValueTest4C status=SUCCESS method=Test02.checkIncorrectSubmissionValueTest4C()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkTextEntryCurrentCollectionName()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkTextEntryCurrentCollectionName" duration-ms="1433" started-at="2016-12-09T15:54:04Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:06Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkTextEntryCurrentCollectionName -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:06Z" finished-at="2016-12-09T15:54:06Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkTextEntryCurrentCollectionName status=SUCCESS method=Test02.checkTextEntryCurrentCollectionName()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkTextEntryBasisOfRecord()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkTextEntryBasisOfRecord" duration-ms="1395" started-at="2016-12-09T15:54:06Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:07Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkTextEntryBasisOfRecord -->
-        <test-method status="PASS" signature="checkTextEntryMount()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkTextEntryMount" duration-ms="1373" started-at="2016-12-09T15:54:07Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:08Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkTextEntryMount -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:07Z" finished-at="2016-12-09T15:54:07Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkTextEntryBasisOfRecord status=SUCCESS method=Test02.checkTextEntryBasisOfRecord()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:08Z" finished-at="2016-12-09T15:54:08Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkTextEntryMount status=SUCCESS method=Test02.checkTextEntryMount()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkTextEntryPreservedPart()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkTextEntryPreservedPart" duration-ms="1365" started-at="2016-12-09T15:54:08Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:10Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkTextEntryPreservedPart -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:10Z" finished-at="2016-12-09T15:54:10Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkTextEntryPreservedPart status=SUCCESS method=Test02.checkTextEntryPreservedPart()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkPrefix()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkPrefix" duration-ms="2069" started-at="2016-12-09T15:54:10Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkPrefix -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:54:12Z" finished-at="2016-12-09T15:54:12Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkPrefix status=SUCCESS method=Test02.checkPrefix()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkNumber()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkNumber" duration-ms="111" started-at="2016-12-09T15:54:12Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkNumber -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:12Z" finished-at="2016-12-09T15:54:12Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkNumber status=SUCCESS method=Test02.checkNumber()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkSuffix()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkSuffix" duration-ms="168" started-at="2016-12-09T15:54:12Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIncorrectSubmissionValueTest3C" finished-at="2016-12-09T15:54:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkSuffix -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:12Z" finished-at="2016-12-09T15:54:12Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkSuffix status=SUCCESS method=Test02.checkSuffix()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkRegistrationNumber()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkRegistrationNumber" duration-ms="3636" started-at="2016-12-09T15:54:12Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkSuffix" finished-at="2016-12-09T15:54:16Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkRegistrationNumber -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:16Z" finished-at="2016-12-09T15:54:16Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkRegistrationNumber status=SUCCESS method=Test02.checkRegistrationNumber()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkCreateRegistrationNumber()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkCreateRegistrationNumber" duration-ms="2090" started-at="2016-12-09T15:54:16Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkRegistrationNumber" finished-at="2016-12-09T15:54:18Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkCreateRegistrationNumber -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:18Z" finished-at="2016-12-09T15:54:18Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkCreateRegistrationNumber status=SUCCESS method=Test02.checkCreateRegistrationNumber()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkCreateRegistrationNumberWithE()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkCreateRegistrationNumberWithE" duration-ms="369" started-at="2016-12-09T15:54:18Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkCreateRegistrationNumber" finished-at="2016-12-09T15:54:18Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkCreateRegistrationNumberWithE -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:18Z" finished-at="2016-12-09T15:54:18Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkCreateRegistrationNumberWithE status=SUCCESS method=Test02.checkCreateRegistrationNumberWithE()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkEnterRegistrationNumberWithE()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkEnterRegistrationNumberWithE" duration-ms="526" started-at="2016-12-09T15:54:18Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkCreateRegistrationNumber" finished-at="2016-12-09T15:54:19Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkEnterRegistrationNumberWithE -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:54:19Z" finished-at="2016-12-09T15:54:19Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkEnterRegistrationNumberWithE status=SUCCESS method=Test02.checkEnterRegistrationNumberWithE()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkEnterRegistrationNumberWithoutE()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkEnterRegistrationNumberWithoutE" duration-ms="476" started-at="2016-12-09T15:54:19Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkEnterRegistrationNumberWithE" finished-at="2016-12-09T15:54:19Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- checkEnterRegistrationNumberWithoutE -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:19Z" finished-at="2016-12-09T15:54:19Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkEnterRegistrationNumberWithoutE status=SUCCESS method=Test02.checkEnterRegistrationNumberWithoutE()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIllegalValuesStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIllegalValuesStorageUnit" duration-ms="2529" started-at="2016-12-09T15:54:19Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkEnterRegistrationNumberWithoutE" finished-at="2016-12-09T15:54:22Z">
+        <test-method status="PASS" signature="checkIllegalValuesStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="checkIllegalValuesStorageUnit" duration-ms="1745" started-at="2016-12-09T20:36:04Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.smallDelay" finished-at="2016-12-09T20:36:06Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- checkIllegalValuesStorageUnit -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T15:54:22Z" finished-at="2016-12-09T15:54:22Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:06Z" finished-at="2016-12-09T20:36:06Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=checkIllegalValuesStorageUnit status=SUCCESS method=Test02.checkIllegalValuesStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=checkIllegalValuesStorageUnit status=SUCCESS method=ProtoTest.checkIllegalValuesStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkAutosuggestStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkAutosuggestStorageUnit" duration-ms="231" started-at="2016-12-09T15:54:22Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIllegalValuesStorageUnit" finished-at="2016-12-09T15:54:22Z">
+        <test-method status="PASS" signature="checkAutosuggestStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="checkAutosuggestStorageUnit" duration-ms="484" started-at="2016-12-09T20:36:06Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.checkIllegalValuesStorageUnit" finished-at="2016-12-09T20:36:06Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- checkAutosuggestStorageUnit -->
-        <test-method status="PASS" signature="checkEnterStorageUnits()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkEnterStorageUnits" duration-ms="5607" started-at="2016-12-09T15:54:22Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkAutosuggestStorageUnit" finished-at="2016-12-09T15:54:28Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T20:36:06Z" finished-at="2016-12-09T20:36:06Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=checkAutosuggestStorageUnit status=SUCCESS method=ProtoTest.checkAutosuggestStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShotOnFailure -->
+        <test-method status="PASS" signature="checkEnterStorageUnits()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="checkEnterStorageUnits" duration-ms="2905" started-at="2016-12-09T20:36:06Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.checkAutosuggestStorageUnit" finished-at="2016-12-09T20:36:09Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- checkEnterStorageUnits -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:22Z" finished-at="2016-12-09T15:54:22Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="1" started-at="2016-12-09T20:36:09Z" finished-at="2016-12-09T20:36:09Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=checkAutosuggestStorageUnit status=SUCCESS method=Test02.checkAutosuggestStorageUnit()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=checkEnterStorageUnits status=SUCCESS method=ProtoTest.checkEnterStorageUnits()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:28Z" finished-at="2016-12-09T15:54:28Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkEnterStorageUnits status=SUCCESS method=Test02.checkEnterStorageUnits()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkIllegalValuesStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkIllegalValuesStorageLocations" duration-ms="2102" started-at="2016-12-09T15:54:28Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkEnterStorageUnits" finished-at="2016-12-09T15:54:30Z">
+        <test-method status="PASS" signature="checkIllegalValuesStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="checkIllegalValuesStorageLocations" duration-ms="1628" started-at="2016-12-09T20:36:09Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.checkEnterStorageUnits" finished-at="2016-12-09T20:36:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- checkIllegalValuesStorageLocations -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:30Z" finished-at="2016-12-09T15:54:30Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=checkIllegalValuesStorageLocations status=SUCCESS method=Test02.checkIllegalValuesStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- takeScreenShotOnFailure -->
-        <test-method status="PASS" signature="checkAutosuggestStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="checkAutosuggestStorageLocations" duration-ms="671" started-at="2016-12-09T15:54:30Z" depends-on-methods="nl.naturalis.selenium.crs.tests.Test02.checkIllegalValuesStorageLocations" finished-at="2016-12-09T15:54:30Z">
+        <test-method status="PASS" signature="checkAutosuggestStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="checkAutosuggestStorageLocations" duration-ms="592" started-at="2016-12-09T20:36:11Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.checkIllegalValuesStorageLocations" finished-at="2016-12-09T20:36:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- checkAutosuggestStorageLocations -->
-        <test-method status="PASS" signature="cleanUp()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="cleanUp" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:30Z" finished-at="2016-12-09T15:54:30Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- cleanUp -->
-        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T15:54:30Z" finished-at="2016-12-09T15:54:30Z">
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:11Z" finished-at="2016-12-09T20:36:11Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=checkAutosuggestStorageLocations status=SUCCESS method=Test02.checkAutosuggestStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.Test02@3ffc5af1] output={null}]]]>
+                <![CDATA[[TestResult name=checkIllegalValuesStorageLocations status=SUCCESS method=ProtoTest.checkIllegalValuesStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShotOnFailure -->
-      </class> <!-- nl.naturalis.selenium.crs.tests.Test02 -->
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:11Z" finished-at="2016-12-09T20:36:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=checkAutosuggestStorageLocations status=SUCCESS method=ProtoTest.checkAutosuggestStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShotOnFailure -->
+        <test-method status="PASS" signature="checkSelectButtonStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="checkSelectButtonStorageLocations" duration-ms="408" started-at="2016-12-09T20:36:11Z" depends-on-methods="nl.naturalis.selenium.crs.tests.ProtoTest.checkAutosuggestStorageLocations" finished-at="2016-12-09T20:36:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- checkSelectButtonStorageLocations -->
+        <test-method status="PASS" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="takeScreenShotOnFailure" is-config="true" duration-ms="0" started-at="2016-12-09T20:36:12Z" finished-at="2016-12-09T20:36:12Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=checkSelectButtonStorageLocations status=SUCCESS method=ProtoTest.checkSelectButtonStorageLocations()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShotOnFailure -->
+        <test-method status="PASS" signature="cleanUp()[pri:0, instance:nl.naturalis.selenium.crs.tests.ProtoTest@27efef64]" name="cleanUp" is-config="true" duration-ms="1" started-at="2016-12-09T20:36:12Z" finished-at="2016-12-09T20:36:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanUp -->
+      </class> <!-- nl.naturalis.selenium.crs.tests.ProtoTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
