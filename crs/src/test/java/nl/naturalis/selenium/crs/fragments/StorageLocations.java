@@ -34,7 +34,8 @@ public class StorageLocations {
 	}
 	
 	public void clickDW() {
-		driver.findElement(By.xpath("//*[@id='RadBoom']/ul/li[7]/div/span[2]")).click();
+		WebElement DW = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='RadBoom']/ul/li[7]/div/span[2]")));
+		DW.click();
 	}
 
 	public void clickDW_E() {
@@ -64,6 +65,8 @@ public class StorageLocations {
 		DW_E_01_017.click();
 	}
 
+	
+	
 	public List<WebElement> getBoomPagerLinks() {
 		WebElement headerPageLinks = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=' DW.E.01.017']/parent::div/parent::li/parent::ul/*//ul[@class='rtUL']")));
 		return driver.findElements(By.xpath("//a[@class='boomPagerLink']"));
@@ -87,4 +90,17 @@ public class StorageLocations {
 	    		}
 	    return true;
 	    }
+	
+	public Boolean selectStorageLocation() {
+		// When there is a page, this method selects the 10th storage location 
+		WebElement selectLocation = driver.findElement(By.xpath("//a[@class='boomPagerLink']/../../../../li[10]/div/span[@class='rtIn']"));
+		selectLocation.click();
+		System.out.println("'" + selectLocation.getCssValue("background-color") + "'");
+		if (selectLocation.getCssValue("background-color").equals("rgba(130, 130, 130, 1)")) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 }

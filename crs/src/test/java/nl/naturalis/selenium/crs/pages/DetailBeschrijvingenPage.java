@@ -631,6 +631,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public void clickFormulierenSelectOption(String optionLabel) {
+		WebElement testSelect = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='ctl00_masterContent_txt_FormulierenUpdatePanel']/select")));
 		Select select = new Select(this.formulierenSelect);
 		select.selectByVisibleText(optionLabel);
 		select.getFirstSelectedOption().click();

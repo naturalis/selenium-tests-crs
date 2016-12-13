@@ -322,5 +322,19 @@ public class ProtoTest extends AbstractTest {
 		Assert.assertEquals(popupStorageLocations.getCurrentPage(), "2", "Fout in 2.1.21.02");
 		Assert.assertTrue(popupStorageLocations.searchBoxAvailable(), "Fout in 2.1.21.03");
 		// popupStorageLocations.closeWindow();
+	}
+	
+	/**
+	 * 2.1.22
+	 * 
+	 * Klik in de pop-up van storage location door de boom heen en selecteer een storage 
+	 * location door hierop te klikken. 
+	 * 1. Wordt de storage location weergegeven in een grijs blok?  
+	 * 
+	 */
+	@Test(priority = 41, dependsOnMethods = { "checkStorageLocationsPageing" })
+	public void checkSelectingStorageLocations() {
+		Assert.assertTrue(popupStorageLocations.selectStorageLocation(), "Fout in 2.1.22");
 	}	
+
 }
