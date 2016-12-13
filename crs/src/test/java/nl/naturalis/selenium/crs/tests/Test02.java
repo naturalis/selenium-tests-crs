@@ -843,4 +843,14 @@ public class Test02 extends AbstractTest {
 		// popupStorageLocations.closeWindow();
 	}
 	
+	/**
+	 * 2.1.23
+	 * 
+	 * Klik in de pop-up van storage location op het icoon rechtsboven. 
+	 * 1. Is de geselecteerde storage location nu ingevoerd in het gekozen veld 
+	 * (Standard of Temporary) storage location?
+	 * 
+	 */
+	
+	
 }

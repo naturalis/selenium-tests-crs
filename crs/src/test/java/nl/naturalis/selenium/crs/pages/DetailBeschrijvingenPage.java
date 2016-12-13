@@ -519,8 +519,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 		// Close the Pop Up window
 		// driver.close();
-
-
+	}
+	
+	public int numberOfWindows() {
+		driver.switchTo().defaultContent();
+		Set<String> windowHandles = driver.getWindowHandles();
+		return windowHandles.size();
 	}
 
 	public int numberOfSuggestsStandardStorageLocation(String text) {

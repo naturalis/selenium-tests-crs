@@ -95,12 +95,15 @@ public class StorageLocations {
 		// When there is a page, this method selects the 10th storage location 
 		WebElement selectLocation = driver.findElement(By.xpath("//a[@class='boomPagerLink']/../../../../li[10]/div/span[@class='rtIn']"));
 		selectLocation.click();
-		System.out.println("'" + selectLocation.getCssValue("background-color") + "'");
 		if (selectLocation.getCssValue("background-color").equals("rgba(130, 130, 130, 1)")) {
 			return true;
 		} else {
 			return false;
 		}
-		
+	}
+	
+	public void koppelStorageLocation() {
+		driver.findElement(By.id("img_Koppel")).click();
+		// NB: clicking this button, also kills the popup window
 	}
 }

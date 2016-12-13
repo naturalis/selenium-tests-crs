@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
@@ -16,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
@@ -287,10 +289,10 @@ public class ProtoTest extends AbstractTest {
 	public void checkSelectButtonStorageLocations() {
 		this.popupStorageLocations.setDriver(detailBeschrijvingenPage.selectStandardStorageLocation());
 		WebElement tree = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
-		// 1. Check wether there is a popup window with the title "Selecteer"
+		// 1. Check whether there is a popup window with the title "Selecteer"
 		Assert.assertEquals(popupStorageLocations.getTitle(), "Selecteer", "Fout in 2.1.20.01");
 		
-		// 2. Check wether there are storage locations
+		// 2. Check whether there are storage locations
 		List<WebElement> listStorageLocations = popupStorageLocations.getStorageLocations();
 		int i = 0;
 		for (WebElement element : listStorageLocations) {
@@ -335,6 +337,24 @@ public class ProtoTest extends AbstractTest {
 	@Test(priority = 41, dependsOnMethods = { "checkStorageLocationsPageing" })
 	public void checkSelectingStorageLocations() {
 		Assert.assertTrue(popupStorageLocations.selectStorageLocation(), "Fout in 2.1.22");
-	}	
+	}
+	
+	/**
+	 * 2.1.23
+	 * 
+	 * Klik in de pop-up van storage location op het icoon rechtsboven. 
+	 * 1. Is de geselecteerde storage location nu ingevoerd in het gekozen veld 
+	 * (Standard of Temporary) storage location?
+	 * 
+	 */
+
+	@Test(priority = 42, dependsOnMethods = { "checkSelectingStorageLocations" })
+	public void checkKoppelStorageLocation() {
+		popupStorageLocations.koppelStorageLocation();
+		// Let's first test whether the popup window has been closed
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfWindows(), 1, "Fout in 2.1.23");
+	}
+
+
 
 }
