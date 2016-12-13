@@ -19,6 +19,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -33,6 +35,7 @@ import static org.hamcrest.Matchers.equalTo;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.InputGroup;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
+import nl.naturalis.selenium.crs.fragments.StorageLocations;
 import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.*;
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
@@ -49,6 +52,7 @@ public class Test02 extends AbstractTest {
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
 	private static List<String> formListLabels;
+	private StorageLocations popupStorageLocations = new StorageLocations();
 
 	private static void initializeTestParameters() {
 		addMenu = new MenuItems(Arrays.asList("Employee", "Add", "Specimen", "Vertebrates"), -1);
@@ -785,5 +789,44 @@ public class Test02 extends AbstractTest {
 	 * a. met daarin de storage location boom  
 	 * b. met achter elke storage location de naam? 
 	 */
+	@Test(priority = 39, dependsOnMethods = { "checkAutosuggestStorageLocations" })
+	public void checkSelectButtonStorageLocations() {
+		this.popupStorageLocations.setDriver(detailBeschrijvingenPage.selectStandardStorageLocation());
+		WebElement tree = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
+		// 1. Check wether there is a popup window with the title "Selecteer"
+		Assert.assertEquals(popupStorageLocations.getTitle(), "Selecteer", "Fout in 2.1.20.01");
+		
+		// 2. Check wether there are storage locations
+		List<WebElement> listStorageLocations = popupStorageLocations.getStorageLocations();
+		int i = 0;
+		for (WebElement element : listStorageLocations) {
+			// System.out.println(element.getText());
+			Assert.assertEquals( (element.getText().length() > 0) , true, "Fout in 2.1.20.02");
+			i++;
+		}
+		// System.out.println("i: " + i);
+		Assert.assertEquals( (i > 0), true);
+	}
 
+	/**
+	 * 2.1.21
+	 * 
+	 * Bij het uitklappen van een grote reeks locaties in het storage location 
+	 * selectiescherm (dmv plus) 
+	 * 1. zijn er paginanummers aanwezig (rechts van storage location), en 
+	 * 2. werken deze? Tevens
+	 * 3. Is er een snel zoeken box aanwezig?
+	 * 
+	 */
+	@Test(priority = 40, dependsOnMethods = { "checkSelectButtonStorageLocations" })
+	public void checkStorageLocationsPageing() {
+		popupStorageLocations.clickDW_E_01_017();
+		List<WebElement> pageLinks = popupStorageLocations.getBoomPagerLinks();
+		Assert.assertTrue(pageLinks.size() > 0, "Fout in 2.1.21.01");
+		pageLinks.get(0).click();
+		pageLinks = popupStorageLocations.getBoomPagerLinks();
+		Assert.assertEquals(popupStorageLocations.getCurrentPage(), "2", "Fout in 2.1.21.02");
+		Assert.assertTrue(popupStorageLocations.searchBoxAvailable(), "Fout in 2.1.21.03");
+		// popupStorageLocations.closeWindow();
+	}
 }
