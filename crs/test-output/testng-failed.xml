@@ -18,6 +18,7 @@
           <include name="detailPageOpen"/>
           <include name="openFormSelect"/>
           <include name="checkEnterStorageUnits"/>
+          <include name="checkStorageLocationsPageing"/>
           <include name="selectSpecifiedForm"/>
           <include name="checkAutosuggestStorageLocations"/>
           <include name="initalize"/>

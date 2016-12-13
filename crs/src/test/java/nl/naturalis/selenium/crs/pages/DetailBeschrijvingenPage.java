@@ -503,7 +503,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		}
 	}
 
-	public void selectStandardStorageLocation() {		
+	public WebDriver selectStandardStorageLocation() {		
 		// Click on the Button "New Message Window"
 		this.standardStorageLocationSelectIcon.click();
 		driver.switchTo().defaultContent();
@@ -513,8 +513,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		String popupWindow = (String) AllWindowHandles.toArray()[1];
 		
 		// Switching from main window to popup window
-		driver.switchTo().window(popupWindow);
-		System.out.println("Title popup: " + driver.getTitle());
+//		driver.switchTo().window(popupWindow);
+//		System.out.println("Title popup: " + driver.getTitle());
+		return driver.switchTo().window(popupWindow);
 
 		// Close the Pop Up window
 		// driver.close();
