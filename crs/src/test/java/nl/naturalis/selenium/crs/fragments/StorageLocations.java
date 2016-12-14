@@ -1,6 +1,7 @@
 package nl.naturalis.selenium.crs.fragments;
 
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -103,7 +104,14 @@ public class StorageLocations {
 	}
 	
 	public void koppelStorageLocation() {
+		Set<String> AllWindowHandles = driver.getWindowHandles();
+		String mainWindow = (String) AllWindowHandles.toArray()[0];
+		String popupWindow = (String) AllWindowHandles.toArray()[1];	
+
+		// Clicking the koppel button, will also kill the popup window
 		driver.findElement(By.id("img_Koppel")).click();
-		// NB: clicking this button, also kills the popup window
+		
+		// So we need to switch back to the main window
+		driver.switchTo().window(mainWindow);
 	}
 }

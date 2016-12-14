@@ -7,16 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -351,10 +346,14 @@ public class ProtoTest extends AbstractTest {
 	@Test(priority = 42, dependsOnMethods = { "checkSelectingStorageLocations" })
 	public void checkKoppelStorageLocation() {
 		popupStorageLocations.koppelStorageLocation();
-		// Let's first test whether the popup window has been closed
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfWindows(), 1, "Fout in 2.1.23");
+		
+		// Let's now test whether the popup window has actually been closed
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfWindows(), 1, "Fout in 2.1.23.01");
+		
+		// Test if the Standard Storage Location is filled and starts with DW
+		ProtoTest.detailBeschrijvingenPage.switchToFrame_1();
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String stringStandardStorageLocation = (String) js.executeScript("return document.querySelectorAll('[name=\"CURRENTSTORAGELOCATION\"]')[0].value;");
+		Assert.assertTrue(stringStandardStorageLocation.substring( 0, 2 ).equals("DW"), "Fout in 2.1.23.02");
 	}
-
-
-
 }

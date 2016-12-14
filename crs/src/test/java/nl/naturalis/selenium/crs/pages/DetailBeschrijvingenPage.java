@@ -2,6 +2,7 @@ package nl.naturalis.selenium.crs.pages;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -492,6 +493,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// Standard Storage Location
 
 	public String getStandardStorageLocation() {
+		this.switchToFrame_1();
 		return this.standardStorageLocation.getText();
 	}
 
@@ -522,6 +524,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 	
 	public int numberOfWindows() {
+		// It may take a while for a window to close, hence wait a short while ...
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// ... and now start checking the number of windows.
 		driver.switchTo().defaultContent();
 		Set<String> windowHandles = driver.getWindowHandles();
 		return windowHandles.size();

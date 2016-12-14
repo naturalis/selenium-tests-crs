@@ -851,6 +851,19 @@ public class Test02 extends AbstractTest {
 	 * (Standard of Temporary) storage location?
 	 * 
 	 */
-	
+
+	@Test(priority = 42, dependsOnMethods = { "checkSelectingStorageLocations" })
+	public void checkKoppelStorageLocation() {
+		popupStorageLocations.koppelStorageLocation();
+		
+		// Let's now test whether the popup window has actually been closed
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfWindows(), 1, "Fout in 2.1.23.01");
+		
+		// Test if the Standard Storage Location is filled and starts with DW
+		Test02.detailBeschrijvingenPage.switchToFrame_1();
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String stringStandardStorageLocation = (String) js.executeScript("return document.querySelectorAll('[name=\"CURRENTSTORAGELOCATION\"]')[0].value;");
+		Assert.assertTrue(stringStandardStorageLocation.substring( 0, 2 ).equals("DW"), "Fout in 2.1.23.02");
+	}	
 	
 }
