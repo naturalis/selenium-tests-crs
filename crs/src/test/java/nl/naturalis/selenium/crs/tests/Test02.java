@@ -9,17 +9,21 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -28,6 +32,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -503,8 +508,8 @@ public class Test02 extends AbstractTest {
 	/**
 	 * 2.1.8 Losse scripts (afhandeling registratienummer).
 	 * 
-	 * 1. Voer het veld Number in met een alfanummerieke waarde. 
-	 * 2. Klopt het dat dit niet geaccepteerd wordt?
+	 * 1. Voer het veld Number in met een alfanummerieke waarde. 2. Klopt het
+	 * dat dit niet geaccepteerd wordt?
 	 * 
 	 */
 	@Test(priority = 28, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
@@ -512,13 +517,14 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setNumber("abc");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getNumber(), "", "Fout in 2.1.8");
 	}
-	
+
 	/**
 	 * 2.1.9 Losse scripts (afhandeling registratienummer).
 	 * 
-	 * 1. Voer het veld Suffix in met een ongeldige waarde (geldige waarde: één of twee kleine letters). 
-	 * 2. Verschijnt er direct een rood uitroepteken achter het veld?  
-	 *   
+	 * 1. Voer het veld Suffix in met een ongeldige waarde (geldige waarde: één
+	 * of twee kleine letters). 2. Verschijnt er direct een rood uitroepteken
+	 * achter het veld?
+	 * 
 	 */
 	@Test(priority = 29, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
 	public void checkSuffix() {
@@ -526,24 +532,25 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getSuffix(), "", "Fout in 2.1.9");
 		Test02.detailBeschrijvingenPage.deleteSuffix();
 	}
-	
+
 	/**
-	 * 2.1.10	"Losse scripts (afhandeling registratienummer). 
+	 * 2.1.10 "Losse scripts (afhandeling registratienummer).
 	 * 
-	 * Voer het veld  Registratienummer in met: 
-	 * 1. minimaal een ongeldige (a) prefix of (b) suffix of (c) zonder nummeriek deel. 
-	 * 2. Verschijnt er een uitroepteken achter het veld?"
+	 * Voer het veld Registratienummer in met: 1. minimaal een ongeldige (a)
+	 * prefix of (b) suffix of (c) zonder nummeriek deel. 2. Verschijnt er een
+	 * uitroepteken achter het veld?"
 	 */
 	@Test(priority = 30, dependsOnMethods = { "checkSuffix" })
 	public void checkRegistrationNumber() {
-//		ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
+		// ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
 		// (a)
 		Test02.detailBeschrijvingenPage.setPrefix("abc");
 		Test02.detailBeschrijvingenPage.setNumber("1234");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
 		Test02.detailBeschrijvingenPage.setRemarks("hello there");
 		Test02.detailBeschrijvingenPage.deleteRemarks();
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect prefix", "Fout in 2.1.10");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect prefix",
+				"Fout in 2.1.10");
 		Test02.detailBeschrijvingenPage.deletePrefix();
 		Test02.detailBeschrijvingenPage.deleteNumber();
 		Test02.detailBeschrijvingenPage.deleteRegistrationNumber();
@@ -555,7 +562,8 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
 		Test02.detailBeschrijvingenPage.setRemarks("hello there");
 		Test02.detailBeschrijvingenPage.deleteRemarks();
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect suffix", "Fout in 2.1.10");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect suffix",
+				"Fout in 2.1.10");
 
 		// (c)
 		Test02.detailBeschrijvingenPage.deleteNumber();
@@ -564,19 +572,21 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
 		Test02.detailBeschrijvingenPage.setRemarks("hello there");
 		Test02.detailBeschrijvingenPage.deleteRemarks();
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Invalid", "Fout in 2.1.10");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Invalid",
+				"Fout in 2.1.10");
 	}
 
 	/**
-	 *  2.1.11 Losse scripts (afhandeling registratienummer).
+	 * 2.1.11 Losse scripts (afhandeling registratienummer).
 	 * 
-	 *  Voer de velden Prefix, Number en Suffix in met een juiste waarde (Prefix anders dan 'e'). 
-	 *  Wordt het veld Registrationnumber automatisch gevuld met de samengestelde waarde uit de 
-	 *  hiervoor genoemde velden nadat deze velden zijn verlaten?
+	 * Voer de velden Prefix, Number en Suffix in met een juiste waarde (Prefix
+	 * anders dan 'e'). Wordt het veld Registrationnumber automatisch gevuld met
+	 * de samengestelde waarde uit de hiervoor genoemde velden nadat deze velden
+	 * zijn verlaten?
 	 */
 	@Test(priority = 31, dependsOnMethods = { "checkRegistrationNumber" })
 	public void checkCreateRegistrationNumber() {
-		
+
 		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 		Test02.detailBeschrijvingenPage.deleteCurrentCollectionName();
 		Test02.detailBeschrijvingenPage.setCurrentCollectionName("Vert", "Vert");
@@ -584,34 +594,39 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setPrefix("TEST");
 		Test02.detailBeschrijvingenPage.setPrefix("TAB");
 		Test02.detailBeschrijvingenPage.setNumber(testNumber);
-		Test02.detailBeschrijvingenPage.setSuffix("se"); // "se" : Selenium test suffix
+		Test02.detailBeschrijvingenPage.setSuffix("se"); // "se" : Selenium test
+															// suffix
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(), "TEST" + "." + testNumber + "." + "se", "Fout in 2.1.11");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Valid", "Fout in 2.1.11");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(),
+				"TEST" + "." + testNumber + "." + "se", "Fout in 2.1.11");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorMessage(), "Valid",
+				"Fout in 2.1.11");
 	}
-	
+
 	/**
-	 *  2.1.12 Losse scripts (afhandeling registratienummer).
-	 *  
-	 *  Voer de velden Prefix en Number in waar Prefix een kleine letter e is, 
-	 *  1. verschijnt er geen punt tussen de e en het nummeriek deel in het veld registratienummer?
+	 * 2.1.12 Losse scripts (afhandeling registratienummer).
+	 * 
+	 * Voer de velden Prefix en Number in waar Prefix een kleine letter e is, 1.
+	 * verschijnt er geen punt tussen de e en het nummeriek deel in het veld
+	 * registratienummer?
 	 */
 	@Test(priority = 32, dependsOnMethods = { "checkCreateRegistrationNumber" })
-	public void checkCreateRegistrationNumberWithE() {		
+	public void checkCreateRegistrationNumberWithE() {
 		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 		Test02.detailBeschrijvingenPage.deletePrefix();
 		Test02.detailBeschrijvingenPage.setPrefix("TAB");
 		Test02.detailBeschrijvingenPage.setPrefix("e");
 		Test02.detailBeschrijvingenPage.setPrefix("TAB");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(), "e" + testNumber + "." + "se", "Fout in 2.1.12");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(), "e" + testNumber + "." + "se",
+				"Fout in 2.1.12");
 	}
 
 	/**
 	 * 2.1.13 Losse scripts (afhandeling registratienummer).
 	 * 
-	 *  Leeg het veld Registrationnumer en voer een juiste waarde in met prefix 'e'. 
-	 *  Wordt dit juist uitelkaar getrokken naar de velden Prefix, Number en Suffix 
-	 *  nadat het veld Registrationnumber is verlaten?
+	 * Leeg het veld Registrationnumer en voer een juiste waarde in met prefix
+	 * 'e'. Wordt dit juist uitelkaar getrokken naar de velden Prefix, Number en
+	 * Suffix nadat het veld Registrationnumber is verlaten?
 	 */
 	@Test(priority = 32, dependsOnMethods = { "checkCreateRegistrationNumber" })
 	public void checkEnterRegistrationNumberWithE() {
@@ -624,28 +639,32 @@ public class Test02 extends AbstractTest {
 		/* Prefix */
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "e", "Fout in 2.1.13.01");
 
-		/* Catalog Number
-		 * The catalog number cannot be accessed directly and needs to be retrieved from the DOM
-		 * using JavaScript:
-		 * document.querySelectorAll('[atfid="add_ncrs_specimen_catalognumber?numberfield"]')[0].value 
-		*/
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		String catalogNumber = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
+		/*
+		 * Catalog Number The catalog number cannot be accessed directly and
+		 * needs to be retrieved from the DOM using JavaScript:
+		 * document.querySelectorAll('[atfid=
+		 * "add_ncrs_specimen_catalognumber?numberfield"]')[0].value
+		 */
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		String catalogNumber = (String) js.executeScript(
+				"return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
 		Assert.assertEquals(catalogNumber, Test02.testNumber, "Fout in 2.1.13.02");
 
-		/* Suffix 
-		 * document.querySelectorAll('[atfid="add_ncrs_specimen_suffix?suffixfield"]')[0].value
+		/*
+		 * Suffix document.querySelectorAll('[atfid=
+		 * "add_ncrs_specimen_suffix?suffixfield"]')[0].value
 		 */
-		String suffix = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
+		String suffix = (String) js.executeScript(
+				"return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
 		Assert.assertEquals(suffix, "se", "Fout in 2.1.13.03");
 	}
 
 	/**
 	 * 2.1.14 Losse scripts (afhandeling registratienummer).
 	 * 
-	 * Leeg het veld Registrationnumer en voer een juiste waarde in met prefix anders dan 'e'. 
-	 * Wordt dit juist uit elkaar getrokken naar de velden Prefix, Number en Suffix 
-	 * nadat het veld Registrationnumber is verlaten?
+	 * Leeg het veld Registrationnumer en voer een juiste waarde in met prefix
+	 * anders dan 'e'. Wordt dit juist uit elkaar getrokken naar de velden
+	 * Prefix, Number en Suffix nadat het veld Registrationnumber is verlaten?
 	 */
 	@Test(priority = 33, dependsOnMethods = { "checkEnterRegistrationNumberWithE" })
 	public void checkEnterRegistrationNumberWithoutE() {
@@ -658,85 +677,92 @@ public class Test02 extends AbstractTest {
 		/* Prefix */
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "TEST", "Fout in 2.1.14.01");
 
-		/* Catalog Number
-		 * The catalog number cannot be accessed directly and needs to be retrieved from the DOM
-		 * using JavaScript:
-		 * document.querySelectorAll('[atfid="add_ncrs_specimen_catalognumber?numberfield"]')[0].value 
-		*/
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		String catalogNumber = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
+		/*
+		 * Catalog Number The catalog number cannot be accessed directly and
+		 * needs to be retrieved from the DOM using JavaScript:
+		 * document.querySelectorAll('[atfid=
+		 * "add_ncrs_specimen_catalognumber?numberfield"]')[0].value
+		 */
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		String catalogNumber = (String) js.executeScript(
+				"return document.querySelectorAll('[atfid=\"add_ncrs_specimen_catalognumber?numberfield\"]')[0].value;");
 		Assert.assertEquals(catalogNumber, Test02.testNumber, "Fout in 2.1.14.02");
 
-		/* Suffix 
-		 * document.querySelectorAll('[atfid="add_ncrs_specimen_suffix?suffixfield"]')[0].value
+		/*
+		 * Suffix document.querySelectorAll('[atfid=
+		 * "add_ncrs_specimen_suffix?suffixfield"]')[0].value
 		 */
-		String suffix = (String) js.executeScript("return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
+		String suffix = (String) js.executeScript(
+				"return document.querySelectorAll('[atfid=\"add_ncrs_specimen_suffix?suffixfield\"]')[0].value;");
 		Assert.assertEquals(suffix, "se", "Fout in 2.1.14.03");
 	}
-	
+
 	/**
-	 * 2.1.15 
+	 * 2.1.15
 	 * 
-	 * Vul Standard of Temporary storage unit in met een onjuiste waarde 
-	 * (juiste waarde is BE. gevolgd door een nummer). 
-	 * Verschijnt er een waarschuwingsteken met 'invalid value' bij het verlaten van het veld?
+	 * Vul Standard of Temporary storage unit in met een onjuiste waarde (juiste
+	 * waarde is BE. gevolgd door een nummer). Verschijnt er een
+	 * waarschuwingsteken met 'invalid value' bij het verlaten van het veld?
 	 * 
 	 */
 	@Test(priority = 34, dependsOnMethods = { "checkEnterRegistrationNumberWithoutE" })
 	public void checkIllegalValuesStorageUnit() {
 		Test02.detailBeschrijvingenPage.setStandardStorageUnit("illegal-text");
 		Test02.detailBeschrijvingenPage.setStandardStorageUnit("TAB");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningStandardStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.01");
-		
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningStandardStorageUnitErrorIcon(), "Invalid value",
+				"Fout in 2.1.15.01");
+
 		Test02.detailBeschrijvingenPage.setTemporaryStorageUnit("illegal-text");
 		Test02.detailBeschrijvingenPage.setTemporaryStorageUnit("TAB");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningTemporaryStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.02");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningTemporaryStorageUnitErrorIcon(), "Invalid value",
+				"Fout in 2.1.15.02");
 	}
-	
+
 	/**
 	 * 2.1.16
 	 * 
-	 * Vul Standard of Temporary storage unit in met een juiste waarde 
-	 * (juiste waarde is BE. gevolgd door een nummer). 
-	 * Verschijnt  de autosuggest?
-	 *  
+	 * Vul Standard of Temporary storage unit in met een juiste waarde (juiste
+	 * waarde is BE. gevolgd door een nummer). Verschijnt de autosuggest?
+	 * 
 	 */
 	@Test(priority = 35, dependsOnMethods = { "checkIllegalValuesStorageUnit" })
 	public void checkAutosuggestStorageUnit() {
 		Test02.detailBeschrijvingenPage.deleteStandardStorageUnit();
 		Test02.detailBeschrijvingenPage.deleteTemporaryStorageUnit();
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsStandardStorageUnit("BE"), 10, "Fout in 2.1.16");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsStandardStorageUnit("BE"), 10,
+				"Fout in 2.1.16");
 		Test02.detailBeschrijvingenPage.deleteStandardStorageUnit();
 		Test02.detailBeschrijvingenPage.setStandardStorageUnit("TAB");
 	}
-	
+
 	/**
 	 * 2.1.17
 	 * 
 	 * Losse scripts (afhandeling Storage)
 	 * 
-	 * Zodra  er een waarde ingevoerd is in Standard  storage unit
-	 * 1. kleurt het veld Standard storage location dan grijs en 
-	 * 2. kan niet worden ingevoerd? Of,
+	 * Zodra er een waarde ingevoerd is in Standard storage unit 1. kleurt het
+	 * veld Standard storage location dan grijs en 2. kan niet worden ingevoerd?
+	 * Of,
 	 * 
-	 * bij het  invoeren van Temporary storage unit 
-	 * 3. kleurt dan Temporary storage location grijs en 
-	 * 4. kan niet worden ingevoerd?
+	 * bij het invoeren van Temporary storage unit 3. kleurt dan Temporary
+	 * storage location grijs en 4. kan niet worden ingevoerd?
 	 */
 	@Test(priority = 36, dependsOnMethods = { "checkAutosuggestStorageUnit" })
 	public void checkEnterStorageUnits() {
 		String standardStorageUnitTestValue = "BE.0000001";
 		String temporaryStorageUnitTestValue = "BE.0000002";
-		
+
 		Test02.detailBeschrijvingenPage.selectStandardStorageUnit(standardStorageUnitTestValue);
 		// 1. kleurt het veld Standard storage location grijs?
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeStandardStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeStandardStorageLocation("background-color"),
+				"rgba(128, 128, 128, 1)", "Fout in 2.1.17.01");
 		// 2. kan niet worden ingevoerd?
 		Assert.assertFalse(Test02.detailBeschrijvingenPage.isStandardStorageLocationEnabled(), "Fout in 2.1.17.02");
-		
+
 		Test02.detailBeschrijvingenPage.selectTemporaryStorageUnit(temporaryStorageUnitTestValue);
 		// 3. kleurt het veld Temporary storage location grijs?
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeTemporaryStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.03");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeTemporaryStorageLocation("background-color"),
+				"rgba(128, 128, 128, 1)", "Fout in 2.1.17.03");
 		// 4. kan niet worden ingevoerd?
 		Assert.assertFalse(Test02.detailBeschrijvingenPage.isTemporaryStorageLocationEnabled(), "Fout in 2.1.17.04");
 	}
@@ -744,8 +770,8 @@ public class Test02 extends AbstractTest {
 	/**
 	 * 2.1.18
 	 * 
-	 * Vul Standard of Temporary storage location in met een onjuiste waarde. 
-	 * Verschijnt  er een uitroepteken met 'invalid value' achter het veld?
+	 * Vul Standard of Temporary storage location in met een onjuiste waarde.
+	 * Verschijnt er een uitroepteken met 'invalid value' achter het veld?
 	 * 
 	 */
 	@Test(priority = 37, dependsOnMethods = { "checkEnterStorageUnits" })
@@ -756,66 +782,70 @@ public class Test02 extends AbstractTest {
 
 		Test02.detailBeschrijvingenPage.setStandardStorageLocation(illegalTestValue);
 		Test02.detailBeschrijvingenPage.setStandardStorageLocation("TAB");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningStandardStorageLocationErrorIcon(), "Invalid value", "Fout in 2.1.18.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningStandardStorageLocationErrorIcon(),
+				"Invalid value", "Fout in 2.1.18.01");
 
 		Test02.detailBeschrijvingenPage.setTemporaryStorageLocation(illegalTestValue);
 		Test02.detailBeschrijvingenPage.setTemporaryStorageLocation("TAB");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningTemporaryStorageLocationErrorIcon(), "Invalid value", "Fout in 2.1.18.02");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getWarningTemporaryStorageLocationErrorIcon(),
+				"Invalid value", "Fout in 2.1.18.02");
 
 		Test02.detailBeschrijvingenPage.deleteStandardStorageLocation();
 		Test02.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
 	}
-	
+
 	/**
 	 * 2.1.19
 	 * 
-	 * Vul Standard of Temporary storage location in met een juiste waarde. 
-	 * Verschijnt de autosuggest ? 
+	 * Vul Standard of Temporary storage location in met een juiste waarde.
+	 * Verschijnt de autosuggest ?
 	 */
 	@Test(priority = 38, dependsOnMethods = { "checkIllegalValuesStorageLocations" })
 	public void checkAutosuggestStorageLocations() {
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsStandardStorageLocation("DW"), 10, "Fout in 2.1.19.01");
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsTemporaryStorageLocation("DW"), 10, "Fout in 2.1.19.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsStandardStorageLocation("DW"), 10,
+				"Fout in 2.1.19.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfSuggestsTemporaryStorageLocation("DW"), 10,
+				"Fout in 2.1.19.01");
 
 		Test02.detailBeschrijvingenPage.deleteStandardStorageLocation();
 		Test02.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
 	}
-	
+
 	/**
 	 * 2.1.20
 	 * 
-	 * Klik op het calculator Icoon achter 1 van de 2 storage location velden. 
-	 * 1. Verschijnt er een pop-up (storage location selectie scherm) 
-	 * a. met daarin de storage location boom  
-	 * b. met achter elke storage location de naam? 
+	 * Klik op het calculator Icoon achter 1 van de 2 storage location velden.
+	 * 1. Verschijnt er een pop-up (storage location selectie scherm) a. met
+	 * daarin de storage location boom b. met achter elke storage location de
+	 * naam?
 	 */
 	@Test(priority = 39, dependsOnMethods = { "checkAutosuggestStorageLocations" })
 	public void checkSelectButtonStorageLocations() {
 		this.popupStorageLocations.setDriver(detailBeschrijvingenPage.selectStandardStorageLocation());
-		WebElement tree = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
+		WebElement tree = (new WebDriverWait(driver, 3))
+				.until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
 		// 1. Check wether there is a popup window with the title "Selecteer"
 		Assert.assertEquals(popupStorageLocations.getTitle(), "Selecteer", "Fout in 2.1.20.01");
-		
+
 		// 2. Check wether there are storage locations
 		List<WebElement> listStorageLocations = popupStorageLocations.getStorageLocations();
 		int i = 0;
 		for (WebElement element : listStorageLocations) {
 			// System.out.println(element.getText());
-			Assert.assertEquals( (element.getText().length() > 0) , true, "Fout in 2.1.20.02");
+			Assert.assertEquals((element.getText().length() > 0), true, "Fout in 2.1.20.02");
 			i++;
 		}
 		// System.out.println("i: " + i);
-		Assert.assertEquals( (i > 0), true);
+		Assert.assertEquals((i > 0), true);
 	}
 
 	/**
 	 * 2.1.21
 	 * 
-	 * Bij het uitklappen van een grote reeks locaties in het storage location 
-	 * selectiescherm (dmv plus) 
-	 * 1. zijn er paginanummers aanwezig (rechts van storage location), en 
-	 * 2. werken deze? Tevens
-	 * 3. Is er een snel zoeken box aanwezig?
+	 * Bij het uitklappen van een grote reeks locaties in het storage location
+	 * selectiescherm (dmv plus) 1. zijn er paginanummers aanwezig (rechts van
+	 * storage location), en 2. werken deze? Tevens 3. Is er een snel zoeken box
+	 * aanwezig?
 	 * 
 	 */
 	@Test(priority = 40, dependsOnMethods = { "checkSelectButtonStorageLocations" })
@@ -828,13 +858,13 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(popupStorageLocations.getCurrentPage(), "2", "Fout in 2.1.21.02");
 		Assert.assertTrue(popupStorageLocations.searchBoxAvailable(), "Fout in 2.1.21.03");
 	}
-	
+
 	/**
 	 * 2.1.22
 	 * 
-	 * Klik in de pop-up van storage location door de boom heen en selecteer een storage 
-	 * location door hierop te klikken. 
-	 * 1. Wordt de storage location weergegeven in een grijs blok?  
+	 * Klik in de pop-up van storage location door de boom heen en selecteer een
+	 * storage location door hierop te klikken. 1. Wordt de storage location
+	 * weergegeven in een grijs blok?
 	 * 
 	 */
 	@Test(priority = 41, dependsOnMethods = { "checkStorageLocationsPageing" })
@@ -842,67 +872,82 @@ public class Test02 extends AbstractTest {
 		Assert.assertTrue(popupStorageLocations.selectStorageLocation(), "Fout in 2.1.22");
 		// popupStorageLocations.closeWindow();
 	}
-	
+
 	/**
 	 * 2.1.23
 	 * 
-	 * Klik in de pop-up van storage location op het icoon rechtsboven. 
-	 * 1. Is de geselecteerde storage location nu ingevoerd in het gekozen veld 
-	 * (Standard of Temporary) storage location?
+	 * Klik in de pop-up van storage location op het icoon rechtsboven. 1. Is de
+	 * geselecteerde storage location nu ingevoerd in het gekozen veld (Standard
+	 * of Temporary) storage location?
 	 * 
 	 */
 
 	@Test(priority = 42, dependsOnMethods = { "checkSelectingStorageLocations" })
 	public void checkKoppelStorageLocation() {
 		popupStorageLocations.koppelStorageLocation();
-		
+
 		// Let's now test whether the popup window has actually been closed
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.numberOfWindows(), 1, "Fout in 2.1.23.01");
-		
+
 		// Test if the Standard Storage Location is filled and starts with DW
 		Test02.detailBeschrijvingenPage.switchToFrame_1();
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		String stringStandardStorageLocation = (String) js.executeScript("return document.querySelectorAll('[name=\"CURRENTSTORAGELOCATION\"]')[0].value;");
-		Assert.assertTrue(stringStandardStorageLocation.substring( 0, 2 ).equals("DW"), "Fout in 2.1.23.02");
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		String stringStandardStorageLocation = (String) js
+				.executeScript("return document.querySelectorAll('[name=\"CURRENTSTORAGELOCATION\"]')[0].value;");
+		Assert.assertTrue(stringStandardStorageLocation.substring(0, 2).equals("DW"), "Fout in 2.1.23.02");
 	}
-	
+
 	/**
 	 * 2.1.24
 	 * 
 	 * Losse scripts (afhandeling Storage)
 	 * 
-	 * Zodra  er een waarde ingevoerd is in Standard storage location  
-	 * 1. kleurt het veld Standard storage unit dan grijs en 
-	 * 2. kan niet worden ingevoerd? 
-	 * Of bij het  invoeren van Temporary storage location 
-	 * 3. kleurt dan Temporary storage unit grijs en 
-	 * 4. kan niet worden ingevoerd?
+	 * Zodra er een waarde ingevoerd is in Standard storage location 1. kleurt
+	 * het veld Standard storage unit dan grijs en 2. kan niet worden ingevoerd?
+	 * Of bij het invoeren van Temporary storage location 3. kleurt dan
+	 * Temporary storage unit grijs en 4. kan niet worden ingevoerd?
 	 * 
 	 */
 	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
 	public void checkInputStorageLocations() {
 		// 1. kleurt het veld Standard storage unit dan grijs?
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeStandardStorageUnit("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeStandardStorageUnit("background-color"),
+				"rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
 		// 2. kan niet worden ingevoerd?
 		Assert.assertFalse(Test02.detailBeschrijvingenPage.isStandardStorageUnitEnabled(), "Fout in 2.1.24.02");
 
-		//Of bij het  invoeren van Temporary storage location 
+		// Of bij het invoeren van Temporary storage location
 		Test02.detailBeschrijvingenPage.setTemporaryStorageLocation("DW.E.01.017.003");
 		Test02.detailBeschrijvingenPage.setTemporaryStorageLocation("TAB");
 		// 3. kleurt dan Temporary storage unit grijs en
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeTemporaryStorageUnit("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeTemporaryStorageUnit("background-color"),
+				"rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
 		// 4. kan niet worden ingevoerd?
 		Assert.assertFalse(Test02.detailBeschrijvingenPage.isTemporaryStorageUnitEnabled(), "Fout in 2.1.24.02");
 	}
-	
+
 	/**
 	 * 2.1.25
 	 * 
-	 * Voer in het veld Remarks de invoerwaarde testrecord in, en 
-	 * sla het record op.
-	 * 1. Lukt dit? 
-	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
-	 * (het scherm hoeft dus niet opnieuw volledig geladen te zijn)
+	 * Voer in het veld Remarks de invoerwaarde testrecord in, en sla het record
+	 * op. 1. Lukt dit? 
+	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op
+	 * save klikken en het verdwijnen van het saving blok (het scherm hoeft dus
+	 * niet opnieuw volledig geladen te zijn)
 	 */
-	
+	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
+	public void testFirstRecordSave() {
+		// Voer in het veld Remarks de invoerwaarde testrecord in
+		Test02.detailBeschrijvingenPage.setRemarks("Selenium testrecord");
+		// sla het record op.
+		long startTime = System.currentTimeMillis();
+		Test02.detailBeschrijvingenPage.saveDocument();
+
+		// 1. Lukt dit?
+		WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
+		Assert.assertTrue(url.getAttribute("href").length() > 0);
+		long elapsedTime = System.currentTimeMillis() - startTime;
+		System.out.println("Elapsed time: " + elapsedTime / 1000 + "secs");
+	}
+
 }

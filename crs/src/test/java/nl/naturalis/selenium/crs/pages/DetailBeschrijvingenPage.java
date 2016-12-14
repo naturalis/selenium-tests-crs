@@ -2,7 +2,6 @@ package nl.naturalis.selenium.crs.pages;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -155,6 +154,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
 	private WebElement temporaryStorageLocationErrorIcon;
+	
+//	@FindBy (xpath = "//a[@title='detail pagina publiek']")
+//	private WebElement urlPublic;
+
 
 	// Buttons, icons, ...
 
@@ -241,7 +244,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
-
+	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
@@ -252,6 +255,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.PageUrlQueryString = queryString;
 	}
 
+	public void saveDocument() {
+		driver.switchTo().defaultContent();
+		this.iconSaveDocument.click();
+	}
+	
 	public void setCurrentCollectionName(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.currentCollectionName.click();
@@ -954,7 +962,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		WebElement closeButton = this.driver.findElement(By.cssSelector("input[title=Close]"));
 		closeButton.click();
 	}
-
+	
 	@Override
 	public String getPageName() {
 		return this.PageName;

@@ -397,6 +397,13 @@ public class ProtoTest extends AbstractTest {
 	 */
 	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
 	public void testFirstRecordSave() {
-		//
+		 // Voer in het veld Remarks de invoerwaarde testrecord in
+		ProtoTest.detailBeschrijvingenPage.setRemarks("Selenium testrecord");
+		 // sla het record op.
+		ProtoTest.detailBeschrijvingenPage.saveDocument();
+		
+		 // 1. Lukt dit? 
+		 // 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
+		
 	}
 }
