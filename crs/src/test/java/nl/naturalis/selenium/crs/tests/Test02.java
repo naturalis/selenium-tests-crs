@@ -864,6 +864,45 @@ public class Test02 extends AbstractTest {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		String stringStandardStorageLocation = (String) js.executeScript("return document.querySelectorAll('[name=\"CURRENTSTORAGELOCATION\"]')[0].value;");
 		Assert.assertTrue(stringStandardStorageLocation.substring( 0, 2 ).equals("DW"), "Fout in 2.1.23.02");
-	}	
+	}
+	
+	/**
+	 * 2.1.24
+	 * 
+	 * Losse scripts (afhandeling Storage)
+	 * 
+	 * Zodra  er een waarde ingevoerd is in Standard storage location  
+	 * 1. kleurt het veld Standard storage unit dan grijs en 
+	 * 2. kan niet worden ingevoerd? 
+	 * Of bij het  invoeren van Temporary storage location 
+	 * 3. kleurt dan Temporary storage unit grijs en 
+	 * 4. kan niet worden ingevoerd?
+	 * 
+	 */
+	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
+	public void checkInputStorageLocations() {
+		// 1. kleurt het veld Standard storage unit dan grijs?
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeStandardStorageUnit("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
+		// 2. kan niet worden ingevoerd?
+		Assert.assertFalse(Test02.detailBeschrijvingenPage.isStandardStorageUnitEnabled(), "Fout in 2.1.24.02");
+
+		//Of bij het  invoeren van Temporary storage location 
+		Test02.detailBeschrijvingenPage.setTemporaryStorageLocation("DW.E.01.017.003");
+		Test02.detailBeschrijvingenPage.setTemporaryStorageLocation("TAB");
+		// 3. kleurt dan Temporary storage unit grijs en
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAttributeTemporaryStorageUnit("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
+		// 4. kan niet worden ingevoerd?
+		Assert.assertFalse(Test02.detailBeschrijvingenPage.isTemporaryStorageUnitEnabled(), "Fout in 2.1.24.02");
+	}
+	
+	/**
+	 * 2.1.25
+	 * 
+	 * Voer in het veld Remarks de invoerwaarde testrecord in, en 
+	 * sla het record op.
+	 * 1. Lukt dit? 
+	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
+	 * (het scherm hoeft dus niet opnieuw volledig geladen te zijn)
+	 */
 	
 }

@@ -479,6 +479,14 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void deleteStandardStorageUnit() {
 		this.standardStorageUnit.clear();
 	}
+	
+	public String getAttributeStandardStorageUnit(String attribute) {
+		return this.standardStorageUnit.getCssValue(attribute);
+	}
+	
+	public Boolean isStandardStorageUnitEnabled() {
+		return this.standardStorageUnit.isEnabled();
+	}
 
 	public int numberOfSuggestsStandardStorageUnit(String text) {
 		setStandardStorageUnit(text);
@@ -583,6 +591,14 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.temporaryStorageUnit.clear();
 	}
 
+	public String getAttributeTemporaryStorageUnit(String attribute) {
+		return this.temporaryStorageUnit.getCssValue(attribute);
+	}
+	
+	public Boolean isTemporaryStorageUnitEnabled() {
+		return this.temporaryStorageUnit.isEnabled();
+	}
+	
 	public int numberOfSuggestsTemporaryStorageUnit(String text) {
 		setStandardStorageUnit(text);
 		List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
