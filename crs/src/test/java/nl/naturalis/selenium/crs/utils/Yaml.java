@@ -5,10 +5,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import com.esotericsoftware.yamlbeans.*;
 
-import org.yaml.snakeyaml.Yaml;
-
-public class YamlReader {
+public class Yaml {
 	
 	private static String yamlFile;
 	
@@ -27,9 +26,17 @@ public class YamlReader {
 	
 	public Map getData() {
 		String content = readFile(yamlFile, Charset.defaultCharset());
-		Yaml yaml = new Yaml();
-		Map map = (Map) yaml.load(content);
-		return map;
+	    YamlReader reader = new YamlReader(content);
+	    Object object;
+		try {
+			object = reader.read();
+		    Map map = (Map)object;
+			return map;
+		} catch (YamlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 

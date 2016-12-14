@@ -262,14 +262,8 @@ public class SimpleSearchResultsPage extends AbstractPage {
 
 	            		if (n.equals(this.getColumnToCheck()+1)) {
 	    	            	for(String e : searchTerms) {
-
-	    	            		System.out.println(td.getText().toLowerCase());
-	    	            		System.out.println(e.toLowerCase());
-	    	            		
 	    	            		if (td.getText().toLowerCase().contains(e.toLowerCase())) {
 	    	            			this.resultRowsMatchSpecificColumn++;
-	    	            			
-	    	            			System.out.println(this.resultRowsMatchSpecificColumn);
 	    	            		}
 	    	            	}
 	            		}

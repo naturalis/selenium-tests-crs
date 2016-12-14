@@ -12,7 +12,7 @@ import com.mysql.jdbc.Connection;
 
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
-import nl.naturalis.selenium.crs.utils.YamlReader;
+import nl.naturalis.selenium.crs.utils.Yaml;
 import nl.naturalis.selenium.crs.configuration.*;
 
 public class AbstractTest {
@@ -26,12 +26,13 @@ public class AbstractTest {
 	
 	protected static void initializeDatabase() throws SQLException
 	{
-		YamlReader yamlReader = new YamlReader();
+		Yaml yamlReader = new Yaml();
 		yamlReader.setFile(configFile);
 		Map settings = yamlReader.getData();
 		Map database = (Map) settings.get("database");
 		
     	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+    	System.out.println(database.get("username").toString()+':'+database.get("password").toString()+'@'+settings.get("jdbc-url").toString()+database.get("db-name").toString());
     	connection = (Connection) DriverManager.getConnection(settings.get("jdbc-url").toString()+database.get("db-name").toString(),database.get("username").toString(),database.get("password").toString());
 	}
 
@@ -42,6 +43,7 @@ public class AbstractTest {
 		if (browserType.equals("Firefox")) {
 			if (Configuration.getBrowserPath()!=null) {
 				System.setProperty("webdriver.firefox.bin",Configuration.getBrowserPath());
+				System.out.println("webdriver.firefox.bin"+':'+Configuration.getBrowserPath());
 			}
 			driver = new FirefoxDriver();
 		}
@@ -49,6 +51,7 @@ public class AbstractTest {
 		if (browserType.equals("Gecko")) {
 			if (Configuration.getBrowserPath()!=null) {
 				System.setProperty("webdriver.gecko.driver",Configuration.getBrowserPath());
+				System.out.println("webdriver.gecko.driver"+':'+Configuration.getBrowserPath());
 			}
 			driver = new FirefoxDriver();
 		}
@@ -57,10 +60,10 @@ public class AbstractTest {
 		{
 			if (Configuration.getBrowserPath()!=null) {
 				System.setProperty("webdriver.chromedriver.bin",Configuration.getBrowserPath());
+				System.out.println("webdriver.chromedriver.bin"+':'+Configuration.getBrowserPath());
 			}
 			driver = new ChromeDriver();
 		}
-	
 	}
 
 	protected static void initializeWaiting(int seconds) {

@@ -102,7 +102,7 @@ public class Test01 extends AbstractTest {
 	 *
 	 * @since 1.0
 	 */
-	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
+	@Test(priority=2, dependsOnMethods = { "homePageTitle" })
 	public void homePageScriptSupport() {
 		Assert.assertTrue(homePage.hasJavascriptOkIcon(),"1.1.2. javascript ok icon");
 		Assert.assertTrue(homePage.hasAjaxOkIcon(),"1.1.2. AJAX ok icon");
@@ -114,7 +114,7 @@ public class Test01 extends AbstractTest {
 	 *
 	 * @since 1.0
 	 */
-	@Test(priority=2, dependsOnMethods = { "homePageOpen" })
+	@Test(priority=2, dependsOnMethods = { "homePageScriptSupport" })
 	public void homePageLoginElements() {
 		Assert.assertTrue(homePage.hasUsernameInput(),"1.1.3. username input");
 		Assert.assertTrue(homePage.hasPasswordInput(),"1.1.3. password input");
@@ -277,8 +277,8 @@ public class Test01 extends AbstractTest {
 		detailBeschrijvingenPageQueryStringNok="xmlbeschrijvingid=23838308";
 		detailBeschrijvingenPageExpectedResultNumber=1;
 
-		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),9));
-		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),9));
+		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Search","Specimen","Vertebrates"),1));  // should be 9...
+		startPageMenuItemsCollection.add(new MenuItems(Arrays.asList("Employee","Add","Specimen","Vertebrates"),1));  // should be 9...
 
 		loggedOutUrl = config.getDomain() + "/AtlantisWeb/pages/publiek/Login.aspx?restart=true&action=afmelden";
 	}

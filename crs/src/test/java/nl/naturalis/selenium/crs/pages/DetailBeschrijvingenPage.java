@@ -15,9 +15,52 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
+import nl.naturalis.selenium.crs.fragments.Link;
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
+/*
+ * prefix
+ * 	input conceptfield="PREFIX"
+ * 
+ * storage
+ * 	name=
+ * 		CURRENTCOLLECTIONUNIT
+ * 		CURRENTSTORAGELOCATION
+ * 		USUALCOLLECTIONUNIT
+ * 		USUALSTORAGELOCATION
+ * 			VerifyNotEditable 
+ * 
+ * conceptfield="PRESERVEDPART"
+ * 
+ *  
+ * iconSaveDocument
+ * 
+ * CONTEXT
+ * ctl00_masterContent_iframe_1
+ *   div#scrolldiv
+ *		 p#scrollcontextinhoud
+ */
+
+	@FindBy(css ="input[conceptfield=PREFIX]")
+	private WebElement prefixInput;
+
+	@FindBy(css ="input[name=CURRENTCOLLECTIONUNIT]")
+	private WebElement currentCollectionUnitInput;
+
+	@FindBy(css ="input[name=CURRENTSTORAGELOCATION]")
+	private WebElement currentStorageLocationInput;
+
+	@FindBy(css ="input[name=USUALCOLLECTIONUNIT]")
+	private WebElement usualCollectionUnitInput;
+
+	@FindBy(css ="input[name=USUALSTORAGELOCATION]")
+	private WebElement usualStorageLocationInput;
+
+
+
+	
+	
 	private WebDriver driver;
 
 	private String PageName = "DetailBeschrijvingenPage";
@@ -48,8 +91,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(id = "uniqueID321918013")
 	private WebElement SourceInstitute;
-
-	@FindBy(id = "uniqueID0219179827")
+	
+	@FindBy(id = "uniqueID0219179827")//uniqueID021917980
 	private WebElement currentCollectionName;
 	
 	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/input[2]")
@@ -97,9 +140,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "ko_unique_2")
 	private WebElement suffixErrorIcon;	
 
-	
-
-	
 	
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
@@ -185,7 +225,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
-
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -474,7 +513,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return iconValues;
 	}
 	
-	
 	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
 		switch (choice) {
@@ -540,8 +578,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		thisIcon.getSrc(icon.getAttribute("src").trim());
 		thisIcon.getAlt(icon.getAttribute("alt").trim());
 		thisIcon.getTitle(icon.getAttribute("title").trim());
-		System.out.println(thisIcon.getAlt());
-
+		
 		return thisIcon;
 	}
 
@@ -551,6 +588,25 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		// contextDisplayMoreButton.click();
 		return contextDisplayMoreButton.isEnabled();
 	}
+
+	public Boolean getContextDisplayIsDisplayed() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		try {
+			return contextDisplay.isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	/*
+	public List<Link> getContextDisplayLinks() {
+		
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		
+	}
+	*/
 
 	public String getContextDisplayObjectType() {
 		driver.switchTo().defaultContent();
