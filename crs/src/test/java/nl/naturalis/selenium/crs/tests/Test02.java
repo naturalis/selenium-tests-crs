@@ -942,12 +942,10 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.saveDocument();
 
 		// 1. Lukt dit?
-		// new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(locator));
-		
-		// WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
-		// Assert.assertTrue(url.getAttribute("href").length() > 0);
+		WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
+		Assert.assertTrue(url.getAttribute("href").length() > 0);
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		System.out.println("Elapsed time: " + elapsedTime / 1000 + "secs");
+		System.out.println("Elapsed time: " + elapsedTime / 1000 + " secs");
 	}
 
 }

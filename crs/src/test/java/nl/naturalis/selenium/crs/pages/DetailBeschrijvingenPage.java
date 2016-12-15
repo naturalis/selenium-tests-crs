@@ -676,7 +676,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public String findSelectedFormulier() {
-		driver.switchTo().defaultContent();
+		// driver.switchTo().defaultContent();
+		switchToFrame_1();
 		Select dropDown = new Select(formulierenSelect);
 		WebElement options = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='ctl00_masterContent_ddl_fomulieren']/option[@selected]")));
 		String selected = dropDown.getFirstSelectedOption().getText();
