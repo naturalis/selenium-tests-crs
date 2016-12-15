@@ -35,39 +35,37 @@ public class StorageLocations {
 	}
 	
 	public void clickDW() {
-		WebElement DW = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='RadBoom']/ul/li[7]/div/span[2]")));
+		WebElement DW = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW')]/parent::div/span[@class='rtPlus']")));
 		DW.click();
 	}
 
 	public void clickDW_E() {
-		Boolean branchAvailable = driver.findElements(By.xpath("//*[@id='RadBoom']/ul/li[7]/ul/li[1]/div/span[1]")).size() > 0;
+		Boolean branchAvailable = driver.findElements(By.xpath("//span[contains(text(), ' DW.E')]/parent::div/span[@class='rtPlus']")).size() > 0;
 		if (!branchAvailable) {
 			this.clickDW();
 		}
-		WebElement DW_E = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='RadBoom']/ul/li[7]/ul/li[1]/div/span[2]")));
+		WebElement DW_E = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW.E')]/parent::div/span[@class='rtPlus']")));
 		DW_E.click();
 	}
 
 	public void clickDW_E_01() {
-		Boolean branchAvailable = driver.findElements(By.xpath("//*[@id='RadBoom']/ul/li[7]/ul/li[1]/ul/li[1]/div/span[1]")).size() > 0;
+		Boolean branchAvailable = driver.findElements(By.xpath("//span[contains(text(), ' DW.E.01')]/parent::div/span[@class='rtPlus']")).size() > 0;
 		if (!branchAvailable) {
 			this.clickDW_E();
 		}
-		WebElement DW_E_01 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='RadBoom']/ul/li[7]/ul/li[1]/ul/li[1]/div/span[2]")));
+		WebElement DW_E_01 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW.E.01')]/parent::div/span[@class='rtPlus']")));
 		DW_E_01.click();
 	}
 
 	public void clickDW_E_01_017() {
-		Boolean branchAvailable = driver.findElements(By.xpath("//*[@id='RadBoom']/ul/li[7]/ul/li[1]/ul/li[1]/ul/li[1]/div/span[1]")).size() > 0;
+		Boolean branchAvailable = driver.findElements(By.xpath("//span[contains(text(), ' DW.E.01.017')]/parent::div/span[@class='rtPlus']")).size() > 0;
 		if (!branchAvailable) {
 			this.clickDW_E_01();
 		}
-		WebElement DW_E_01_017 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='RadBoom']/ul/li[7]/ul/li[1]/ul/li[1]/ul/li[1]/div/span[2]")));
+		WebElement DW_E_01_017 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW.E.01.017')]/parent::div/span[@class='rtPlus']")));
 		DW_E_01_017.click();
 	}
 
-	
-	
 	public List<WebElement> getBoomPagerLinks() {
 		WebElement headerPageLinks = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=' DW.E.01.017']/parent::div/parent::li/parent::ul/*//ul[@class='rtUL']")));
 		return driver.findElements(By.xpath("//a[@class='boomPagerLink']"));

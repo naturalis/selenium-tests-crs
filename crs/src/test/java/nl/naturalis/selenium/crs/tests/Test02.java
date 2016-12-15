@@ -547,8 +547,7 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setPrefix("abc");
 		Test02.detailBeschrijvingenPage.setNumber("1234");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
-		Test02.detailBeschrijvingenPage.setRemarks("hello there");
-		Test02.detailBeschrijvingenPage.deleteRemarks();
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect prefix",
 				"Fout in 2.1.10");
 		Test02.detailBeschrijvingenPage.deletePrefix();
@@ -560,8 +559,7 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setNumber("1234");
 		Test02.detailBeschrijvingenPage.setSuffix("abc");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
-		Test02.detailBeschrijvingenPage.setRemarks("hello there");
-		Test02.detailBeschrijvingenPage.deleteRemarks();
+		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getAltRegistrationNumberErrorIcon(), "Incorrect suffix",
 				"Fout in 2.1.10");
 
@@ -944,8 +942,10 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.saveDocument();
 
 		// 1. Lukt dit?
-		WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
-		Assert.assertTrue(url.getAttribute("href").length() > 0);
+		// new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+		
+		// WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
+		// Assert.assertTrue(url.getAttribute("href").length() > 0);
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.println("Elapsed time: " + elapsedTime / 1000 + "secs");
 	}
