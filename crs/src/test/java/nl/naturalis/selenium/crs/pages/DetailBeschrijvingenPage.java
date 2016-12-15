@@ -1,6 +1,7 @@
 package nl.naturalis.selenium.crs.pages;
 
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -67,80 +68,142 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private String PageTitle = "NCB PL omgeving - ";
 	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
 	private String PageUrlQueryString = "";
-	
+
 	@FindBy(id = "ctl00_masterContent_tbl_navigatie")
 	private WebElement resultNumberTable;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']")
+	private WebElement prefix;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/input[@title='Select']")
+	private WebElement prefixThesaurusIcon;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*//span/input[1]")
+	private WebElement prefixThesaurusList;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/input[@title='Clear']")
+	private WebElement prefixDeleteIcon;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	private WebElement prefixConceptLink;
 
 	@FindBy(css = "tbody>tr>td>span>span.huidige")
 	private WebElement numberSpan;
 
-	@FindBy(id = "ctl00_masterContent_ddl_fomulieren")
+	@FindBy(xpath = "//div[@id='ctl00_masterContent_txt_FormulierenUpdatePanel']/select")
 	private WebElement formulierenSelect;
 
-	@FindBy(id = "ctl00_masterContent_btn_formulieren")
+	@FindBy(name = "ctl00$masterContent$btn_formulieren")
 	private WebElement buttonFormulierenSelect;
 
-	@FindBy(id = "ctl00_QuickSearchTextBox")
+	@FindBy(name = "ctl00_QuickSearchTextBox")
 	private WebElement QuickSearchTextBox;
 
 	@FindBy(id = "ctl00_QuickSearchButton")
 	private WebElement QuickSearchButton;
 
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_catalognumber?numberfield']")
+	private WebElement number;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']")
+	private WebElement suffix;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']/parent::td/img[@class='errorImage']")
+	private WebElement suffixErrorIcon;
+
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
 
-	@FindBy(id = "uniqueID321918013")
-	private WebElement SourceInstitute;
-	
-	@FindBy(id = "uniqueID0219179827")//uniqueID021917980
+	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/input")
+	private WebElement registrationNumberErrorMessage;
+
+	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/img")
+	private WebElement registrationNumberErrorIcon;
+
+	@FindBy(id = "//input[@conceptfield='SOURCEINSTITUTE']")
+	private WebElement sourceInstitute;
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']")
 	private WebElement currentCollectionName;
-	
-	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/input[2]")
+
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearCurrentCollectionName;
 
-	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkCurrentCollectionName;
 
-	@FindBy(xpath = "//input[@id='uniqueID1219179928']/parent::*/span[@class='CSContainer']/input[2]")
-	private WebElement clearPrefix;
-	
-	@FindBy(id = "uniqueID3219180130")
+	@FindBy(name = "ko_unique_64")
 	private WebElement basisOfRecord;
-	
-	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/input[2]")
+
+	@FindBy(xpath = "//input[@name='ko_unique_64']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearBasisOfRecord;
 
-	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='ko_unique_64']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkBasisOfRecord;
 
-	@FindBy(css = "input#uniqueID4219180231")
+	@FindBy(name = "SPECIMENMOUNT")
 	private WebElement mount;
 
-	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@name='SPECIMENMOUNT']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearMount;
 
-	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='SPECIMENMOUNT']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkMount;
 
-	@FindBy(css ="input#uniqueID6219180333")
+	@FindBy(name = "PRESERVEDPART")
 	private WebElement preservedPart;
 
-	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@name='PRESERVEDPART']/parent::*/span[@class='CSContainer']/input[2]")
 	private WebElement clearPreservedPart;
 
-	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
+	@FindBy(xpath = "//input[@name='PRESERVEDPART']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
-	
-	@FindBy(xpath = "//input[@name='ko_unique_3']")
-	private WebElement number;	
-	
-	@FindBy(xpath = "//input[@name='ko_unique_4']")
-	private WebElement suffix;	
-	
-	@FindBy(id = "ko_unique_2")
-	private WebElement suffixErrorIcon;	
 
+	@FindBy(xpath = "//textarea[@atfid='add_ncrs_specimen_remarks?defaultfield']")
+	private WebElement remarks;
+
+	@FindBy(name = "CURRENTCOLLECTIONUNIT")
+	private WebElement standardStorageUnit;
+
+	@FindBy(xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@class='errorImage']")
+	private WebElement standardStorageUnitErrorIcon;
+
+	@FindBy(name = "USUALCOLLECTIONUNIT")
+	private WebElement temporaryStorageUnit;
+
+	@FindBy(xpath = "//input[@name='USUALCOLLECTIONUNIT']/parent::td/input[@type='image']")
+	private WebElement temporaryStorageUnitErrorIcon;
+
+	@FindBy(name = "CURRENTSTORAGELOCATION")
+	private WebElement standardStorageLocation;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	private WebElement standardStorageLocationBinIcon;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Select']")
+	private WebElement standardStorageLocationSelectIcon;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	private WebElement standardStorageLocationErrorIcon;
+
+	@FindBy(name = "USUALSTORAGELOCATION")
+	private WebElement temporaryStorageLocation;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	private WebElement temporaryStorageLocationBinIcon;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Select']")
+	private WebElement temporaryStorageLocationSelectIcon;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	private WebElement temporaryStorageLocationErrorIcon;
 	
+//	@FindBy (xpath = "//a[@title='detail pagina publiek']")
+//	private WebElement urlPublic;
+
+
+	// Buttons, icons, ...
+
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
 	private WebElement iconAddMultimedia;
@@ -198,13 +261,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private WebElement iconBinGatheringSiteCountry;
 
 	// #15 Warning
-	@FindBy(css = "img#ko_unique_58")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_inst_coll_subcoll?selectfield']/parent::span/parent::td/img[@class='errorImage']")
 	private WebElement invalidCollectionName;
 
 	// #16 Warning Basis of Record
 	@FindBy(css = "img#ko_unique_64")
 	private WebElement invalidBasisOfRecord;
-	
+
 	// #17 Warning Mount
 	@FindBy(css = "img#SPECIMENMOUNT")
 	private WebElement invalidMount;
@@ -212,8 +275,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #18 Warning Preserved Part
 	@FindBy(css = "img#PRESERVEDPART")
 	private WebElement invalidPreservedPart;
-	
-	
+
 	@FindBy(id = "scrolldiv")
 	private WebElement contextDisplay;
 
@@ -229,13 +291,18 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
-		this.PageURL=Configuration.getDomain() + this.PageURL;
-	}	
-	
+		this.PageURL = Configuration.getDomain() + this.PageURL;
+	}
+
 	public void setPageUrlQueryString(String queryString) {
 		this.PageUrlQueryString = queryString;
 	}
 
+	public void saveDocument() {
+		driver.switchTo().defaultContent();
+		this.iconSaveDocument.click();
+	}
+	
 	public void setCurrentCollectionName(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.currentCollectionName.click();
@@ -256,13 +323,43 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.currentCollectionName.click();
 		this.clearCurrentCollectionName.click();
 	}
-	
-	public void deletePrefix() {
-		this.clearPrefix.click();
+
+	public String getPrefix() {
+		if (prefix.getText().length() > 0) {
+			return prefix.getText();
+		} else {
+			return prefix.getAttribute("lastval");
+		}
 	}
-	
+
+	public void setPrefix(String text) {
+		this.switchToFrame_1();
+		if (text == "TAB") {
+			this.prefix.sendKeys(Keys.TAB);
+		} else {
+			this.prefix.sendKeys(text);
+		}
+	}
+
+	public void setPrefixThesaurus(String text) {
+		this.setPrefix(text);
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		this.driver.findElement(By.partialLinkText(text + "(Prefix)")).click();
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("iframe_1");
+	}
+
+	public void deletePrefix() {
+		this.prefixDeleteIcon.click();
+	}
+
 	public String getNumber() {
-		return number.getText();
+		if (number.getText().length() > 0) {
+			return number.getText();
+		} else {
+			return number.getAttribute("innerHTML");
+		}
 	}
 
 	public void setNumber(String text) {
@@ -270,16 +367,66 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.number.sendKeys(text);
 	}
 
-	public String getPrefix() {
-		return number.getText();
+	public void deleteNumber() {
+		this.number.clear();
 	}
 
-	public void setPrefix(String text) {
-		this.switchToFrame_1();
-		this.number.sendKeys(text);
+	public String getSuffix() {
+		return suffix.getText();
 	}
-	
-	
+
+	public void setSuffix(String text) {
+		this.switchToFrame_1();
+		this.suffix.sendKeys(text);
+	}
+
+	public void deleteSuffix() {
+		this.switchToFrame_1();
+		this.suffix.clear();
+	}
+
+	public String getRegistrationNumber() {
+		this.switchToFrame_1();
+		return this.registrationNumber.getAttribute("lastval");
+	}
+
+	public void setRegistrationNumber(String text) {
+		this.switchToFrame_1();
+		if (text == "TAB") {
+			this.registrationNumber.sendKeys(Keys.TAB);
+		} else {
+			this.registrationNumber.sendKeys(text);
+		}
+	}
+
+	public void deleteRegistrationNumber() {
+		this.switchToFrame_1();
+		this.registrationNumber.clear();
+	}
+
+	public String getAltRegistrationNumberErrorMessage() {
+		return this.registrationNumberErrorMessage.getAttribute("value");
+	}
+
+	public String getAltRegistrationNumberErrorIcon() {
+		return this.registrationNumberErrorIcon.getAttribute("alt");
+	}
+
+	public String getSourceInstitute() {
+		this.switchToFrame_1();
+		return this.sourceInstitute.getText();
+	}
+
+	public void setSourceInstitute(String text) {
+		this.switchToFrame_1();
+		this.sourceInstitute.sendKeys(text);
+	}
+
+	public void deleteSourceInstitute() {
+		this.switchToFrame_1();
+		this.sourceInstitute.clear();
+	}
+
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
@@ -290,17 +437,17 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.findElement(By.partialLinkText(selectText)).click();
 	}
 
-	public String getBasisOfRecordTlink() {
-		this.switchToFrame_1();
-		return this.tlinkBasisOfRecord.getText();
-	}
-
 	public void deleteBasisOfRecord() {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
 		this.clearBasisOfRecord.click();
 	}
-	
+
+	public String getBasisOfRecordTlink() {
+		this.switchToFrame_1();
+		return this.tlinkBasisOfRecord.getText();
+	}
+
 	public void setMount(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.mount.click();
@@ -311,17 +458,17 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.findElement(By.partialLinkText(selectText)).click();
 	}
 
-	public String getMountTlink() {
-		this.switchToFrame_1();
-		return this.tlinkMount.getText();
-	}
-
 	public void deleteMount() {
 		this.switchToFrame_1();
 		this.mount.click();
 		this.clearMount.click();
 	}
-	
+
+	public String getMountTlink() {
+		this.switchToFrame_1();
+		return this.tlinkMount.getText();
+	}
+
 	public void setPreservedPart(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.preservedPart.click();
@@ -332,19 +479,225 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.findElement(By.partialLinkText(selectText)).click();
 	}
 
-	public String getPreservedPartTlink() {
-		this.switchToFrame_1();
-		return this.tlinkPreservedPart.getText();
-	}
-	
 	public void deletePreservedPart() {
 		this.switchToFrame_1();
 		this.preservedPart.click();
 		this.preservedPart.click();
 	}
 
+	public String getPreservedPartTlink() {
+		this.switchToFrame_1();
+		return this.tlinkPreservedPart.getText();
+	}
 
+	public String getRemarks() {
+		return remarks.getText();
+	}
+
+	public void setRemarks(String text) {
+		this.switchToFrame_1();
+		this.remarks.sendKeys(text);
+	}
+
+	public void deleteRemarks() {
+		this.switchToFrame_1();
+		this.remarks.clear();
+	}
+
+	// STORAGE
+
+	// Standard Storage Unit
+
+	public String getStandardStorageUnit() {
+		return this.standardStorageUnit.getText();
+	}
+
+	public void setStandardStorageUnit(String text) {
+		if (text == "TAB") {
+			this.standardStorageUnit.sendKeys(Keys.TAB);
+		} else {
+			this.standardStorageUnit.sendKeys(text);
+		}
+	}
+
+	public void selectStandardStorageUnit(String text) {
+		this.standardStorageUnit.sendKeys(text);
+		WebElement autoSuggest = (new WebDriverWait(driver, 3))
+				.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+		autoSuggest.click();
+	}
+
+	public void deleteStandardStorageUnit() {
+		this.standardStorageUnit.clear();
+	}
 	
+	public String getAttributeStandardStorageUnit(String attribute) {
+		return this.standardStorageUnit.getCssValue(attribute);
+	}
+	
+	public Boolean isStandardStorageUnitEnabled() {
+		return this.standardStorageUnit.isEnabled();
+	}
+
+	public int numberOfSuggestsStandardStorageUnit(String text) {
+		setStandardStorageUnit(text);
+		List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
+		return suggestsList.size();
+	}
+
+	public String getWarningStandardStorageUnitErrorIcon() {
+		return this.standardStorageUnitErrorIcon.getAttribute("alt");
+	}
+
+	// Standard Storage Location
+
+	public String getStandardStorageLocation() {
+		this.switchToFrame_1();
+		return this.standardStorageLocation.getText();
+	}
+
+	public void setStandardStorageLocation(String text) {
+		if (text == "TAB") {
+			this.standardStorageLocation.sendKeys(Keys.TAB);
+		} else {
+			this.standardStorageLocation.sendKeys(text);
+		}
+	}
+
+	public WebDriver selectStandardStorageLocation() {		
+		// Click on the Button "New Message Window"
+		this.standardStorageLocationSelectIcon.click();
+		driver.switchTo().defaultContent();
+
+		Set<String> AllWindowHandles = driver.getWindowHandles();
+		String mainWindow = (String) AllWindowHandles.toArray()[0];
+		String popupWindow = (String) AllWindowHandles.toArray()[1];
+		
+		// Switching from main window to popup window
+//		driver.switchTo().window(popupWindow);
+//		System.out.println("Title popup: " + driver.getTitle());
+		return driver.switchTo().window(popupWindow);
+
+		// Close the Pop Up window
+		// driver.close();
+	}
+	
+	public int numberOfWindows() {
+		// It may take a while for a window to close, hence wait a short while ...
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// ... and now start checking the number of windows.
+		driver.switchTo().defaultContent();
+		Set<String> windowHandles = driver.getWindowHandles();
+		return windowHandles.size();
+	}
+
+	public int numberOfSuggestsStandardStorageLocation(String text) {
+		setStandardStorageLocation(text);
+		List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+		return suggestsList.size();
+	}
+
+	public void deleteStandardStorageLocation() {
+		this.standardStorageLocationBinIcon.click();
+	}
+
+	public String getAttributeStandardStorageLocation(String attribute) {
+		return this.standardStorageLocation.getCssValue(attribute);
+	}
+
+	public Boolean isStandardStorageLocationEnabled() {
+		return this.standardStorageLocation.isEnabled();
+	}
+
+	public String getWarningStandardStorageLocationErrorIcon() {
+		return this.standardStorageLocationErrorIcon.getAttribute("alt");
+	}
+
+	// Temporary Storage Unit
+
+	public String getTemporaryStorageUnit() {
+		return this.temporaryStorageUnit.getText();
+	}
+
+	public void setTemporaryStorageUnit(String text) {
+		if (text == "TAB") {
+			this.temporaryStorageUnit.sendKeys(Keys.TAB);
+		} else {
+			this.temporaryStorageUnit.sendKeys(text);
+		}
+	}
+
+	public void selectTemporaryStorageUnit(String text) {
+		this.temporaryStorageUnit.sendKeys(text);
+		WebElement autoSuggest = (new WebDriverWait(driver, 3))
+				.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+		autoSuggest.click();
+	}
+
+	public void deleteTemporaryStorageUnit() {
+		this.temporaryStorageUnit.clear();
+	}
+
+	public String getAttributeTemporaryStorageUnit(String attribute) {
+		return this.temporaryStorageUnit.getCssValue(attribute);
+	}
+	
+	public Boolean isTemporaryStorageUnitEnabled() {
+		return this.temporaryStorageUnit.isEnabled();
+	}
+	
+	public int numberOfSuggestsTemporaryStorageUnit(String text) {
+		setStandardStorageUnit(text);
+		List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
+		return suggestsList.size();
+	}
+
+	public String getWarningTemporaryStorageUnitErrorIcon() {
+		return this.temporaryStorageUnitErrorIcon.getAttribute("alt");
+	}
+
+	// Temporary Storage Location
+
+	public String getTemporaryStorageLocation() {
+		return this.temporaryStorageLocation.getText();
+	}
+
+	public void setTemporaryStorageLocation(String text) {
+		if (text == "TAB") {
+			this.temporaryStorageLocation.sendKeys(Keys.TAB);
+		} else {
+			this.temporaryStorageLocation.sendKeys(text);
+		}
+	}
+
+	public int numberOfSuggestsTemporaryStorageLocation(String text) {
+		setTemporaryStorageLocation(text);
+		List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+		return suggestsList.size();
+	}
+
+	public void deleteTemporaryStorageLocation() {
+		this.temporaryStorageLocationBinIcon.click();
+	}
+
+	public String getAttributeTemporaryStorageLocation(String attribute) {
+		return this.temporaryStorageLocation.getCssValue(attribute);
+	}
+
+	public Boolean isTemporaryStorageLocationEnabled() {
+		return this.temporaryStorageLocation.isEnabled();
+	}
+
+	public String getWarningTemporaryStorageLocationErrorIcon() {
+		return this.standardStorageLocationErrorIcon.getAttribute("alt");
+	}
+
+	// ***
+
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
@@ -358,10 +711,20 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public void clickFormulierenSelectOption(String optionLabel) {
+		WebElement testSelect = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='ctl00_masterContent_txt_FormulierenUpdatePanel']/select")));
 		Select select = new Select(this.formulierenSelect);
 		select.selectByVisibleText(optionLabel);
 		select.getFirstSelectedOption().click();
 		buttonFormulierenSelect.click();
+	}
+
+	public String findSelectedFormulier() {
+		// driver.switchTo().defaultContent();
+		switchToFrame_1();
+		Select dropDown = new Select(formulierenSelect);
+		WebElement options = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='ctl00_masterContent_ddl_fomulieren']/option[@selected]")));
+		String selected = dropDown.getFirstSelectedOption().getText();
+		return selected;
 	}
 
 	public void enterValueToField(String fieldname, String value) {
@@ -369,22 +732,22 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		WebElement field = null;
 
-		switch (fieldname) {         
-        case "currentcollectionname":
+		switch (fieldname) {
+		case "currentcollectionname":
 			field = currentCollectionName;
 			break;
-        case "basisofrecord":
-        	field = basisOfRecord;
-        	break;
-        case "mount":
-        	field = mount;
-        	break;
-        case "preservedpart":
-        	field = preservedPart;
-        	break;
-        default:
-        	field = null;
-        }
+		case "basisofrecord":
+			field = basisOfRecord;
+			break;
+		case "mount":
+			field = mount;
+			break;
+		case "preservedpart":
+			field = preservedPart;
+			break;
+		default:
+			field = null;
+		}
 
 		// Position the cursor in the input field ...
 		Actions builder = new Actions(driver);
@@ -400,29 +763,29 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			field.sendKeys(value);
 		}
 	}
-	
+
 	public String readValueFromField(String fieldname) {
 		WebElement field = null;
-		switch (fieldname) {         
-        case "basisofrecord":
-        	field = basisOfRecord;
-        	break;
-        case "currentcollectionname":
+		switch (fieldname) {
+		case "basisofrecord":
+			field = basisOfRecord;
+			break;
+		case "currentcollectionname":
 			field = currentCollectionName;
 			break;
-        case "preservedpart":
+		case "preservedpart":
 			field = preservedPart;
 			break;
-        case "mount":
-        	field = mount;
-        	break;
-        default:
-        	field = null;
-        }
+		case "mount":
+			field = mount;
+			break;
+		default:
+			field = null;
+		}
 		return field.getAttribute("value");
-		
+
 	}
-	
+
 	public void switchToMainFrame() {
 		driver.switchTo().defaultContent();
 	}
@@ -438,7 +801,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.driver.switchTo().frame("iframe_1");
 	}
 
-	
 	/**
 	 * 
 	 */
@@ -474,18 +836,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		}
 	}
 
-	public String findSelectedFormulier() {
-		driver.switchTo().defaultContent();
-		Select dropDown = new Select(formulierenSelect);
-		String selected = dropDown.getFirstSelectedOption().getText();
-		return selected;
-	}
-
-	public String getRegistrationNumber() {
-		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
-		return registrationNumber.getAttribute("value");
-	}
-
 	public void doDetailSearch(String searchterm) {
 		this.QuickSearchTextBox.sendKeys(searchterm);
 		this.QuickSearchButton.click();
@@ -512,7 +862,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		iconValues[1] = iconAttachAllMultimediaFromGlobalSelection.getAttribute("title").trim();
 		return iconValues;
 	}
-	
+
 	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
 		switch (choice) {
@@ -573,7 +923,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		default:
 			icon = null;
 		}
-	
+
 		EditIcon thisIcon = new EditIcon();
 		thisIcon.getSrc(icon.getAttribute("src").trim());
 		thisIcon.getAlt(icon.getAttribute("alt").trim());
@@ -674,7 +1024,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		WebElement closeButton = this.driver.findElement(By.cssSelector("input[title=Close]"));
 		closeButton.click();
 	}
-
+	
 	@Override
 	public String getPageName() {
 		return this.PageName;
