@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-
+import nl.naturalis.selenium.crs.fragments.Link;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.fragments.TestCase;
 import nl.naturalis.selenium.crs.configuration.*;
@@ -37,7 +37,6 @@ public class Test12 extends AbstractTest {
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
 	private static List<TestCase> testCases = new ArrayList<TestCase>();
 	private TestCase currentTestCase;
-
 
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
@@ -74,11 +73,12 @@ public class Test12 extends AbstractTest {
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
 		
 		for(TestCase testCase : testCases) {
+
 			setCurrentTestCase(testCase);
 			
 			detailBeschrijvingenPage.setPageUrlQueryString(getCurrentTestCase().getQuery());
 			driver.get(detailBeschrijvingenPage.getCompletePageURL());
-			Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL(),"verifying URL detail page");
+			detailBeschrijvingenPage = detailBeschrijvingenPage.selectFormulierByName(getCurrentTestCase().getPage());
 
 			contextTest();
 			newSpecimenDNATests();
@@ -98,13 +98,17 @@ public class Test12 extends AbstractTest {
 	
 	private void testContextExists() {
 		//Komt het context scherm voor in het formulier
-		System.out.println(detailBeschrijvingenPage.getContextDisplayIsDisplayed());
+		Assert.assertTrue(detailBeschrijvingenPage.getContextDisplayIsDisplayed(),"context.1 - " + getCurrentTestCase().getIdString());
 	}
 
 	private void testContextMatchRelations() {
 		//Komen de relaties in het formulier overeen met wat er in het context scherm staat. Let ook specifiek op dat de relatienamen "current" en "usual" (storage unit / storage location) niet meer voorkomen
-		System.out.println(detailBeschrijvingenPage.getContextDisplayObjectType());
+		
+		List<Link> links = detailBeschrijvingenPage.getContextDisplayLinks();
+		detailBeschrijvingenPage.clickRelationsTabButton();
 	}
+	
+	
 
 	private void testContextFunctioningLinks() {
 		//Werken de links in het context scherm naar de relaties toe.
@@ -238,7 +242,8 @@ public class Test12 extends AbstractTest {
 	}
 
 	private static void initializeTestParameters() {
-		detailBeschrijvingenPageQueryString_01="xmlbeschrijvingid=20250966";
+	
+		/*
 
 		TestCase tmp = new TestCase("Entomology","Collection Entomological Specimen","xmlbeschrijvingid=20250966");
 		tmp.addTest("Context");
@@ -369,13 +374,15 @@ public class Test12 extends AbstractTest {
 		tmp.addTest("Context");
 		tmp.addTest("New specimen other");
 		testCases.add(tmp);
+		*/
 
-		tmp = new TestCase("Vertebrates","Collection Vertebrates Specimen","xmlbeschrijvingid=20250966");
+		TestCase tmp = new TestCase("Vertebrates","Collection Vertebrates Specimen","xmlbeschrijvingid=182568105","Collection Vertebrates Specimen");
 		tmp.addTest("Context");
 		tmp.addTest("New specimen other");
 		testCases.add(tmp);
 
-		tmp = new TestCase("Vertebrates","Digistreet Vertebrates Specimen","xmlbeschrijvingid=20250966");
+		/*
+		tmp = new TestCase("Vertebrates","Digistreet Vertebrates Specimen","xmlbeschrijvingid=182568105","Digistreet Vertebrates Specimen");
 		tmp.addTest("Context");
 		tmp.addTest("New specimen other");
 		testCases.add(tmp);
@@ -418,6 +425,7 @@ public class Test12 extends AbstractTest {
 		tmp.addTest("Context");
 		tmp.addTest("Molecular storage unit");
 		testCases.add(tmp);
+		*/
 	
 		
 	}

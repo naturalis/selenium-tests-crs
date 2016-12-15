@@ -5,6 +5,7 @@ public class Link {
 	private String href;
 	private String text;
 	private String target;
+	private String additionalInfo;
 	
 	public Link(String href, String text) {
 		this.setHref(href);
@@ -24,6 +25,10 @@ public class Link {
 		this.target=item;
 	}
 	
+	public void setAdditionalInfo(String item) {
+		this.additionalInfo=item;
+	}
+	
 	public String getHref() {
 		return this.href;
 	}
@@ -35,5 +40,9 @@ public class Link {
 	public String getTarget() {
 		return this.target;
 	}
-	
+
+	public String getAdditionalInfo() {
+		return this.additionalInfo;
+	}
+
 }

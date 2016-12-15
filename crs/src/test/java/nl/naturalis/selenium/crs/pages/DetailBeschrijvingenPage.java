@@ -1,8 +1,11 @@
 package nl.naturalis.selenium.crs.pages;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -225,6 +228,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
+
+	@FindBy(id = "ctl00_masterContent_LinkButton5")
+	private WebElement relationsTabButton;
+
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -349,6 +356,18 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
 
+	
+
+	public DetailBeschrijvingenPage selectFormulierByName(String name) {
+		Select select = new Select(this.formulierenSelect);
+		select.selectByVisibleText(name);
+		return new DetailBeschrijvingenPage(this.driver);
+	}
+
+	
+	
+	
+	
 	public List<WebElement> clickFormulierenSelect() {
 		Actions action = new Actions(driver);
 		action.moveToElement(this.formulierenSelect).perform();
@@ -599,14 +618,24 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		}
 	}
 	
-	/*
 	public List<Link> getContextDisplayLinks() {
 		
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		contextDisplay.findElement(By.tagName("p")).click();
+		List<WebElement> ahrefs = contextDisplay.findElements(By.cssSelector("a"));
 		
+		//setAdditionalInfo
+		
+		
+		List<Link> links = new ArrayList<Link>(); 
+		for (WebElement ahref : ahrefs) {
+			links.add(new Link(ahref.getAttribute("href"),ahref.getText()));
+		}
+		return links;
 	}
-	*/
 
 	public String getContextDisplayObjectType() {
 		driver.switchTo().defaultContent();
@@ -674,7 +703,18 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		WebElement closeButton = this.driver.findElement(By.cssSelector("input[title=Close]"));
 		closeButton.click();
 	}
+	
+	public void clickRelationsTabButton() {
+		driver.switchTo().defaultContent();
+		relationsTabButton.click();
+	}
 
+	/*
+	#TBL_Relaties
+		tbody > tr >
+	*/
+	
+	
 	@Override
 	public String getPageName() {
 		return this.PageName;
