@@ -285,8 +285,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.switchToFrame_1();
 		this.number.sendKeys(text);
 	}
-	
-	
+
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.basisOfRecord.click();
@@ -350,23 +349,15 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.preservedPart.click();
 	}
 
-
-	
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
-
-	
 
 	public DetailBeschrijvingenPage selectFormulierByName(String name) {
 		Select select = new Select(this.formulierenSelect);
 		select.selectByVisibleText(name);
 		return new DetailBeschrijvingenPage(this.driver);
 	}
-
-	
-	
-	
 	
 	public List<WebElement> clickFormulierenSelect() {
 		Actions action = new Actions(driver);
@@ -625,15 +616,25 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		contextDisplay.findElement(By.tagName("p")).click();
-		List<WebElement> ahrefs = contextDisplay.findElements(By.cssSelector("a"));
 		
-		//setAdditionalInfo
-		
-		
-		List<Link> links = new ArrayList<Link>(); 
-		for (WebElement ahref : ahrefs) {
-			links.add(new Link(ahref.getAttribute("href"),ahref.getText()));
+		List<WebElement> rows = contextDisplay.findElements(By.cssSelector("table > tbody > tr"));
+		List<Link> links = new ArrayList<Link>();
+		for (WebElement row : rows) {
+			List<WebElement> cells = row.findElements(By.cssSelector("td"));
+			Integer n=0;
+			String info = null;
+			for (WebElement cell : cells) {
+				if (n.equals(0)) {
+					info = cell.getText();
+				}
+				if (n.equals(1)) {
+					WebElement ahref = cell.findElement(By.cssSelector("a"));
+					links.add(new Link(ahref.getAttribute("href"),ahref.getText(),null, info));
+				}
+				n++;
+			}
 		}
+
 		return links;
 	}
 
@@ -708,13 +709,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.switchTo().defaultContent();
 		relationsTabButton.click();
 	}
-
-	/*
-	#TBL_Relaties
-		tbody > tr >
-	*/
-	
-	
+		
 	@Override
 	public String getPageName() {
 		return this.PageName;

@@ -763,10 +763,10 @@ public class Test03_1 extends AbstractTest {
 		simpleSearchSearch_02_ResultsWithVariants=109;
 		
 		simpleSearchSearchBreadcrumb_01_BackLinkText="Search on Vertebrates";
-		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
-		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
-		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true",simpleSearchSearchBreadcrumb_01_BackLinkText));
-		simpleSearchSearchBreadcrumb_01.add(new Link(null,"Results"));
+		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start",null,null));
+		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates",null,null));
+		simpleSearchSearchBreadcrumb_01.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true",simpleSearchSearchBreadcrumb_01_BackLinkText,null,null));
+		simpleSearchSearchBreadcrumb_01.add(new Link(null,"Results",null,null));
 		
 		searchResultsTemplates.add("Vertebrates");
 		searchResultsTemplates.add("Vertebrates Results Page");
@@ -789,12 +789,12 @@ public class Test03_1 extends AbstractTest {
 		simpleSearchSearch_13B_Term="Gambia";
 
 		simpleSearchSearchBreadcrumb_02_BackLinkText="Search on IM Test Storage units";
-		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start"));
-		//simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates"));
-		//simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true","Search on Vertebrates"));
-		//simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=IM+Test+Storage+units&back=true",simpleSearchSearchBreadcrumb_02_BackLinkText));
-		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=IM+Test+Storage+units",simpleSearchSearchBreadcrumb_02_BackLinkText));
-		simpleSearchSearchBreadcrumb_02.add(new Link(null,"Results"));	
+		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/default.aspx?back=true","Start",null,null));
+		//simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx?xmlbeschrijvingid=20250966&back=true","Vertebrates",null,null));
+		//simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=Vertebrates&back=true","Search on Vertebrates",null,null));
+		//simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=IM+Test+Storage+units&back=true",simpleSearchSearchBreadcrumb_02_BackLinkText,null,null));
+		simpleSearchSearchBreadcrumb_02.add(new Link(Configuration.getDomain() + "/AtlantisWeb/pages/medewerker/Zoeken.aspx?type=IM+Test+Storage+units",simpleSearchSearchBreadcrumb_02_BackLinkText,null,null));
+		simpleSearchSearchBreadcrumb_02.add(new Link(null,"Results",null,null));	
 
 		simpleSearchTransformOption="Storage unit (IM Test) -> Specimen (IM Test)";
 		simpleSearchTransformOptions.add("IM Test Storage units");

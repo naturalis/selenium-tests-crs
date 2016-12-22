@@ -7,10 +7,11 @@ public class Link {
 	private String target;
 	private String additionalInfo;
 	
-	public Link(String href, String text) {
+	public Link(String href, String text, String target, String info) {
 		this.setHref(href);
 		this.setText(text);
 		this.setTarget(target);
+		this.setAdditionalInfo(info);
 	}
 	
 	public void setHref(String item) {
