@@ -5,11 +5,13 @@ public class Link {
 	private String href;
 	private String text;
 	private String target;
+	private String additionalInfo;
 	
-	public Link(String href, String text) {
+	public Link(String href, String text, String target, String info) {
 		this.setHref(href);
 		this.setText(text);
 		this.setTarget(target);
+		this.setAdditionalInfo(info);
 	}
 	
 	public void setHref(String item) {
@@ -24,6 +26,10 @@ public class Link {
 		this.target=item;
 	}
 	
+	public void setAdditionalInfo(String item) {
+		this.additionalInfo=item;
+	}
+	
 	public String getHref() {
 		return this.href;
 	}
@@ -35,5 +41,9 @@ public class Link {
 	public String getTarget() {
 		return this.target;
 	}
-	
+
+	public String getAdditionalInfo() {
+		return this.additionalInfo;
+	}
+
 }

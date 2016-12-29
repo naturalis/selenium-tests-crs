@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-
+import nl.naturalis.selenium.crs.fragments.Link;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.fragments.TestCase;
 import nl.naturalis.selenium.crs.configuration.*;
@@ -30,6 +30,8 @@ public class Test12 extends AbstractTest {
 	private static String projectID = "CRS";
 	private static String testID = "Test 12";
 	
+	private static List<Link> predefContextLinks = new ArrayList<Link>();
+	private static List<Link> contextLinks = new ArrayList<Link>();
 	private static List<MenuItems> startPageMenuItemsCollection = new ArrayList<MenuItems>();
 	private static String detailBeschrijvingenPageQueryString_01;
 	private static HomePage homePage;
@@ -37,7 +39,6 @@ public class Test12 extends AbstractTest {
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
 	private static List<TestCase> testCases = new ArrayList<TestCase>();
 	private TestCase currentTestCase;
-
 
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
@@ -74,11 +75,12 @@ public class Test12 extends AbstractTest {
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
 		
 		for(TestCase testCase : testCases) {
+
 			setCurrentTestCase(testCase);
 			
 			detailBeschrijvingenPage.setPageUrlQueryString(getCurrentTestCase().getQuery());
 			driver.get(detailBeschrijvingenPage.getCompletePageURL());
-			Assert.assertEquals(driver.getCurrentUrl(),detailBeschrijvingenPage.getCompletePageURL(),"verifying URL detail page");
+			detailBeschrijvingenPage = detailBeschrijvingenPage.selectFormulierByName(getCurrentTestCase().getPage());
 
 			contextTest();
 			newSpecimenDNATests();
@@ -87,7 +89,6 @@ public class Test12 extends AbstractTest {
 			geneiousOIATests();
 		}
 	}
-
 	
 	public void contextTest() {
 		if (!getCurrentTestCase().hasTest("Context")) return;
@@ -98,18 +99,38 @@ public class Test12 extends AbstractTest {
 	
 	private void testContextExists() {
 		//Komt het context scherm voor in het formulier
-		System.out.println(detailBeschrijvingenPage.getContextDisplayIsDisplayed());
+		Assert.assertTrue(detailBeschrijvingenPage.getContextDisplayIsDisplayed(),"context.1 - " + getCurrentTestCase().getIdString());
 	}
 
 	private void testContextMatchRelations() {
 		//Komen de relaties in het formulier overeen met wat er in het context scherm staat. Let ook specifiek op dat de relatienamen "current" en "usual" (storage unit / storage location) niet meer voorkomen
-		System.out.println(detailBeschrijvingenPage.getContextDisplayObjectType());
+		
+		contextLinks = detailBeschrijvingenPage.getContextDisplayLinks();
+		
+		int n=0;
+		for(Link l : contextLinks) { 
+			Link lp = predefContextLinks.get(n++);
+			Assert.assertTrue(l.getAdditionalInfo().equals(lp.getAdditionalInfo()) && l.getText().equals(lp.getText()),"context.2 - " + getCurrentTestCase().getIdString());
+		}
+
 	}
 
 	private void testContextFunctioningLinks() {
 		//Werken de links in het context scherm naar de relaties toe.
-		System.out.println(detailBeschrijvingenPage.getContextDisplayObjectType());
 		
+		boolean assertion=true;
+		for(Link l : contextLinks) {
+			System.out.println(l.getHref());
+			driver.get(l.getHref());
+			//Assert.assertEquals(driver.getCurrentUrl(),l.getHref(),"context.2 - " + getCurrentTestCase().getIdString() + ": " + l.getText() + " " + l.getAdditionalInfo());			
+
+			if (!driver.getCurrentUrl().equals(l.getHref())) {
+				System.out.println("context.2 - " + getCurrentTestCase().getIdString() + ": " + l.getText() + " " + l.getAdditionalInfo() + driver.getCurrentUrl() +" != " + l.getHref());
+				assertion=false;
+			}
+		}
+
+		Assert.assertTrue(assertion,"context.2 - " + getCurrentTestCase().getIdString());
 	}
 
 	
@@ -238,7 +259,22 @@ public class Test12 extends AbstractTest {
 	}
 
 	private static void initializeTestParameters() {
-		detailBeschrijvingenPageQueryString_01="xmlbeschrijvingid=20250966";
+
+		predefContextLinks.add(new Link(null,"TEST.BE.3",null,"Standard storage unit"));
+		predefContextLinks.add(new Link(null,"DW",null,"Standard storage location"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.33",null,"Belongs to"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.31",null,"Has parent"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.30.a",null,"Has parts"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.34",null,"Consists of"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.32",null,"Has children"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.3.a",null,"Is associated with tissue"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.3.bu",null,"Is associated with WholeOrganism"));
+		predefContextLinks.add(new Link(null,"TEST.SPEC.3.im",null,"Is associated with WholeOrganism"));
+		
+		/*
+		 * 
+		 * needs to go to
+		 * Test12start
 
 		TestCase tmp = new TestCase("Entomology","Collection Entomological Specimen","xmlbeschrijvingid=20250966");
 		tmp.addTest("Context");
@@ -369,13 +405,15 @@ public class Test12 extends AbstractTest {
 		tmp.addTest("Context");
 		tmp.addTest("New specimen other");
 		testCases.add(tmp);
+		*/
 
-		tmp = new TestCase("Vertebrates","Collection Vertebrates Specimen","xmlbeschrijvingid=20250966");
+		TestCase tmp = new TestCase("Vertebrates","Collection Vertebrates Specimen","xmlbeschrijvingid=182568105","Collection Vertebrates Specimen");
 		tmp.addTest("Context");
 		tmp.addTest("New specimen other");
 		testCases.add(tmp);
 
-		tmp = new TestCase("Vertebrates","Digistreet Vertebrates Specimen","xmlbeschrijvingid=20250966");
+		/*
+		tmp = new TestCase("Vertebrates","Digistreet Vertebrates Specimen","xmlbeschrijvingid=182568105","Digistreet Vertebrates Specimen");
 		tmp.addTest("Context");
 		tmp.addTest("New specimen other");
 		testCases.add(tmp);
@@ -418,6 +456,7 @@ public class Test12 extends AbstractTest {
 		tmp.addTest("Context");
 		tmp.addTest("Molecular storage unit");
 		testCases.add(tmp);
+		*/
 	
 		
 	}
