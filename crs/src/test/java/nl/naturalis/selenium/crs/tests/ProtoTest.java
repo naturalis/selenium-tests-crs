@@ -160,7 +160,7 @@ public class ProtoTest extends AbstractTest {
 	public void loadTestRecord() {
 		driver.switchTo().defaultContent();
 		WebElement detailSearch = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
-		detailSearch.sendKeys("TEST.2016122901.se");
+		detailSearch.sendKeys("TEST" + "." + ProtoTest.testNumber + ".se");
 		detailSearch.sendKeys(Keys.ENTER);
 		// WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("registrationNumber")));
 	}
@@ -171,27 +171,6 @@ public class ProtoTest extends AbstractTest {
 	 * New tests can be added from here
 	 * 
 	 */
-
-	/**
-	 * 2.1.25
-	 * 
-	 * Voer in het veld Remarks de invoerwaarde testrecord in, en 
-	 * sla het record op.
-	 * 1. Lukt dit? 
-	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
-	 * (het scherm hoeft dus niet opnieuw volledig geladen te zijn)
-	 */
-//	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
-//	public void testFirstRecordSave() {
-//		 // Voer in het veld Remarks de invoerwaarde testrecord in
-//		ProtoTest.detailBeschrijvingenPage.setRemarks("Selenium testrecord");
-//		 // sla het record op.
-//		ProtoTest.detailBeschrijvingenPage.saveDocument();
-//		
-//		 // 1. Lukt dit? 
-//		 // 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
-//		
-//	}
 	
 	/**
 	 * 2.1.26
@@ -218,5 +197,32 @@ public class ProtoTest extends AbstractTest {
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon23");
 		Assert.assertEquals(thisIcon.getAlt(), "Add to working set", "Fout in 2.1.26 - Add to working set icon");		
 	}
+
+	/** 
+	 * 2.1.27
+	 * 
+	 * Verschijnt het registratienummer juist in het samenvattende lichtblauwe blok rechtsboven?
+	 * (Vul het registratienummer in dit formulier in de kolom invoerwaarde in.)
+	 */
+	@Test(priority = 45, dependsOnMethods = { "checkExtraIcons" })
+	public void checkContextRegistrationNumber() {
+		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getContextDisplayRegistrationNumber(), "TEST" + "." + ProtoTest.testNumber + ".se");
+	}
+	
+	/**
+	 * 2.1.28
+	 * 
+	 * Wordt de datagroup correct getoond (blauwe balk)?
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkContextRegistrationNumber" })
+	public void checkDataGroups() {
+		Assert.assertTrue(ProtoTest.detailBeschrijvingenPage.isLegendDataGroupAvailable(), "Fout in 2.1.27 - Geen data group aanwezig.");
+		Assert.assertTrue(ProtoTest.detailBeschrijvingenPage.isDataGroupStructureOK(), "Fout in 2.1.27 - Structuur data group niet OK.");
+		Assert.assertTrue((ProtoTest.detailBeschrijvingenPage.numberDataGroups() >= 1), "Fout in 2.1.27 - Geen data group aanwezig.");
+	}
+	
+	
+	
+	
 
 }

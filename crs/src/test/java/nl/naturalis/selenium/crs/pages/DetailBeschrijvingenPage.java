@@ -155,8 +155,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
 	private WebElement temporaryStorageLocationErrorIcon;
 	
+	@FindBy(xpath = "*//legend[text()='DATAGROUP']/parent::fieldset")
+	private WebElement fieldSetDatagroup;
+	
 //	@FindBy (xpath = "//a[@title='detail pagina publiek']")
 //	private WebElement urlPublic;
+
 
 
 	// Buttons, icons, ...
@@ -331,7 +335,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			icon = null;
 		}
 
-		EditIcon thisIcon = new EditIcon();
+		EditIcon thisIcon = new EditIcon();		
+		
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.visibilityOf(icon));
+		
 		thisIcon.getSrc(icon.getAttribute("src").trim());
 		thisIcon.getAlt(icon.getAttribute("alt").trim());
 		thisIcon.getTitle(icon.getAttribute("title").trim());
@@ -935,13 +943,47 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		// contextDisplayMoreButton.click();
 		return contextDisplayMoreButton.isEnabled();
 	}
-
+	
 	public String getContextDisplayObjectType() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		return contextDisplay.getText().trim();
 	}
+	
+	public String getContextDisplayRegistrationNumber() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		return this.contextDisplay.findElement(By.xpath("*//label")).getText().trim();
+	}
 
+	public boolean isLegendDataGroupAvailable() {
+		if (this.fieldSetDatagroup.findElement(By.tagName("legend")).getText().trim().equals("DATAGROUP")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isDataGroupStructureOK() {
+		List<WebElement> dataGroups = this.fieldSetDatagroup.findElements(By.xpath("//*[@id='accordion']"));
+		boolean structure = false;
+		for (WebElement dataGroup : dataGroups) {
+			if ((dataGroup.findElement(By.cssSelector("*[role='tab']")) != null) && (dataGroup.findElement(By.cssSelector("*[role='tabpanel']")) != null )) {
+				structure = true;
+			}
+			else {
+				structure = false;
+				break;
+			}
+		}
+		return structure;	
+	}
+	
+	public int numberDataGroups() {
+		List<WebElement> dataGroups = this.fieldSetDatagroup.findElements(By.xpath("//*[@id='accordion']/h3"));
+		return dataGroups.size(); 
+	}
+	
 	public void clickFirstIdentificationEditIcon() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");

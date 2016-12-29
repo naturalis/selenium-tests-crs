@@ -973,4 +973,28 @@ public class Test02 extends AbstractTest {
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon23");
 		Assert.assertEquals(thisIcon.getAlt(), "Add to working set", "Fout in 2.1.26 - Add to working set icon");		
 	}
+	
+	/** 
+	 * 2.1.27
+	 * 
+	 * Verschijnt het registratienummer juist in het samenvattende lichtblauwe blok rechtsboven?
+	 * (Vul het registratienummer in dit formulier in de kolom invoerwaarde in.)
+	 */
+	@Test(priority = 45, dependsOnMethods = { "checkExtraIcons" })
+	public void checkContextRegistrationNumber() {
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getContextDisplayRegistrationNumber(), "TEST" + "." + Test02.testNumber + ".se");
+	}
+	
+	/**
+	 * 2.1.28
+	 * 
+	 * Wordt de datagroup correct getoond (blauwe balk)?
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkContextRegistrationNumber" })
+	public void checkDataGroups() {
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.isLegendDataGroupAvailable(), "Fout in 2.1.27 - Legenda data group afwezig.");
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.isDataGroupStructureOK(), "Fout in 2.1.27 - Structuur data group niet OK.");
+		Assert.assertTrue((Test02.detailBeschrijvingenPage.numberDataGroups() >= 1), "Fout in 2.1.27 - Geen data group aanwezig.");
+	}
+	
 }
