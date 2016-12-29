@@ -232,7 +232,115 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #18 Warning Preserved Part
 	@FindBy(css = "img#PRESERVEDPART")
 	private WebElement invalidPreservedPart;
+	
+	// #19 Copy
+	@FindBy(id = "btn_copy")
+	private WebElement iconCopyDocument;
 
+	// #20 Delete
+	@FindBy(id = "btn_delete")
+	private WebElement iconDeleteDocument;
+
+	// #21 Create report
+	@FindBy(id = "btn_genereerrapportage")
+	private WebElement iconCreateReport;
+
+	// #22 Show stats
+	@FindBy(id = "btn_stats")
+	private WebElement iconShowStats;
+
+	// #23 Add to working set
+	@FindBy(id = "ctl00_masterContent_btn_werkset")
+	private WebElement iconAddToWorkingSet;
+
+	
+	public EditIcon getIconInfo(String choice) {
+		WebElement icon = null;
+		switch (choice) {
+		case "icon1":
+			icon = iconAddMultimedia;
+			break;
+		case "icon2":
+			icon = iconAttachAllMultimediaFromGlobalSelection;
+			break;
+		case "icon3":
+			icon = iconMoveAllMultimediaFromGlobalSelection;
+			break;
+		case "icon4":
+			icon = iconNewDocument;
+			break;
+		case "icon5":
+			icon = iconSaveDocument;
+			break;
+		case "icon6":
+			icon = iconSaveAddNewDocument;
+			break;
+		case "icon7":
+			icon = iconSaveDefaults;
+			break;
+		case "icon8":
+			icon = iconLoadDefaults;
+			break;
+		case "icon9":
+			icon = iconThesaurusBasisOfRecord;
+			break;
+		case "icon10":
+			icon = iconBinBasisOfRecord;
+			break;
+		case "icon11":
+			icon = iconThesaurusDataGroupType;
+			break;
+		case "icon12":
+			icon = iconBinDataGroupType;
+			break;
+		case "icon13":
+			icon = iconThesaurusGatheringSiteCountry;
+			break;
+		case "icon14":
+			icon = iconBinGatheringSiteCountry;
+			break;
+		case "icon15":
+			icon = invalidCollectionName;
+			break;
+		case "icon16":
+			icon = invalidBasisOfRecord;
+			break;
+		case "icon17":
+			icon = invalidMount;
+			break;
+		case "icon18":
+			icon = invalidPreservedPart;
+			break;
+		case "icon19":
+			icon = iconCopyDocument;
+			break;
+		case "icon20":
+			icon = iconDeleteDocument;
+			break;
+		case "icon21":
+			icon = iconCreateReport;
+			break;
+		case "icon22":
+			icon = iconShowStats;
+			break;
+		case "icon23":
+			icon = iconAddToWorkingSet;
+			break;
+
+		default:
+			icon = null;
+		}
+
+		EditIcon thisIcon = new EditIcon();
+		thisIcon.getSrc(icon.getAttribute("src").trim());
+		thisIcon.getAlt(icon.getAttribute("alt").trim());
+		thisIcon.getTitle(icon.getAttribute("title").trim());
+		return thisIcon;
+	}
+
+	// .... End of Icons
+	
+	
 	@FindBy(id = "scrolldiv")
 	private WebElement contextDisplay;
 
@@ -794,6 +902,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public void doDetailSearch(String searchterm) {
+		driver.switchTo().defaultContent();
 		this.QuickSearchTextBox.sendKeys(searchterm);
 		this.QuickSearchButton.click();
 	}
@@ -818,76 +927,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		iconValues[0] = iconAttachAllMultimediaFromGlobalSelection.getAttribute("src").trim();
 		iconValues[1] = iconAttachAllMultimediaFromGlobalSelection.getAttribute("title").trim();
 		return iconValues;
-	}
-
-	public EditIcon getIconInfo(String choice) {
-		WebElement icon = null;
-		switch (choice) {
-		case "icon1":
-			icon = iconAddMultimedia;
-			break;
-		case "icon2":
-			icon = iconAttachAllMultimediaFromGlobalSelection;
-			break;
-		case "icon3":
-			icon = iconMoveAllMultimediaFromGlobalSelection;
-			break;
-		case "icon4":
-			icon = iconNewDocument;
-			break;
-		case "icon5":
-			icon = iconSaveDocument;
-			break;
-		case "icon6":
-			icon = iconSaveAddNewDocument;
-			break;
-		case "icon7":
-			icon = iconSaveDefaults;
-			break;
-		case "icon8":
-			icon = iconLoadDefaults;
-			break;
-		case "icon9":
-			icon = iconThesaurusBasisOfRecord;
-			break;
-		case "icon10":
-			icon = iconBinBasisOfRecord;
-			break;
-		case "icon11":
-			icon = iconThesaurusDataGroupType;
-			break;
-		case "icon12":
-			icon = iconBinDataGroupType;
-			break;
-		case "icon13":
-			icon = iconThesaurusGatheringSiteCountry;
-			break;
-		case "icon14":
-			icon = iconBinGatheringSiteCountry;
-			break;
-		case "icon15":
-			icon = invalidCollectionName;
-			break;
-		case "icon16":
-			icon = invalidBasisOfRecord;
-			break;
-		case "icon17":
-			icon = invalidMount;
-			break;
-		case "icon18":
-			icon = invalidPreservedPart;
-			break;
-		default:
-			icon = null;
-		}
-
-		EditIcon thisIcon = new EditIcon();
-		thisIcon.getSrc(icon.getAttribute("src").trim());
-		thisIcon.getAlt(icon.getAttribute("alt").trim());
-		thisIcon.getTitle(icon.getAttribute("title").trim());
-		System.out.println(thisIcon.getAlt());
-
-		return thisIcon;
 	}
 
 	public Boolean isContextDisplayAvailable() {

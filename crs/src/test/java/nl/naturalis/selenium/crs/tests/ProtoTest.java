@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -154,6 +155,16 @@ public class ProtoTest extends AbstractTest {
 	}
 
 
+	// Load the test record
+	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
+	public void loadTestRecord() {
+		driver.switchTo().defaultContent();
+		WebElement detailSearch = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		detailSearch.sendKeys("TEST.2016122901.se");
+		detailSearch.sendKeys(Keys.ENTER);
+		// WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("registrationNumber")));
+	}
+
 	
 	/**
 	 * 
@@ -161,231 +172,6 @@ public class ProtoTest extends AbstractTest {
 	 * 
 	 */
 
-	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
-	public void smallDelay() {
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame("ctl00_masterContent_iframe_1");
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("registrationNumber")));
-	}
-	
-	/**
-	 * 2.1.15 
-	 * 
-	 * Vul Standard of Temporary storage unit in met een onjuiste waarde 
-	 * (juiste waarde is BE. gevolgd door een nummer). 
-	 * Verschijnt er een waarschuwingsteken met 'invalid value' bij het verlaten van het veld?
-	 * 
-	 */
-	@Test(priority = 34, dependsOnMethods = { "smallDelay" })
-	public void checkIllegalValuesStorageUnit() {
-		ProtoTest.detailBeschrijvingenPage.setStandardStorageUnit("illegal-text");
-		ProtoTest.detailBeschrijvingenPage.setStandardStorageUnit("TAB");
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningStandardStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.01");
-		
-		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageUnit("illegal-text");
-		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageUnit("TAB");
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningTemporaryStorageUnitErrorIcon(), "Invalid value", "Fout in 2.1.15.02");
-	}
-	
-	/**
-	 * 2.1.16
-	 * 
-	 * Vul Standard of Temporary storage unit in met een juiste waarde 
-	 * (juiste waarde is BE. gevolgd door een nummer). 
-	 * Verschijnt  de autosuggest?
-	 *  
-	 */
-	@Test(priority = 35, dependsOnMethods = { "checkIllegalValuesStorageUnit" })
-	public void checkAutosuggestStorageUnit() {
-		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
-		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageUnit();
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfSuggestsStandardStorageUnit("BE"), 10, "Fout in 2.1.16");
-		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
-	}
-	
-	/**
-	 * 2.1.17
-	 * 
-	 * Losse scripts (afhandeling Storage)
-	 * 
-	 * Zodra  er een waarde ingevoerd is in Standard  storage unit
-	 * 1. kleurt het veld Standard storage location dan grijs en 
-	 * 2. kan niet worden ingevoerd? Of,
-	 * bij het  invoeren van Temporary storage unit 
-	 * 3. kleurt dan Temporary storage location grijs en 
-	 * 4. kan niet worden ingevoerd?
-	 */
-	@Test(priority = 36, dependsOnMethods = { "checkAutosuggestStorageUnit" })
-	public void checkEnterStorageUnits() {
-		String standardStorageUnitTestValue = "BE.0000001";
-		String temporaryStorageUnitTestValue = "BE.0000002";
-		ProtoTest.detailBeschrijvingenPage.selectStandardStorageUnit(standardStorageUnitTestValue);
-		// 1. kleurt het veld Standard storage location grijs?
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAttributeStandardStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.01");
-		// 2. kan niet worden ingevoerd?
-		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isStandardStorageLocationEnabled(), "Fout in 2.1.17.02");
-		ProtoTest.detailBeschrijvingenPage.selectTemporaryStorageUnit(temporaryStorageUnitTestValue);
-		// 3. kleurt het veld Temporary storage location grijs?
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAttributeTemporaryStorageLocation("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.17.03");
-		// 4. kan niet worden ingevoerd?
-		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isTemporaryStorageLocationEnabled(), "Fout in 2.1.17.04");
-	}
-	
-	/**
-	 * 2.1.18
-	 * 
-	 * Vul Standard of Temporary storage location in met een onjuiste waarde. 
-	 * Verschijnt  er een uitroepteken met 'invalid value' achter het veld?
-	 * 
-	 */
-	@Test(priority = 37, dependsOnMethods = { "checkEnterStorageUnits" })
-	public void checkIllegalValuesStorageLocations() {
-		String illegalTestValue = "illegal-text";
-		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageUnit();
-		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageUnit();
-
-		ProtoTest.detailBeschrijvingenPage.setStandardStorageLocation(illegalTestValue);
-		ProtoTest.detailBeschrijvingenPage.setStandardStorageLocation("TAB");
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningStandardStorageLocationErrorIcon(), "Invalid value", "Fout in 2.1.18.01");
-
-		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageLocation(illegalTestValue);
-		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageLocation("TAB");
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getWarningTemporaryStorageLocationErrorIcon(), "Invalid value", "Fout in 2.1.18.02");
-
-		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageLocation();
-		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
-
-	}
-	
-	/**
-	 * 2.1.19
-	 * 
-	 * Vul Standard of Temporary storage location in met een juiste waarde. 
-	 * Verschijnt de autosuggest ? 
-	 */
-	@Test(priority = 38, dependsOnMethods = { "checkIllegalValuesStorageLocations" })
-	public void checkAutosuggestStorageLocations() {
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfSuggestsStandardStorageLocation("DW"), 10, "Fout in 2.1.19.01");
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfSuggestsTemporaryStorageLocation("DW"), 10, "Fout in 2.1.19.01");
-
-		ProtoTest.detailBeschrijvingenPage.deleteStandardStorageLocation();
-		ProtoTest.detailBeschrijvingenPage.deleteTemporaryStorageLocation();
-	}
-
-	/**
-	 * 2.1.20
-	 * 
-	 * Klik op het calculator Icoon achter 1 van de 2 storage location velden. 
-	 * 1. Verschijnt er een pop-up (storage location selectie scherm) 
-	 * a. met daarin de storage location boom  
-	 * b. met achter elke storage location de naam? 
-	 */
-	@Test(priority = 39, dependsOnMethods = { "checkAutosuggestStorageLocations" })
-	public void checkSelectButtonStorageLocations() {
-		this.popupStorageLocations.setDriver(detailBeschrijvingenPage.selectStandardStorageLocation());
-		WebElement tree = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
-		// 1. Check whether there is a popup window with the title "Selecteer"
-		Assert.assertEquals(popupStorageLocations.getTitle(), "Selecteer", "Fout in 2.1.20.01");
-		
-		// 2. Check whether there are storage locations
-		List<WebElement> listStorageLocations = popupStorageLocations.getStorageLocations();
-		int i = 0;
-		for (WebElement element : listStorageLocations) {
-			// System.out.println(element.getText());
-			Assert.assertEquals( (element.getText().length() > 0) , true, "Fout in 2.1.20.02");
-			i++;
-		}
-		// System.out.println("i: " + i);
-		Assert.assertEquals( (i > 0), true);
-	}
-
-	/**
-	 * 2.1.21
-	 * 
-	 * Bij het uitklappen van een grote reeks locaties in het storage location 
-	 * selectiescherm (dmv plus) 
-	 * 1. zijn er paginanummers aanwezig (rechts van storage location), en 
-	 * 2. werken deze? Tevens
-	 * 3. Is er een snel zoeken box aanwezig?
-	 * 
-	 */
-	@Test(priority = 40, dependsOnMethods = { "checkSelectButtonStorageLocations" })
-	public void checkStorageLocationsPageing() {
-		popupStorageLocations.clickDW_E_01_017();
-		List<WebElement> pageLinks = popupStorageLocations.getBoomPagerLinks();
-		Assert.assertTrue(pageLinks.size() > 0, "Fout in 2.1.21.01");
-		pageLinks.get(0).click();
-		pageLinks = popupStorageLocations.getBoomPagerLinks();
-		Assert.assertEquals(popupStorageLocations.getCurrentPage(), "2", "Fout in 2.1.21.02");
-		Assert.assertTrue(popupStorageLocations.searchBoxAvailable(), "Fout in 2.1.21.03");
-		// popupStorageLocations.closeWindow();
-	}
-	
-	/**
-	 * 2.1.22
-	 * 
-	 * Klik in de pop-up van storage location door de boom heen en selecteer een storage 
-	 * location door hierop te klikken. 
-	 * 1. Wordt de storage location weergegeven in een grijs blok?  
-	 * 
-	 */
-	@Test(priority = 41, dependsOnMethods = { "checkStorageLocationsPageing" })
-	public void checkSelectingStorageLocations() {
-		Assert.assertTrue(popupStorageLocations.selectStorageLocation(), "Fout in 2.1.22");
-	}
-	
-	/**
-	 * 2.1.23
-	 * 
-	 * Klik in de pop-up van storage location op het icoon rechtsboven. 
-	 * 1. Is de geselecteerde storage location nu ingevoerd in het gekozen veld 
-	 * (Standard of Temporary) storage location?
-	 * 
-	 */
-
-	@Test(priority = 42, dependsOnMethods = { "checkSelectingStorageLocations" })
-	public void checkKoppelStorageLocation() {
-		popupStorageLocations.koppelStorageLocation();
-		
-		// Let's now test whether the popup window has actually been closed
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.numberOfWindows(), 1, "Fout in 2.1.23.01");
-		
-		// Test if the Standard Storage Location is filled and starts with DW
-		ProtoTest.detailBeschrijvingenPage.switchToFrame_1();
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		String stringStandardStorageLocation = (String) js.executeScript("return document.querySelectorAll('[name=\"CURRENTSTORAGELOCATION\"]')[0].value;");
-		Assert.assertTrue(stringStandardStorageLocation.substring( 0, 2 ).equals("DW"), "Fout in 2.1.23.02");
-	}
-	
-	/**
-	 * 2.1.24
-	 * 
-	 * Losse scripts (afhandeling Storage)
-	 * 
-	 * Zodra  er een waarde ingevoerd is in Standard storage location  
-	 * 1. kleurt het veld Standard storage unit dan grijs en 
-	 * 2. kan niet worden ingevoerd? 
-	 * Of bij het  invoeren van Temporary storage location 
-	 * 3. kleurt dan Temporary storage unit grijs en 
-	 * 4. kan niet worden ingevoerd?
-	 * 
-	 */
-	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
-	public void checkInputStorageLocations() {
-		// 1. kleurt het veld Standard storage unit dan grijs?
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAttributeStandardStorageUnit("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
-		// 2. kan niet worden ingevoerd?
-		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isStandardStorageUnitEnabled(), "Fout in 2.1.24.02");
-
-		//Of bij het  invoeren van Temporary storage location 
-		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageLocation("DW.E.01.017.003");
-		ProtoTest.detailBeschrijvingenPage.setTemporaryStorageLocation("TAB");
-		// 3. kleurt dan Temporary storage unit grijs en
-		Assert.assertEquals(ProtoTest.detailBeschrijvingenPage.getAttributeTemporaryStorageUnit("background-color"), "rgba(128, 128, 128, 1)", "Fout in 2.1.24.01");
-		// 4. kan niet worden ingevoerd?
-		Assert.assertFalse(ProtoTest.detailBeschrijvingenPage.isTemporaryStorageUnitEnabled(), "Fout in 2.1.24.02");
-	}
-	
 	/**
 	 * 2.1.25
 	 * 
@@ -395,15 +181,42 @@ public class ProtoTest extends AbstractTest {
 	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
 	 * (het scherm hoeft dus niet opnieuw volledig geladen te zijn)
 	 */
-	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
-	public void testFirstRecordSave() {
-		 // Voer in het veld Remarks de invoerwaarde testrecord in
-		ProtoTest.detailBeschrijvingenPage.setRemarks("Selenium testrecord");
-		 // sla het record op.
-		ProtoTest.detailBeschrijvingenPage.saveDocument();
-		
-		 // 1. Lukt dit? 
-		 // 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
-		
+//	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
+//	public void testFirstRecordSave() {
+//		 // Voer in het veld Remarks de invoerwaarde testrecord in
+//		ProtoTest.detailBeschrijvingenPage.setRemarks("Selenium testrecord");
+//		 // sla het record op.
+//		ProtoTest.detailBeschrijvingenPage.saveDocument();
+//		
+//		 // 1. Lukt dit? 
+//		 // 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en het verdwijnen van het saving blok 
+//		
+//	}
+	
+	/**
+	 * 2.1.26
+	 * 
+	 * Zijn na het opslaan van het nieuwe record  de iconen Copy, Delete, Create report, 
+	 * Statistiek, Add to working set, erbij gekomen?
+	 */
+	@Test(priority = 44, dependsOnMethods = { "loadTestRecord" })
+	public void checkExtraIcons() {
+		// Copy 
+		EditIcon thisIcon = null;
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon19");
+		Assert.assertEquals(thisIcon.getAlt(), "Copy", "Fout in 2.1.26 - Copy icon");
+		// Delete
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon20");
+		Assert.assertEquals(thisIcon.getAlt(), "Delete", "Fout in 2.1.26 - Delete icon");
+		// Create report
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon21");
+		Assert.assertEquals(thisIcon.getAlt(), "Create report", "Fout in 2.1.26 - Create report icon");
+		// Statistiek
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon22");
+		Assert.assertEquals(thisIcon.getAlt(), "Geef statistieken weer", "Fout in 2.1.26 - Statistiek icon");
+		// Add to working set
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon23");
+		Assert.assertEquals(thisIcon.getAlt(), "Add to working set", "Fout in 2.1.26 - Add to working set icon");		
 	}
+
 }

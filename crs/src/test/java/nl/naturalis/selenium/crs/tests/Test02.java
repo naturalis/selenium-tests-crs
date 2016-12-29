@@ -947,5 +947,30 @@ public class Test02 extends AbstractTest {
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.println("Elapsed time: " + elapsedTime / 1000 + " secs");
 	}
-
+	
+	/**
+	 * 2.1.26
+	 * 
+	 * Zijn na het opslaan van het nieuwe record  de iconen Copy, Delete, Create report, 
+	 * Statistiek, Add to working set, erbij gekomen?
+	 */
+	@Test(priority = 44, dependsOnMethods = { "testFirstRecordSave" })
+	public void checkExtraIcons() {
+		// Copy 
+		EditIcon thisIcon = null;
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon19");
+		Assert.assertEquals(thisIcon.getAlt(), "Copy", "Fout in 2.1.26 - Copy icon");
+		// Delete
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon20");
+		Assert.assertEquals(thisIcon.getAlt(), "Delete", "Fout in 2.1.26 - Delete icon");
+		// Create report
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon21");
+		Assert.assertEquals(thisIcon.getAlt(), "Create report", "Fout in 2.1.26 - Create report icon");
+		// Statistiek
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon22");
+		Assert.assertEquals(thisIcon.getAlt(), "Geef statistieken weer", "Fout in 2.1.26 - Statistiek icon");
+		// Add to working set
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon23");
+		Assert.assertEquals(thisIcon.getAlt(), "Add to working set", "Fout in 2.1.26 - Add to working set icon");		
+	}
 }
