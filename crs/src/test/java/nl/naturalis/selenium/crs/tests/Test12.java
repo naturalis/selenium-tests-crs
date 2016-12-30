@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -30,7 +31,6 @@ public class Test12 extends AbstractTest {
 	private static String projectID = "CRS";
 	private static String testID = "Test 12";
 	
-	private static List<Link> predefContextLinks = new ArrayList<Link>();
 	private static List<Link> contextLinks = new ArrayList<Link>();
 	private static List<MenuItems> startPageMenuItemsCollection = new ArrayList<MenuItems>();
 	private static String detailBeschrijvingenPageQueryString_01;
@@ -39,7 +39,7 @@ public class Test12 extends AbstractTest {
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
 	private static List<TestCase> testCases = new ArrayList<TestCase>();
 	private TestCase currentTestCase;
-
+	
 	@BeforeClass
 	private static void initalize() throws MissingConfigurationException, SQLException {
 		initializeDatabase();
@@ -69,24 +69,31 @@ public class Test12 extends AbstractTest {
 		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL(),"URL of home page");
 	}
 
-	@Test(priority=6, dependsOnMethods = { "homePageDoLogin" })
-	public void runTestCases() {
+	@Test(priority=6, dependsOnMethods = { "homePageDoLogin" }, dataProvider = "testCases")
+	public void runTestCases(TestCase thisTest) {
+
+		setCurrentTestCase(thisTest);
+		System.out.println("running " + getCurrentTestCase().getIdString());
 
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
-		
-		for(TestCase testCase : testCases) {
-
-			setCurrentTestCase(testCase);
-			
-			detailBeschrijvingenPage.setPageUrlQueryString(getCurrentTestCase().getQuery());
-			driver.get(detailBeschrijvingenPage.getCompletePageURL());
-			detailBeschrijvingenPage = detailBeschrijvingenPage.selectFormulierByName(getCurrentTestCase().getPage());
-
-			contextTest();
-			newSpecimenDNATests();
-			newSpecimenOtherTests();
-			molecularStorageUnitTests();
-			geneiousOIATests();
+		detailBeschrijvingenPage.setPageUrlQueryString(getCurrentTestCase().getQuery());
+		driver.get(detailBeschrijvingenPage.getCompletePageURL());
+		detailBeschrijvingenPage = changeForm();
+				
+		contextTest();
+		newSpecimenDNATests();
+		newSpecimenOtherTests();
+		molecularStorageUnitTests();
+		geneiousOIATests();
+	}
+	
+	public DetailBeschrijvingenPage changeForm() {
+		if (getCurrentTestCase().getPage()==null) {
+			return detailBeschrijvingenPage;			
+		}
+		else {
+			Assert.assertTrue(detailBeschrijvingenPage.hasFormulierByName(getCurrentTestCase().getPage()),"context.hasForm - " + getCurrentTestCase().getIdString());
+			return detailBeschrijvingenPage.selectFormulierByName(getCurrentTestCase().getPage());
 		}
 	}
 	
@@ -96,7 +103,7 @@ public class Test12 extends AbstractTest {
 		testContextMatchRelations();
 		testContextFunctioningLinks();
 	}
-	
+
 	private void testContextExists() {
 		//Komt het context scherm voor in het formulier
 		Assert.assertTrue(detailBeschrijvingenPage.getContextDisplayIsDisplayed(),"context.1 - " + getCurrentTestCase().getIdString());
@@ -106,10 +113,10 @@ public class Test12 extends AbstractTest {
 		//Komen de relaties in het formulier overeen met wat er in het context scherm staat. Let ook specifiek op dat de relatienamen "current" en "usual" (storage unit / storage location) niet meer voorkomen
 		
 		contextLinks = detailBeschrijvingenPage.getContextDisplayLinks();
-		
+		List<Link> tmp = currentTestCase.getContextLinks();
 		int n=0;
 		for(Link l : contextLinks) { 
-			Link lp = predefContextLinks.get(n++);
+			Link lp = tmp.get(n++);
 			Assert.assertTrue(l.getAdditionalInfo().equals(lp.getAdditionalInfo()) && l.getText().equals(lp.getText()),"context.2 - " + getCurrentTestCase().getIdString());
 		}
 
@@ -125,17 +132,13 @@ public class Test12 extends AbstractTest {
 			//Assert.assertEquals(driver.getCurrentUrl(),l.getHref(),"context.2 - " + getCurrentTestCase().getIdString() + ": " + l.getText() + " " + l.getAdditionalInfo());			
 
 			if (!driver.getCurrentUrl().equals(l.getHref())) {
-				System.out.println("context.2 - " + getCurrentTestCase().getIdString() + ": " + l.getText() + " " + l.getAdditionalInfo() + driver.getCurrentUrl() +" != " + l.getHref());
+				System.out.println("context.3 - " + getCurrentTestCase().getIdString() + ": " + l.getText() + " " + l.getAdditionalInfo() + driver.getCurrentUrl() +" != " + l.getHref());
 				assertion=false;
 			}
 		}
 
-		Assert.assertTrue(assertion,"context.2 - " + getCurrentTestCase().getIdString());
+		Assert.assertTrue(assertion,"context.3 - " + getCurrentTestCase().getIdString());
 	}
-
-	
-	
-	
 	
 	
 
@@ -164,7 +167,6 @@ public class Test12 extends AbstractTest {
 	}
 
 	
-	
 
 	public void newSpecimenOtherTests() {
 		if (!getCurrentTestCase().hasTest("New specimen other")) return;
@@ -175,18 +177,46 @@ public class Test12 extends AbstractTest {
 	}
 
 	private void testNewSpecimenOtherPrefix() {
+		//vul prefix met 'e' en catalognumber met nieuwe waarde. Wordt het registratienummer samengesteld zonder punt tussen prefix en catalogumber?
+
+		String prefix = "e";
+		String number = "621";
+		detailBeschrijvingenPage.setPrefix(prefix);
+		detailBeschrijvingenPage.setNumber(number);
+		
+		Assert.assertEquals(prefix.concat(number),detailBeschrijvingenPage.getRegistrationNumber(),"spec.other.1 - " + getCurrentTestCase().getIdString());
 	}
 
 	private void testNewSpecimenOtherDisabledFields() {
+		//Vul mount met '96 well plate'. Worden de storage location velden uitgegrijst?
+		
+		boolean before =
+				detailBeschrijvingenPage.isStandardStorageLocationEnabled() && 
+				detailBeschrijvingenPage.isTemporaryStorageUnitEnabled() &&
+				detailBeschrijvingenPage.isTemporaryStorageLocationEnabled();
+		
+		Assert.assertTrue(before,"spec.other.2 (initial state) - " + getCurrentTestCase().getIdString());
+
+		detailBeschrijvingenPage.setMount("96 well plate","96 well plate");
+
+		boolean after =
+				!detailBeschrijvingenPage.isStandardStorageLocationEnabled() && 
+				!detailBeschrijvingenPage.isTemporaryStorageUnitEnabled() &&
+				!detailBeschrijvingenPage.isTemporaryStorageLocationEnabled();
+		
+		Assert.assertTrue(after,"spec.other.2 - " + getCurrentTestCase().getIdString());
 	}
 
 	private void testNewSpecimenOtherExclusiveNCBN() {
+		//Kun je een NCBN storage unit koppelen, maar niet een BE storage unit?
 	}
 
 	private void testNewSpecimenOtherSaves() {
+		//Kan het record opgeslagen worden?
 	}
 
 
+	
 	public void molecularStorageUnitTests() {
 		if (!getCurrentTestCase().hasTest("Molecular storage unit")) return;
 		testMolecularStorageUnitPrefixZeroes01();
@@ -200,6 +230,7 @@ public class Test12 extends AbstractTest {
 	}
 
 
+	
 	public void geneiousOIATests() {
 		if (!getCurrentTestCase().hasTest("Geneious OIA")) return;
 		testGeneiousOIAExtractPlates();
@@ -259,205 +290,377 @@ public class Test12 extends AbstractTest {
 	}
 
 	private static void initializeTestParameters() {
-
-		predefContextLinks.add(new Link(null,"TEST.BE.3",null,"Standard storage unit"));
-		predefContextLinks.add(new Link(null,"DW",null,"Standard storage location"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.33",null,"Belongs to"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.31",null,"Has parent"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.30.a",null,"Has parts"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.34",null,"Consists of"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.32",null,"Has children"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.3.a",null,"Is associated with tissue"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.3.bu",null,"Is associated with WholeOrganism"));
-		predefContextLinks.add(new Link(null,"TEST.SPEC.3.im",null,"Is associated with WholeOrganism"));
-		
-		/*
-		 * 
-		 * needs to go to
-		 * Test12start
-
-		TestCase tmp = new TestCase("Entomology","Collection Entomological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Entomology","Digistreet Entomological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Entomology","General Entomological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Entomology Storage unit","Digistreet 30M Entomological Storage unit","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Arts","FES","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Arts","General Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Arts","Zoological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Arts Storage unit","Dynamisch","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Arts Storage unit","test","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Invertebrates","Collection Invertebrates Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Invertebrates","Digistreet Invertebrates Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Invertebrates","General Invertebrates Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Invertebrates Storage unit","Digistreet 30M Invertebrates Storage unit","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Mineralogy and Petrology","Collection MinandPetro Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Mineralogy and Petrology","Digistreet MinandPetro Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Mineralogy and Petrology","General MinandPetro Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Mineralogy and Petrology Storage unit","Digistreet 30M MinandPetro Storage unit","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Paleontology","Collection Paleontological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Paleontology","Digistreet Paleontological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Paleontology","General Paleontological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Paleontology","Paleo Specimen Compact","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Paleontology Storage unit","Digistreet 30M Paleontological Storage unit","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Sounds","FES","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Sounds","General Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Sounds","Zoological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Sounds Storage unit","Dynamisch","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-		*/
-
-		TestCase tmp = new TestCase("Vertebrates","Collection Vertebrates Specimen","xmlbeschrijvingid=182568105","Collection Vertebrates Specimen");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		/*
-		tmp = new TestCase("Vertebrates","Digistreet Vertebrates Specimen","xmlbeschrijvingid=182568105","Digistreet Vertebrates Specimen");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Vertebrates","General Vertebrates Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Vertebrates Storage unit","Digistreet 30M Vertebrates Storage unit","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen other");
-		testCases.add(tmp);
-
-		tmp = new TestCase("DNA Lab","Collection Entomological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen DNA");
-		tmp.addTest("Geneious OIA");
-		testCases.add(tmp);
-
-		tmp = new TestCase("DNA Lab","Digistreet Entomological Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen DNA");
-		tmp.addTest("Geneious OIA");
-		testCases.add(tmp);
-
-		tmp = new TestCase("DNA Lab","Collection Vertebrates Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen DNA");
-		tmp.addTest("Geneious OIA");
-		testCases.add(tmp);
-
-		tmp = new TestCase("DNA Lab","DNA Lab Specimen","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("New specimen DNA");
-		tmp.addTest("Geneious OIA");
-		testCases.add(tmp);
-
-		tmp = new TestCase("Molecular Storage unit","Collection Molecular Storage unit","xmlbeschrijvingid=20250966");
-		tmp.addTest("Context");
-		tmp.addTest("Molecular storage unit");
-		testCases.add(tmp);
-		*/
-	
-		
 	}
+
+	@DataProvider(name = "testCases")
+	public static Object[][] testCaseProvider() {
+		/* 
+		[forms]
+		"Collection Vertebrates Specimen"
+		"Digistreet Vertebrates Specimen"
+		"General Vertebrates Specimen"
+		"IM Test"
+		
+		[tests]
+		tmp.addTest("Context");
+		tmp.addTest("New specimen DNA");
+		tmp.addTest("New specimen other");
+		tmp.addTest("Molecular storage unit");
+		tmp.addTest("Geneious OIA");
+		
+		*/
+		TestCase tmp = new TestCase(null,null,null,null);
+		
+	
+		tmp = new TestCase("Vertebrates","Collection Vertebrates Specimen","xmlbeschrijvingid=182568105","Collection Vertebrates Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.3",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.33",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.31",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.30.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.34",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.32",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+			
+		tmp = new TestCase("Vertebrates","Digistreet Vertebrates Specimen","xmlbeschrijvingid=182568105","Digistreet Vertebrates Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.3",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.33",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.31",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.30.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.34",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.32",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+		/*
+		tmp = new TestCase("Vertebrates","General Vertebrates Specimen","xmlbeschrijvingid=182568105","General Vertebrates Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.3",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.33",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.31",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.30.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.34",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.32",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+
+		tmp = new TestCase("Vertebrates Storage unit","Digistreet 30M Vertebrates Storage unit","xmlbeschrijvingid=182568204",null);
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.30",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3",null,"Is Standard storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.3.a",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.30",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.30.a",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.31",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.32",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.33",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.34",null,"Is Temporary storage unit of"));
+			testCases.add(tmp);
+			
+		tmp = new TestCase("Entomology","Collection Entomological Specimen","xmlbeschrijvingid=182567557","Collection Entomological Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.23",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.21",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.20.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.24",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.22",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Entomology","Digistreet Entomological Specimen","xmlbeschrijvingid=182567557","Digistreet Entomological Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.23",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.21",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.20.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.24",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.22",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Entomology","General Entomological Specimen","xmlbeschrijvingid=182567557","General Entomological Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.23",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.21",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.20.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.24",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.22",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Entomology Storage unit","Digistreet 30M Entomological Storage unit","xmlbeschrijvingid=182567670",null);
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.2.a",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.20",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.20.a",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.21",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.22",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.23",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.24",null,"Is Temporary storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.BE.2",null,"Is Standard storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.BE.2",null,"Is Temporary storage unit of"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Invertebrates","Collection Invertebrates Specimen","xmlbeschrijvingid=182567725","Collection Invertebrates Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.4",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.43",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.41",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.40.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.44",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.42",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Invertebrates","Digistreet Invertebrates Specimen","xmlbeschrijvingid=182567725","Digistreet Invertebrates Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.4",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.43",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.41",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.40.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.44",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.42",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+
+		tmp = new TestCase("Invertebrates","General Invertebrates Specimen","xmlbeschrijvingid=182567725","General Invertebrates Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.4",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.43",null,"Belongs to"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.41",null,"Has parent"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.40.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.44",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.42",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.bu",null,"Is associated with WholeOrganism"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4.im",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Invertebrates Storage unit","Digistreet 30M Invertebrates Storage unit","xmlbeschrijvingid=182567839",null);
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.40",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4",null,"Is Standard storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.4",null,"Is Temporary storage unit of"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Mineralogy and Petrology","Collection MinandPetro Specimen","xmlbeschrijvingid=182568231","Collection MinandPetro Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.6",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.64",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.62",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Mineralogy and Petrology","Digistreet MinandPetro Specimen","xmlbeschrijvingid=182568231","Digistreet MinandPetro Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.6",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.64",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.62",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Mineralogy and Petrology","General MinandPetro Specimen","xmlbeschrijvingid=182568231","General MinandPetro Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.6",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.64",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.62",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Mineralogy and Petrology Storage unit","Digistreet 30M MinandPetro Storage unit","xmlbeschrijvingid=182568343",null);
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.60",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6",null,"Is Standard storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.6",null,"Is Temporary storage unit of"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Paleontology","Collection Paleontological Specimen","xmlbeschrijvingid=182567934","Collection Paleontological Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.5",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.50.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.54",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.52",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Paleontology","Digistreet Paleontological Specimen","xmlbeschrijvingid=182567934","Digistreet Paleontological Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.5",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.50.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.54",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.52",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Paleontology","General Paleontological Specimen","xmlbeschrijvingid=182567934","General Paleontological Specimen");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.5",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.50.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.54",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.52",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Paleontology","Paleo Specimen Compact","xmlbeschrijvingid=182567934","Paleo Specimen Compact");
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.5",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.50.a",null,"Has parts"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.54",null,"Consists of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.52",null,"Has children"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.a",null,"Is associated with tissue"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5.bu",null,"Is associated with WholeOrganism"));
+			testCases.add(tmp);
+
+		tmp = new TestCase("Paleontology Storage unit","Digistreet 30M Paleontological Storage unit","xmlbeschrijvingid=182568037",null);
+			tmp.addTest("Context");
+			tmp.addContextLink(new Link(null,"TEST.BE.50",null,"Standard storage unit"));
+			tmp.addContextLink(new Link(null,"DW",null,"Standard storage location"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5",null,"Is Standard storage unit of"));
+			tmp.addContextLink(new Link(null,"TEST.SPEC.5",null,"Is Temporary storage unit of"));
+			testCases.add(tmp);
+*/		
+		
+		Object[][] testData = new Object[testCases.size()][1];
+		for (int row=0; row<testCases.size(); row++)
+			testData[row][0] = testCases.get(row);
+		
+		return testData;
+		   
+		   
+			/*
+
+			tmp = new TestCase("Arts","FES","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Arts","General Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Arts","Zoological Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Arts Storage unit","Dynamisch","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Arts Storage unit","test","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+
+			tmp = new TestCase("Sounds","FES","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Sounds","General Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Sounds","Zoological Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Sounds Storage unit","Dynamisch","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen other");
+			testCases.add(tmp);
+			*/
+
+		
+
+			/*
+			tmp = new TestCase("DNA Lab","Collection Entomological Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen DNA");
+			tmp.addTest("Geneious OIA");
+			testCases.add(tmp);
+
+			tmp = new TestCase("DNA Lab","Digistreet Entomological Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen DNA");
+			tmp.addTest("Geneious OIA");
+			testCases.add(tmp);
+
+			tmp = new TestCase("DNA Lab","Collection Vertebrates Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen DNA");
+			tmp.addTest("Geneious OIA");
+			testCases.add(tmp);
+
+			tmp = new TestCase("DNA Lab","DNA Lab Specimen","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("New specimen DNA");
+			tmp.addTest("Geneious OIA");
+			testCases.add(tmp);
+
+			tmp = new TestCase("Molecular Storage unit","Collection Molecular Storage unit","xmlbeschrijvingid=20250966");
+			tmp.addTest("Context");
+			tmp.addTest("Molecular storage unit");
+			testCases.add(tmp);
+			*/
+			
+	   
+	   
+	   }
+		   
+
+
+
 }

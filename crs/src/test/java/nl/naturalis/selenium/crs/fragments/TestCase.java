@@ -10,6 +10,7 @@ public class TestCase {
 	private String query;
 	private String page;
 	private static List<String> testsToRun = new ArrayList<String>();
+	private static List<Link> contextLinks = new ArrayList<Link>();
 	
 	public TestCase(String collection, String variant, String query, String form) {
 		this.setCollection(collection);
@@ -38,6 +39,10 @@ public class TestCase {
 		this.testsToRun.add(item);
 	}
 
+	public void addContextLink(Link item) {
+		this.contextLinks.add(item);
+	}
+
 	public boolean hasTest(String item) {
 		return this.testsToRun.contains(item);
 	}
@@ -57,7 +62,10 @@ public class TestCase {
 	public String getVariant() {
 		return this.variant;
 	}
-	
+
+	public List<Link> getContextLinks() {
+		return this.contextLinks;
+	}
 
 	public String getIdString() {
 		return

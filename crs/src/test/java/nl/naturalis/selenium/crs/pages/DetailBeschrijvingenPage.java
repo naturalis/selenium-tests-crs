@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.Link;
+
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
@@ -45,6 +45,14 @@ public class DetailBeschrijvingenPage extends AbstractPage {
  *		 p#scrollcontextinhoud
  */
 
+	private WebDriver driver;
+
+	private String PageName = "DetailBeschrijvingenPage";
+	private String PageTitle = "NCB PL omgeving - ";
+	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
+	private String PageUrlQueryString = "";
+	
+
 	@FindBy(css ="input[conceptfield=PREFIX]")
 	private WebElement prefixInput;
 
@@ -60,17 +68,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css ="input[name=USUALSTORAGELOCATION]")
 	private WebElement usualStorageLocationInput;
 
-
-
-	
-	
-	private WebDriver driver;
-
-	private String PageName = "DetailBeschrijvingenPage";
-	private String PageTitle = "NCB PL omgeving - ";
-	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
-	private String PageUrlQueryString = "";
-	
 	@FindBy(id = "ctl00_masterContent_tbl_navigatie")
 	private WebElement resultNumberTable;
 
@@ -116,7 +113,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//input[@id='uniqueID3219180130']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkBasisOfRecord;
 
-	@FindBy(css = "input#uniqueID4219180231")
+	//@FindBy(css = "input#uniqueID4219180231")
+	@FindBy(css ="input[name=SPECIMENMOUNT]")
 	private WebElement mount;
 
 	@FindBy(xpath = "//input[@id='uniqueID4219180231']/parent::*/span[@class='CSContainer']/input[2]")
@@ -134,7 +132,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
 	
-	@FindBy(xpath = "//input[@name='ko_unique_3']")
+	//@FindBy(xpath = "//input[@name='ko_unique_3']")
+	@FindBy(css ="input[title='Numeric part of the RegistrationNumber']")
 	private WebElement number;	
 	
 	@FindBy(xpath = "//input[@name='ko_unique_4']")
@@ -278,12 +277,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public String getPrefix() {
-		return number.getText();
+		return prefixInput.getText();
 	}
 
 	public void setPrefix(String text) {
 		this.switchToFrame_1();
-		this.number.sendKeys(text);
+		this.prefixInput.sendKeys(text);
 	}
 
 	public void setBasisOfRecord(String enterText, String selectText) {
@@ -356,7 +355,20 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public DetailBeschrijvingenPage selectFormulierByName(String name) {
 		Select select = new Select(this.formulierenSelect);
 		select.selectByVisibleText(name);
+		buttonFormulierenSelect.click();
 		return new DetailBeschrijvingenPage(this.driver);
+	}
+	
+	public boolean hasFormulierByName(String name) {
+		Select select = new Select(this.formulierenSelect);
+		List<WebElement> options = select.getOptions();
+		boolean result=false;
+		for (WebElement option : options) {
+			if (option.getText().equals(name)) {
+				result=true;
+			}
+		}
+		return result;
 	}
 	
 	public List<WebElement> clickFormulierenSelect() {
@@ -709,7 +721,35 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.switchTo().defaultContent();
 		relationsTabButton.click();
 	}
-		
+
+	public boolean isStandardStorageLocationEnabled() {
+		return currentStorageLocationInput.isEnabled();
+	}
+	
+	public boolean isTemporaryStorageUnitEnabled() {
+		return usualCollectionUnitInput.isEnabled();
+	}
+
+	public boolean isTemporaryStorageLocationEnabled() {
+		return usualStorageLocationInput.isEnabled();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public String getPageName() {
 		return this.PageName;
