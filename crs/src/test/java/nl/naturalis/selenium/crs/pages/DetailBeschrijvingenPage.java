@@ -25,6 +25,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private String PageTitle = "NCB PL omgeving - ";
 	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
 	private String PageUrlQueryString = "";
+	private String DataGroupTestThesaurusConcept;
 
 	@FindBy(id = "ctl00_masterContent_tbl_navigatie")
 	private WebElement resultNumberTable;
@@ -158,15 +159,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "*//legend[text()='DATAGROUP']/parent::fieldset")
 	private WebElement fieldSetDatagroup;
 	
-//	@FindBy (xpath = "//a[@title='detail pagina publiek']")
-//	private WebElement urlPublic;
-
-
 
 	// Buttons, icons, ...
 
 	// #1 Add multimedia
-	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
+	@FindBy(xpath = "//*[@id='ctl00_masterContent_UpdatePanel1']/input[last()]")
 	private WebElement iconAddMultimedia;
 
 	// #2 Attach all multimedia ...
@@ -337,7 +334,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 		EditIcon thisIcon = new EditIcon();		
 		
-		WebDriverWait wait = new WebDriverWait(driver, 3);
+		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOf(icon));
 		
 		thisIcon.getSrc(icon.getAttribute("src").trim());
@@ -360,6 +357,9 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	@FindBy(css = "*[title=\"Close\"")
 	private WebElement closeButton;
+
+	
+	
 	
 	public DetailBeschrijvingenPage(WebDriver driver) {
 		this.driver = driver;
@@ -374,6 +374,11 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void saveDocument() {
 		driver.switchTo().defaultContent();
 		this.iconSaveDocument.click();
+	}
+	
+	public void deleteDocument() {
+		driver.switchTo().defaultContent();
+		this.iconDeleteDocument.click();		
 	}
 	
 	public void setCurrentCollectionName(String enterText, String selectText) {
@@ -647,12 +652,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		String popupWindow = (String) AllWindowHandles.toArray()[1];
 		
 		// Switching from main window to popup window
-//		driver.switchTo().window(popupWindow);
-//		System.out.println("Title popup: " + driver.getTitle());
 		return driver.switchTo().window(popupWindow);
-
-		// Close the Pop Up window
-		// driver.close();
 	}
 	
 	public int numberOfWindows() {
@@ -965,24 +965,111 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	}
 
 	public boolean isDataGroupStructureOK() {
-		List<WebElement> dataGroups = this.fieldSetDatagroup.findElements(By.xpath("//*[@id='accordion']"));
-		boolean structure = false;
-		for (WebElement dataGroup : dataGroups) {
-			if ((dataGroup.findElement(By.cssSelector("*[role='tab']")) != null) && (dataGroup.findElement(By.cssSelector("*[role='tabpanel']")) != null )) {
-				structure = true;
-			}
-			else {
-				structure = false;
-				break;
-			}
+		if ((this.fieldSetDatagroup.findElements(By.cssSelector("*[role='tab']")) != null) && 
+			(this.fieldSetDatagroup.findElements(By.cssSelector("*[role='tab']")).size() == this.fieldSetDatagroup.findElements(By.cssSelector("*[role='tabpanel']")).size())) {
+			return true;
 		}
-		return structure;	
+		else {
+			return false;
+		}
 	}
 	
 	public int numberDataGroups() {
 		List<WebElement> dataGroups = this.fieldSetDatagroup.findElements(By.xpath("//*[@id='accordion']/h3"));
 		return dataGroups.size(); 
 	}
+	
+	public boolean dataGroupThesaurusLinks() {
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		if (!tLinksDataGroup.isEmpty()) {
+			if (tLinksDataGroup.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		else {
+			return false;
+			}
+		}
+		
+	public boolean dataGroupTestFirstTlink() {
+		// Find all thesaurus links in the datagroup and click on the first
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		WebElement tLink = tLinksDataGroup.get(0);		
+		tLink.click();
+
+		// Select the first thesaurusconcept in the list
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("iframe_1");
+		WebElement thesConcept = driver.findElement(By.xpath("//span[starts-with(@class, 'Concept')]"));
+		this.DataGroupTestThesaurusConcept = thesConcept.getText();
+		thesConcept.click();
+
+		// Find the conceptLink that has been connected
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		List<WebElement> tLinkConceptsDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[class='conceptLink']"));
+		WebElement tConceptLink = tLinkConceptsDataGroup.get(0);
+		String tConceptLinkName = tConceptLink.getText();
+		
+		// Compare what has been selected from the list and what is selected
+		if (tConceptLinkName.equals(this.DataGroupTestThesaurusConcept)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean dataGroupTestAutoSuggest() {
+		// Find all thesaurus links in the datagroup and test the first
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		WebElement tLink = tLinksDataGroup.get(0);
+		
+		// Empty the input box
+		WebElement tLinkClear = tLink.findElement(By.xpath("parent::span/*[@title='Clear']"));
+		tLinkClear.click();
+		
+		// Enter (part of) a concept name
+		WebElement inputFieldConceptName = tLink.findElement(By.xpath("parent::span/parent::td/input"));
+		inputFieldConceptName.sendKeys(this.DataGroupTestThesaurusConcept.substring(0, 2));
+		
+		// ... and check if an autosuggest is presented by counting the suggested list items
+		if (driver.findElements(By.cssSelector("a[class='ui-corner-all']")).size() >= 1) {
+			tLinkClear.click();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean dataGroupTestAutoSuggestSelect() {
+		// Find all thesaurus links in the datagroup and test the first
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		WebElement tLink = tLinksDataGroup.get(0);
+		WebElement tLinkClear = tLink.findElement(By.xpath("parent::span/*[@title='Clear']"));
+		tLinkClear.click();
+
+		// Enter the correct concept name
+		WebElement inputFieldConceptName = tLink.findElement(By.xpath("parent::span/parent::td/input"));
+		inputFieldConceptName.sendKeys(this.DataGroupTestThesaurusConcept);
+		inputFieldConceptName.sendKeys(Keys.TAB);
+
+		// ... and find the conceptLink that has been connected
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		List<WebElement> tLinkConceptsDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[class='conceptLink']"));
+		WebElement tConceptLink = tLinkConceptsDataGroup.get(0);
+		String tConceptLinkName = tConceptLink.getText();
+		
+		// Compare what has been selected from the list and what is selected
+		if (tConceptLinkName.equals(this.DataGroupTestThesaurusConcept)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	
 	public void clickFirstIdentificationEditIcon() {
 		driver.switchTo().defaultContent();

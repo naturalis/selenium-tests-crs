@@ -16,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -79,6 +80,9 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() {
+		// Todo: 
+		// -remove the test record
+		
 		// tearDown();
 		Report.LogTestEnd();
 	}
@@ -172,7 +176,7 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getSrc(),
 				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_add.png",
 				"Fout in 2.1.2");
-		Assert.assertEquals(thisIcon.getAlt(), "Add multimedia", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getTitle(), "Add multimedia", "Fout in 2.1.2");
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon2");
 		Assert.assertEquals(thisIcon.getSrc(),
 				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_copy.png",
@@ -860,23 +864,22 @@ public class Test02 extends AbstractTest {
 	/**
 	 * 2.1.22
 	 * 
-	 * Klik in de pop-up van storage location door de boom heen en selecteer een
-	 * storage location door hierop te klikken. 1. Wordt de storage location
-	 * weergegeven in een grijs blok?
+	 * Klik in de pop-up van storage location door de boom heen en 
+	 * selecteer een storage location door hierop te klikken. 
+	 * 1. Wordt de storage location weergegeven in een grijs blok?
 	 * 
 	 */
 	@Test(priority = 41, dependsOnMethods = { "checkStorageLocationsPageing" })
 	public void checkSelectingStorageLocations() {
 		Assert.assertTrue(popupStorageLocations.selectStorageLocation(), "Fout in 2.1.22");
-		// popupStorageLocations.closeWindow();
 	}
 
 	/**
 	 * 2.1.23
 	 * 
-	 * Klik in de pop-up van storage location op het icoon rechtsboven. 1. Is de
-	 * geselecteerde storage location nu ingevoerd in het gekozen veld (Standard
-	 * of Temporary) storage location?
+	 * Klik in de pop-up van storage location op het icoon rechtsboven. 
+	 * 1. Is de geselecteerde storage location nu ingevoerd in het gekozen veld 
+	 * (Standard of Temporary) storage location?
 	 * 
 	 */
 
@@ -900,10 +903,12 @@ public class Test02 extends AbstractTest {
 	 * 
 	 * Losse scripts (afhandeling Storage)
 	 * 
-	 * Zodra er een waarde ingevoerd is in Standard storage location 1. kleurt
-	 * het veld Standard storage unit dan grijs en 2. kan niet worden ingevoerd?
-	 * Of bij het invoeren van Temporary storage location 3. kleurt dan
-	 * Temporary storage unit grijs en 4. kan niet worden ingevoerd?
+	 * Zodra er een waarde ingevoerd is in Standard storage location 
+	 * 1. kleurt het veld Standard storage unit dan grijs, en 
+	 * 2. kan niet worden ingevoerd? 
+	 *    Of bij het invoeren van Temporary storage location 
+	 * 3. kleurt dan Temporary storage unit grijs, en 
+	 * 4. kan niet worden ingevoerd?
 	 * 
 	 */
 	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
@@ -927,11 +932,10 @@ public class Test02 extends AbstractTest {
 	/**
 	 * 2.1.25
 	 * 
-	 * Voer in het veld Remarks de invoerwaarde testrecord in, en sla het record
-	 * op. 1. Lukt dit? 
-	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op
-	 * save klikken en het verdwijnen van het saving blok (het scherm hoeft dus
-	 * niet opnieuw volledig geladen te zijn)
+	 * Voer in het veld Remarks de invoerwaarde testrecord in, en sla het record op. 
+	 * 1. Lukt dit? 
+	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en 
+	 * het verdwijnen van het saving blok (het scherm hoeft dus niet opnieuw volledig geladen te zijn)
 	 */
 	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
 	public void testFirstRecordSave() {
@@ -995,6 +999,34 @@ public class Test02 extends AbstractTest {
 		Assert.assertTrue(Test02.detailBeschrijvingenPage.isLegendDataGroupAvailable(), "Fout in 2.1.27 - Legenda data group afwezig.");
 		Assert.assertTrue(Test02.detailBeschrijvingenPage.isDataGroupStructureOK(), "Fout in 2.1.27 - Structuur data group niet OK.");
 		Assert.assertTrue((Test02.detailBeschrijvingenPage.numberDataGroups() >= 1), "Fout in 2.1.27 - Geen data group aanwezig.");
+	}
+	
+	/**
+	 * 2.1.29
+	 * 
+	 * 1. Zijn de thesaurus icons aanwezig in de datagroup en 
+	 * 2. werken deze?
+	 * 
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkDataGroups" })
+	public void checkDataGroupThesaurusIcons() {
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupThesaurusLinks(), "Fout in 2.1.29 - Geen thesauruslinks aanwezig in data group.");
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestFirstTlink(), "Fout in 2.1.29 - Koppelen van thesaurus concept in data group heeft gefaald.");
+	}
+
+	/**
+	 * 2.1.30
+	 * 
+	 * 1. Wordt auto-suggest getoond bij de thesaurusvelden? 
+	 * 
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkDataGroupThesaurusIcons" })
+	public void checkDataGroupThesaurusAutoSuggest() {
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestAutoSuggest(), "Fout in 2.1.30 - Geen autosuggest.");
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestAutoSuggestSelect(), "Fout in 2.1.30 - Selecteren van thesaurusterm mislukt.");
+		
+		Test02.detailBeschrijvingenPage.saveDocument();
+		
 	}
 	
 }

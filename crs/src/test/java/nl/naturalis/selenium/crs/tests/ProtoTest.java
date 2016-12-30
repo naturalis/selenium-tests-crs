@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -221,7 +222,92 @@ public class ProtoTest extends AbstractTest {
 		Assert.assertTrue((ProtoTest.detailBeschrijvingenPage.numberDataGroups() >= 1), "Fout in 2.1.27 - Geen data group aanwezig.");
 	}
 	
+	/**
+	 * 2.1.29
+	 * 
+	 * 1. Zijn de thesaurus icons aanwezig in de datagroup en 
+	 * 2. werken deze?
+	 * 
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkDataGroups" })
+	public void checkDataGroupThesaurusIcons() {
+		Assert.assertTrue(ProtoTest.detailBeschrijvingenPage.dataGroupThesaurusLinks(), "Fout in 2.1.29 - Geen thesauruslinks aanwezig in data group.");
+		Assert.assertTrue(ProtoTest.detailBeschrijvingenPage.dataGroupTestFirstTlink(), "Fout in 2.1.29 - Koppelen van thesaurus concept in data group heeft gefaald.");
+	}
+
+	/**
+	 * 2.1.30
+	 * 
+	 * 1. Wordt auto-suggest getoond bij de thesaurusvelden? 
+	 * 
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkDataGroupThesaurusIcons" })
+	public void checkDataGroupThesaurusAutoSuggest() {
+		Assert.assertTrue(ProtoTest.detailBeschrijvingenPage.dataGroupTestAutoSuggest(), "Fout in 2.1.30 - Geen autosuggest.");
+		Assert.assertTrue(ProtoTest.detailBeschrijvingenPage.dataGroupTestAutoSuggestSelect(), "Fout in 2.1.30 - Selecteren van thesaurusterm mislukt.");
+		
+		// Save the record to prevent pop-ups when trying to leave the record
+		ProtoTest.detailBeschrijvingenPage.saveDocument();
+		
+		
+		// <div class="ui-widget-overlay" style="width: 1255px; height: 1310px; z-index: 1001;"></div>
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='ui-widget-overlay']")));
+	}
 	
+	/**
+	 * Delete the test record created just now
+	 * 
+	 */
+	@Test(priority = 47, dependsOnMethods = { "checkDataGroupThesaurusAutoSuggest" })
+	public void deleteTestRecord() {
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
+		driver.switchTo().defaultContent();
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebElement detailSearch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		detailSearch.sendKeys("TEST" + "." + ProtoTest.testNumber + ".se");
+		detailSearch.sendKeys(Keys.ENTER);
+
+		WebElement bin = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
+		bin.click();
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		driver.switchTo().defaultContent();
+		// wait = new WebDriverWait(driver, 5);
+		int size = driver.findElements(By.xpath("//iframe")).size();
+		System.out.println("# of frames: " + size);
+				
+		for (int n = 0; n < size; n++) {
+			driver.switchTo().frame(n);
+			System.out.println("n: " + n + " has: " + driver.findElements(By.xpath("//iframe")).size() + " frames.");
+			List<WebElement> wantedElements = driver.findElements(By.tagName("title"));
+			if (driver.findElements(By.xpath("//iframe")).size() > 0) {
+				// driver.switchTo().frame(1);
+				System.out.println(driver.getPageSource());
+			}
+			driver.switchTo().defaultContent();
+		}
+
+
+		
+//		ProtoTest.detailBeschrijvingenPage.switchToFrameContainingElementID("innercontent");
+//		System.out.println(driver.getTitle());
+//		
+//		WebElement deleteButton = driver.findElement(By.id("btn_verwijder_client"));
+//		deleteButton.click();
+
+		
+		// Switching from main window to popup window
+//		driver.switchTo().window(popupWindow);
+//		System.out.println("Title popup: " + driver.getTitle());
+//		return driver.switchTo().window(popupWindow);
+
+	}
 	
 	
 
