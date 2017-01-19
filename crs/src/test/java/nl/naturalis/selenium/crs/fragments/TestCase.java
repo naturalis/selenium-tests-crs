@@ -5,20 +5,26 @@ import java.util.List;
 
 public class TestCase {
 
+	private String identifier;
 	private String collection;
 	private String variant;
 	private String query;
-	private String page;
-	private static List<String> testsToRun = new ArrayList<String>();
-	private static List<Link> contextLinks = new ArrayList<Link>();
+	private String form;
+	private List<String> testsToRun = new ArrayList<String>();
+	private List<Link> contextLinks = new ArrayList<Link>();
 	
-	public TestCase(String collection, String variant, String query, String form) {
+	public TestCase(String identifier, String collection, String variant, String query, String form) {
+		this.setIdentifier(identifier);
 		this.setCollection(collection);
 		this.setVariant(variant);
 		this.setQuery(query);
-		this.setPage(form);
+		this.setForm(form);
 	}
 	
+	public void setIdentifier(String item) {
+		this.identifier=item;
+	}
+
 	public void setCollection(String item) {
 		this.collection=item;
 	}
@@ -31,8 +37,8 @@ public class TestCase {
 		this.query=item;
 	}
 	
-	public void setPage(String item) {
-		this.page=item;
+	public void setForm(String item) {
+		this.form=item;
 	}
 
 	public void addTest(String item) {
@@ -47,12 +53,20 @@ public class TestCase {
 		return this.testsToRun.contains(item);
 	}
 
+	public List<String> getTests() {
+		return this.testsToRun;
+	}
+
+	public String getIdentifier() {
+		return this.identifier;
+	}
+	
 	public String getCollection() {
 		return this.collection;
 	}
 	
-	public String getPage() {
-		return this.page;
+	public String getForm() {
+		return this.form;
 	}
 	
 	public String getQuery() {
@@ -70,9 +84,9 @@ public class TestCase {
 	public String getIdString() {
 		return
 			"collection: " + this.getCollection() + " / " +
-			"page: " + this.getPage() + " / " +
-			//"query: " + this.getQuery() + " / " +
-			"form: " + this.getVariant();
+			"variant: " + this.getVariant() + " / " +
+			"query: " + this.getQuery() + " / " +
+			"form: " + this.getForm();
 	}
 	
 }

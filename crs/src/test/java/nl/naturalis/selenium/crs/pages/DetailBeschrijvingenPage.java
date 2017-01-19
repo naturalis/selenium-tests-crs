@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.Link;
+import nl.naturalis.selenium.crs.utils.ToolKit;
 
 
 public class DetailBeschrijvingenPage extends AbstractPage {
@@ -274,6 +275,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void setNumber(String text) {
 		this.switchToFrame_1();
 		this.number.sendKeys(text);
+		WebElement body = driver.findElement(By.cssSelector("body"));
+		body.click();
 	}
 
 	public String getPrefix() {
@@ -283,6 +286,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	public void setPrefix(String text) {
 		this.switchToFrame_1();
 		this.prefixInput.sendKeys(text);
+		WebElement body = driver.findElement(By.cssSelector("body"));
+		body.click();
 	}
 
 	public void setBasisOfRecord(String enterText, String selectText) {
@@ -505,6 +510,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	public String getRegistrationNumber() {
 		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
+		System.out.println(registrationNumber.getAttribute("value"));
 		return registrationNumber.getAttribute("value");
 	}
 
@@ -734,8 +740,36 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return usualStorageLocationInput.isEnabled();
 	}
 	
+	public void setStandardStorageUnit(String keys) {
+
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		
+		this.currentCollectionUnitInput.sendKeys(keys);
+		WebElement body = driver.findElement(By.cssSelector("body"));
+		body.click();
+		this.currentCollectionUnitInput.sendKeys(keys);
+	}
 	
-	
+	public ArrayList<String> getStorgeUnitSuggestions() {
+		
+		// unable to get this to work
+		
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+
+		WebElement list = driver.findElement(By.xpath("/html/body/ul[21]"));
+		List<WebElement> items = list.findElements(By.cssSelector("li"));
+		for (WebElement e : items) {
+			System.out.println(e.getText());
+		}
+
+		//NCBN000023
+		//NCBN000615
+		
+		return new ArrayList<String>();
+
+	}
 	
 	
 	
