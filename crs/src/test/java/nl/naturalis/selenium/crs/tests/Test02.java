@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -1025,8 +1026,59 @@ public class Test02 extends AbstractTest {
 		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestAutoSuggest(), "Fout in 2.1.30 - Geen autosuggest.");
 		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestAutoSuggestSelect(), "Fout in 2.1.30 - Selecteren van thesaurusterm mislukt.");
 		
+		// Save the record to prevent pop-ups when trying to leave the record
 		Test02.detailBeschrijvingenPage.saveDocument();
 		
+		
+		// Wait for the overlay to disappear
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='ui-widget-overlay']")));
 	}
+	
+	/**
+	 * Delete the test record
+	 * 
+	 */
+	@Test(priority = 47, dependsOnMethods = { "checkDataGroupThesaurusAutoSuggest" })
+	public void deleteTestRecord() {
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
+		driver.switchTo().defaultContent();
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebElement detailSearch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
+		// detailSearch.sendKeys("TEST.2017012001.se");
+		detailSearch.sendKeys(Keys.ENTER);
+
+//		WebElement bin = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
+//		bin.click();
+//		
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+	    driver.findElement(By.id("btn_delete")).click();
+	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame | iframe_1 | ]]
+	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame |  | ]]
+	    driver.switchTo().frame(0);
+	    System.out.println("Switched to frame 0");
+	    driver.switchTo().frame(0);
+	    System.out.println("Switched to frame 0");
+	    driver.findElement(By.id("btn_verwijder_client")).click();
+	    Alert deleteAlert = driver.switchTo().alert();
+		String alertText = deleteAlert.getText();
+		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?", "Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
+
+		// Delete? No way!
+		// deleteAlert.dismiss();
+		
+		// Let's delete this record
+		deleteAlert.accept();
+
+		// ...
+
+	}
+
 	
 }

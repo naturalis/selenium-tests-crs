@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -250,13 +251,13 @@ public class ProtoTest extends AbstractTest {
 		ProtoTest.detailBeschrijvingenPage.saveDocument();
 		
 		
-		// <div class="ui-widget-overlay" style="width: 1255px; height: 1310px; z-index: 1001;"></div>
+		// Wait for the overlay to disappear
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='ui-widget-overlay']")));
 	}
 	
 	/**
-	 * Delete the test record created just now
+	 * Delete the test record
 	 * 
 	 */
 	@Test(priority = 47, dependsOnMethods = { "checkDataGroupThesaurusAutoSuggest" })
@@ -266,46 +267,37 @@ public class ProtoTest extends AbstractTest {
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		WebElement detailSearch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
 		detailSearch.sendKeys("TEST" + "." + ProtoTest.testNumber + ".se");
+		// detailSearch.sendKeys("TEST.2017012001.se");
 		detailSearch.sendKeys(Keys.ENTER);
 
-		WebElement bin = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
-		bin.click();
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		driver.switchTo().defaultContent();
-		// wait = new WebDriverWait(driver, 5);
-		int size = driver.findElements(By.xpath("//iframe")).size();
-		System.out.println("# of frames: " + size);
-				
-		for (int n = 0; n < size; n++) {
-			driver.switchTo().frame(n);
-			System.out.println("n: " + n + " has: " + driver.findElements(By.xpath("//iframe")).size() + " frames.");
-			List<WebElement> wantedElements = driver.findElements(By.tagName("title"));
-			if (driver.findElements(By.xpath("//iframe")).size() > 0) {
-				// driver.switchTo().frame(1);
-				System.out.println(driver.getPageSource());
-			}
-			driver.switchTo().defaultContent();
-		}
-
-
-		
-//		ProtoTest.detailBeschrijvingenPage.switchToFrameContainingElementID("innercontent");
-//		System.out.println(driver.getTitle());
+//		WebElement bin = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
+//		bin.click();
 //		
-//		WebElement deleteButton = driver.findElement(By.id("btn_verwijder_client"));
-//		deleteButton.click();
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
+	    driver.findElement(By.id("btn_delete")).click();
+	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame | iframe_1 | ]]
+	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame |  | ]]
+	    driver.switchTo().frame(0);
+	    System.out.println("Switched to frame 0");
+	    driver.switchTo().frame(0);
+	    System.out.println("Switched to frame 0");
+	    driver.findElement(By.id("btn_verwijder_client")).click();
+	    Alert deleteAlert = driver.switchTo().alert();
+		String alertText = deleteAlert.getText();
+		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?", "Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
+
+		// Delete? No way!
+		deleteAlert.dismiss();
 		
-		// Switching from main window to popup window
-//		driver.switchTo().window(popupWindow);
-//		System.out.println("Title popup: " + driver.getTitle());
-//		return driver.switchTo().window(popupWindow);
+		// Let's delete this record
+		deleteAlert.accept();
+
+		// ...
 
 	}
 	
