@@ -2,6 +2,7 @@ package nl.naturalis.selenium.crs.pages;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -52,10 +53,13 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	private String PageTitle = "NCB PL omgeving - ";
 	private String PageURL = "/AtlantisWeb/pages/medewerker/DetailBeschrijvingen.aspx";
 	private String PageUrlQueryString = "";
-	
+	private String DataGroupTestThesaurusConcept;
 
 	@FindBy(css ="input[conceptfield=PREFIX]")
 	private WebElement prefixInput;
+	
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']")
+	private WebElement prefix;
 
 	@FindBy(css ="input[name=CURRENTCOLLECTIONUNIT]")
 	private WebElement currentCollectionUnitInput;
@@ -90,6 +94,12 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "registrationNumber")
 	private WebElement registrationNumber;
 
+	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/input")
+	private WebElement registrationNumberErrorMessage;
+
+	@FindBy(xpath = "//input[@id='regNrCheck']/parent::td/img")
+	private WebElement registrationNumberErrorIcon;
+	
 	@FindBy(id = "uniqueID321918013")
 	private WebElement SourceInstitute;
 	
@@ -133,16 +143,60 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//input[@id='uniqueID6219180333']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkPreservedPart;
 	
+	@FindBy(xpath = "//textarea[@atfid='add_ncrs_specimen_remarks?defaultfield']")
+	private WebElement remarks;
+
+	@FindBy(name = "CURRENTCOLLECTIONUNIT")
+	private WebElement standardStorageUnit;
+
+	@FindBy(xpath = "//input[@name='CURRENTCOLLECTIONUNIT']/parent::td/input[@class='errorImage']")
+	private WebElement standardStorageUnitErrorIcon;
+
+	@FindBy(name = "USUALCOLLECTIONUNIT")
+	private WebElement temporaryStorageUnit;
+
+	@FindBy(xpath = "//input[@name='USUALCOLLECTIONUNIT']/parent::td/input[@type='image']")
+	private WebElement temporaryStorageUnitErrorIcon;
+
+	@FindBy(name = "CURRENTSTORAGELOCATION")
+	private WebElement standardStorageLocation;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	private WebElement standardStorageLocationBinIcon;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@title='Select']")
+	private WebElement standardStorageLocationSelectIcon;
+
+	@FindBy(xpath = "//input[@name='CURRENTSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	private WebElement standardStorageLocationErrorIcon;
+
+	@FindBy(name = "USUALSTORAGELOCATION")
+	private WebElement temporaryStorageLocation;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Clear']")
+	private WebElement temporaryStorageLocationBinIcon;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@title='Select']")
+	private WebElement temporaryStorageLocationSelectIcon;
+
+	@FindBy(xpath = "//input[@name='USUALSTORAGELOCATION']/parent::td/input[@class='errorImage']")
+	private WebElement temporaryStorageLocationErrorIcon;
+	
 	//@FindBy(xpath = "//input[@name='ko_unique_3']")
 	@FindBy(css ="input[title='Numeric part of the RegistrationNumber']")
-	private WebElement number;	
+	private WebElement number;
 	
-	@FindBy(xpath = "//input[@name='ko_unique_4']")
+	@FindBy(xpath = "*//legend[text()='DATAGROUP']/parent::fieldset")
+	private WebElement fieldSetDatagroup;
+	
+	//@FindBy(xpath = "//input[@name='ko_unique_4']")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_suffix?suffixfield']")
 	private WebElement suffix;	
 	
 	@FindBy(id = "ko_unique_2")
 	private WebElement suffixErrorIcon;	
 
+	// Buttons, icons, ...
 	
 	// #1 Add multimedia
 	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
@@ -215,6 +269,116 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// #18 Warning Preserved Part
 	@FindBy(css = "img#PRESERVEDPART")
 	private WebElement invalidPreservedPart;
+
+	// #19 Copy
+	@FindBy(id = "btn_copy")
+	private WebElement iconCopyDocument;
+
+	// #20 Delete
+	@FindBy(id = "btn_delete")
+	private WebElement iconDeleteDocument;
+
+	// #21 Create report
+	@FindBy(id = "btn_genereerrapportage")
+	private WebElement iconCreateReport;
+
+	// #22 Show stats
+	@FindBy(id = "btn_stats")
+	private WebElement iconShowStats;
+
+	// #23 Add to working set
+	@FindBy(id = "ctl00_masterContent_btn_werkset")
+	private WebElement iconAddToWorkingSet;
+	
+	public EditIcon getIconInfo(String choice) {
+		WebElement icon = null;
+		switch (choice) {
+		case "icon1":
+			icon = iconAddMultimedia;
+			break;
+		case "icon2":
+			icon = iconAttachAllMultimediaFromGlobalSelection;
+			break;
+		case "icon3":
+			icon = iconMoveAllMultimediaFromGlobalSelection;
+			break;
+		case "icon4":
+			icon = iconNewDocument;
+			break;
+		case "icon5":
+			icon = iconSaveDocument;
+			break;
+		case "icon6":
+			icon = iconSaveAddNewDocument;
+			break;
+		case "icon7":
+			icon = iconSaveDefaults;
+			break;
+		case "icon8":
+			icon = iconLoadDefaults;
+			break;
+		case "icon9":
+			icon = iconThesaurusBasisOfRecord;
+			break;
+		case "icon10":
+			icon = iconBinBasisOfRecord;
+			break;
+		case "icon11":
+			icon = iconThesaurusDataGroupType;
+			break;
+		case "icon12":
+			icon = iconBinDataGroupType;
+			break;
+		case "icon13":
+			icon = iconThesaurusGatheringSiteCountry;
+			break;
+		case "icon14":
+			icon = iconBinGatheringSiteCountry;
+			break;
+		case "icon15":
+			icon = invalidCollectionName;
+			break;
+		case "icon16":
+			icon = invalidBasisOfRecord;
+			break;
+		case "icon17":
+			icon = invalidMount;
+			break;
+		case "icon18":
+			icon = invalidPreservedPart;
+			break;
+		case "icon19":
+			icon = iconCopyDocument;
+			break;
+		case "icon20":
+			icon = iconDeleteDocument;
+			break;
+		case "icon21":
+			icon = iconCreateReport;
+			break;
+		case "icon22":
+			icon = iconShowStats;
+			break;
+		case "icon23":
+			icon = iconAddToWorkingSet;
+			break;
+
+		default:
+			icon = null;
+		}
+	
+		EditIcon thisIcon = new EditIcon();
+		
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.visibilityOf(icon));
+
+		thisIcon.getSrc(icon.getAttribute("src").trim());
+		thisIcon.getAlt(icon.getAttribute("alt").trim());
+		thisIcon.getTitle(icon.getAttribute("title").trim());
+		return thisIcon;
+	}
+
+	// .... End of Icons
 	
 	
 	@FindBy(id = "scrolldiv")
@@ -243,6 +407,16 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.PageUrlQueryString = queryString;
 	}
 
+	public void saveDocument() {
+		driver.switchTo().defaultContent();
+		this.iconSaveDocument.click();
+	}
+	
+	public void deleteDocument() {
+		driver.switchTo().defaultContent();
+		this.iconDeleteDocument.click();		
+	}
+	
 	public void setCurrentCollectionName(String enterText, String selectText) {
 		this.switchToFrame_1();
 		this.currentCollectionName.click();
@@ -263,7 +437,44 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.currentCollectionName.click();
 		this.clearCurrentCollectionName.click();
 	}
+
+	public String getPrefix() {
+		return prefixInput.getText();
+	}
 	
+	public String getPrefixExt() {
+		if (prefix.getText().length() > 0) {
+			return prefix.getText();
+		} else {
+			return prefix.getAttribute("lastval");
+		}
+	}
+
+	public void setPrefix(String text) {
+		this.switchToFrame_1();
+		this.prefixInput.sendKeys(text);
+		WebElement body = driver.findElement(By.cssSelector("body"));
+		body.click();
+	}
+	
+	public void setPrefixExt(String text) {
+		this.switchToFrame_1();
+		if (text == "TAB") {
+			this.prefix.sendKeys(Keys.TAB);
+		} else {
+			this.prefix.sendKeys(text);
+		}
+	}
+	
+	public void setPrefixThesaurus(String text) {
+		this.setPrefixExt(text);
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		this.driver.findElement(By.partialLinkText(text + "(Prefix)")).click();
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("iframe_1");
+	}
+
 	public void deletePrefix() {
 		this.clearPrefix.click();
 	}
@@ -279,16 +490,58 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		body.click();
 	}
 
-	public String getPrefix() {
-		return prefixInput.getText();
+	public void deleteNumber() {
+		this.number.clear();
+	}
+	
+	public String getSuffix() {
+		return suffix.getText();
 	}
 
-	public void setPrefix(String text) {
+	public void setSuffix(String text) {
 		this.switchToFrame_1();
-		this.prefixInput.sendKeys(text);
-		WebElement body = driver.findElement(By.cssSelector("body"));
-		body.click();
+		this.suffix.sendKeys(text);
 	}
+
+	public void deleteSuffix() {
+		this.switchToFrame_1();
+		this.suffix.clear();
+	}
+	
+	public String getRegistrationNumber() {
+		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
+		System.out.println(registrationNumber.getAttribute("value"));
+		return registrationNumber.getAttribute("value");
+	}
+
+//	public String getRegistrationNumber() {
+//		this.switchToFrame_1();
+//		return this.registrationNumber.getAttribute("lastval");
+//	}
+
+	public void setRegistrationNumber(String text) {
+		this.switchToFrame_1();
+		if (text == "TAB") {
+			this.registrationNumber.sendKeys(Keys.TAB);
+		} else {
+			this.registrationNumber.sendKeys(text);
+		}
+	}
+
+	public void deleteRegistrationNumber() {
+		this.switchToFrame_1();
+		this.registrationNumber.clear();
+	}
+
+	public String getAltRegistrationNumberErrorMessage() {
+		return this.registrationNumberErrorMessage.getAttribute("value");
+	}
+
+	public String getAltRegistrationNumberErrorIcon() {
+		return this.registrationNumberErrorIcon.getAttribute("alt");
+	}
+
+
 
 	public void setBasisOfRecord(String enterText, String selectText) {
 		this.switchToFrame_1();
@@ -353,6 +606,20 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.preservedPart.click();
 	}
 
+	public String getRemarks() {
+		return remarks.getText();
+	}
+
+	public void setRemarks(String text) {
+		this.switchToFrame_1();
+		this.remarks.sendKeys(text);
+	}
+
+	public void deleteRemarks() {
+		this.switchToFrame_1();
+		this.remarks.clear();
+	}
+	
 	public Integer getNumberOfResults() {
 		return Integer.parseInt(numberSpan.getText().trim());
 	}
@@ -508,12 +775,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return selected;
 	}
 
-	public String getRegistrationNumber() {
-		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
-		System.out.println(registrationNumber.getAttribute("value"));
-		return registrationNumber.getAttribute("value");
-	}
-
 	public void doDetailSearch(String searchterm) {
 		this.QuickSearchTextBox.sendKeys(searchterm);
 		this.QuickSearchButton.click();
@@ -541,74 +802,6 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return iconValues;
 	}
 	
-	public EditIcon getIconInfo(String choice) {
-		WebElement icon = null;
-		switch (choice) {
-		case "icon1":
-			icon = iconAddMultimedia;
-			break;
-		case "icon2":
-			icon = iconAttachAllMultimediaFromGlobalSelection;
-			break;
-		case "icon3":
-			icon = iconMoveAllMultimediaFromGlobalSelection;
-			break;
-		case "icon4":
-			icon = iconNewDocument;
-			break;
-		case "icon5":
-			icon = iconSaveDocument;
-			break;
-		case "icon6":
-			icon = iconSaveAddNewDocument;
-			break;
-		case "icon7":
-			icon = iconSaveDefaults;
-			break;
-		case "icon8":
-			icon = iconLoadDefaults;
-			break;
-		case "icon9":
-			icon = iconThesaurusBasisOfRecord;
-			break;
-		case "icon10":
-			icon = iconBinBasisOfRecord;
-			break;
-		case "icon11":
-			icon = iconThesaurusDataGroupType;
-			break;
-		case "icon12":
-			icon = iconBinDataGroupType;
-			break;
-		case "icon13":
-			icon = iconThesaurusGatheringSiteCountry;
-			break;
-		case "icon14":
-			icon = iconBinGatheringSiteCountry;
-			break;
-		case "icon15":
-			icon = invalidCollectionName;
-			break;
-		case "icon16":
-			icon = invalidBasisOfRecord;
-			break;
-		case "icon17":
-			icon = invalidMount;
-			break;
-		case "icon18":
-			icon = invalidPreservedPart;
-			break;
-		default:
-			icon = null;
-		}
-	
-		EditIcon thisIcon = new EditIcon();
-		thisIcon.getSrc(icon.getAttribute("src").trim());
-		thisIcon.getAlt(icon.getAttribute("alt").trim());
-		thisIcon.getTitle(icon.getAttribute("title").trim());
-		
-		return thisIcon;
-	}
 
 	public Boolean isContextDisplayAvailable() {
 		driver.switchTo().defaultContent();
@@ -661,6 +854,126 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
 		return contextDisplay.getText().trim();
 	}
+	
+	public String getContextDisplayRegistrationNumber() {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		return this.contextDisplay.findElement(By.xpath("*//label")).getText().trim();
+	}
+
+	public boolean isLegendDataGroupAvailable() {
+		if (this.fieldSetDatagroup.findElement(By.tagName("legend")).getText().trim().equals("DATAGROUP")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isDataGroupStructureOK() {
+		if ((this.fieldSetDatagroup.findElements(By.cssSelector("*[role='tab']")) != null) && 
+			(this.fieldSetDatagroup.findElements(By.cssSelector("*[role='tab']")).size() == this.fieldSetDatagroup.findElements(By.cssSelector("*[role='tabpanel']")).size())) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public int numberDataGroups() {
+		List<WebElement> dataGroups = this.fieldSetDatagroup.findElements(By.xpath("//*[@id='accordion']/h3"));
+		return dataGroups.size(); 
+	}
+	
+	public boolean dataGroupThesaurusLinks() {
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		if (!tLinksDataGroup.isEmpty()) {
+			if (tLinksDataGroup.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		else {
+			return false;
+			}
+		}
+		
+	public boolean dataGroupTestFirstTlink() {
+		// Find all thesaurus links in the datagroup and click on the first
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		WebElement tLink = tLinksDataGroup.get(0);		
+		tLink.click();
+
+		// Select the first thesaurusconcept in the list
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("iframe_1");
+		WebElement thesConcept = driver.findElement(By.xpath("//span[starts-with(@class, 'Concept')]"));
+		this.DataGroupTestThesaurusConcept = thesConcept.getText();
+		thesConcept.click();
+
+		// Find the conceptLink that has been connected
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		List<WebElement> tLinkConceptsDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[class='conceptLink']"));
+		WebElement tConceptLink = tLinkConceptsDataGroup.get(0);
+		String tConceptLinkName = tConceptLink.getText();
+		
+		// Compare what has been selected from the list and what is selected
+		if (tConceptLinkName.equals(this.DataGroupTestThesaurusConcept)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean dataGroupTestAutoSuggest() {
+		// Find all thesaurus links in the datagroup and test the first
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		WebElement tLink = tLinksDataGroup.get(0);
+		
+		// Empty the input box
+		WebElement tLinkClear = tLink.findElement(By.xpath("parent::span/*[@title='Clear']"));
+		tLinkClear.click();
+		
+		// Enter (part of) a concept name
+		WebElement inputFieldConceptName = tLink.findElement(By.xpath("parent::span/parent::td/input"));
+		inputFieldConceptName.sendKeys(this.DataGroupTestThesaurusConcept.substring(0, 2));
+		
+		// ... and check if an autosuggest is presented by counting the suggested list items
+		if (driver.findElements(By.cssSelector("a[class='ui-corner-all']")).size() >= 1) {
+			tLinkClear.click();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean dataGroupTestAutoSuggestSelect() {
+		// Find all thesaurus links in the datagroup and test the first
+		List<WebElement> tLinksDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[src='/AtlantisWeb/App_Themes/Flexible/images/buttons/node-select-child.png']"));
+		WebElement tLink = tLinksDataGroup.get(0);
+		WebElement tLinkClear = tLink.findElement(By.xpath("parent::span/*[@title='Clear']"));
+		tLinkClear.click();
+
+		// Enter the correct concept name
+		WebElement inputFieldConceptName = tLink.findElement(By.xpath("parent::span/parent::td/input"));
+		inputFieldConceptName.sendKeys(this.DataGroupTestThesaurusConcept);
+		inputFieldConceptName.sendKeys(Keys.TAB);
+
+		// ... and find the conceptLink that has been connected
+		this.driver.switchTo().defaultContent();
+		this.driver.switchTo().frame("ctl00_masterContent_iframe_1");
+		List<WebElement> tLinkConceptsDataGroup = this.fieldSetDatagroup.findElements(By.cssSelector("*[class='conceptLink']"));
+		WebElement tConceptLink = tLinkConceptsDataGroup.get(0);
+		String tConceptLinkName = tConceptLink.getText();
+		
+		// Compare what has been selected from the list and what is selected
+		if (tConceptLinkName.equals(this.DataGroupTestThesaurusConcept)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public void clickFirstIdentificationEditIcon() {
 		driver.switchTo().defaultContent();
@@ -709,7 +1022,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		WebElement mainNav = this.driver.findElement(By.id("ctl00_masterContent_tbl_navigatie"));
 		List<WebElement> as = mainNav.findElements(By.cssSelector("a"));
 		for (WebElement a : as) {
-			if (a.getText().trim().equals("›")) {
+			if (a.getText().trim().equals("â€º")) {
 				return a;
 			}
 		}
@@ -728,28 +1041,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		relationsTabButton.click();
 	}
 
-	public boolean isStandardStorageLocationEnabled() {
-		return currentStorageLocationInput.isEnabled();
-	}
 	
-	public boolean isTemporaryStorageUnitEnabled() {
-		return usualCollectionUnitInput.isEnabled();
-	}
 
-	public boolean isTemporaryStorageLocationEnabled() {
-		return usualStorageLocationInput.isEnabled();
-	}
-	
-	public void setStandardStorageUnit(String keys) {
-
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame("ctl00_masterContent_iframe_1");
-		
-		this.currentCollectionUnitInput.sendKeys(keys);
-		WebElement body = driver.findElement(By.cssSelector("body"));
-		body.click();
-		this.currentCollectionUnitInput.sendKeys(keys);
-	}
 	
 	public ArrayList<String> getStorgeUnitSuggestions() {
 		
@@ -770,18 +1063,212 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		return new ArrayList<String>();
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+	// STORAGE
+
+		// Standard Storage Unit
+
+		public String getStandardStorageUnit() {
+			return this.standardStorageUnit.getText();
+		}
+
+		public void setStandardStorageUnit(String text) {
+			if (text == "TAB") {
+				this.standardStorageUnit.sendKeys(Keys.TAB);
+			} else {
+				this.standardStorageUnit.sendKeys(text);
+			}
+		}
+
+//		public void setStandardStorageUnit(String keys) {
+//
+//			driver.switchTo().defaultContent();
+//			driver.switchTo().frame("ctl00_masterContent_iframe_1");
+//			
+//			this.currentCollectionUnitInput.sendKeys(keys);
+//			WebElement body = driver.findElement(By.cssSelector("body"));
+//			body.click();
+//			this.currentCollectionUnitInput.sendKeys(keys);
+//		}
+
+		
+		public void selectStandardStorageUnit(String text) {
+			this.standardStorageUnit.sendKeys(text);
+			WebElement autoSuggest = (new WebDriverWait(driver, 3))
+					.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+			autoSuggest.click();
+		}
+
+		public void deleteStandardStorageUnit() {
+			this.standardStorageUnit.clear();
+		}
+		
+		public String getAttributeStandardStorageUnit(String attribute) {
+			return this.standardStorageUnit.getCssValue(attribute);
+		}
+		
+		public Boolean isStandardStorageUnitEnabled() {
+			return this.standardStorageUnit.isEnabled();
+		}
+
+		public int numberOfSuggestsStandardStorageUnit(String text) {
+			setStandardStorageUnit(text);
+			List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
+			return suggestsList.size();
+		}
+		
+		public String getWarningStandardStorageUnitErrorIcon() {
+			return this.standardStorageUnitErrorIcon.getAttribute("alt");
+		}
+		
+		
+		// Standard Storage Location
+
+		public String getStandardStorageLocation() {
+			this.switchToFrame_1();
+			return this.standardStorageLocation.getText();
+		}
+
+		public void setStandardStorageLocation(String text) {
+			if (text == "TAB") {
+				this.standardStorageLocation.sendKeys(Keys.TAB);
+			} else {
+				this.standardStorageLocation.sendKeys(text);
+			}
+		}
+
+		public WebDriver selectStandardStorageLocation() {		
+			// Click on the Button "New Message Window"
+			this.standardStorageLocationSelectIcon.click();
+			driver.switchTo().defaultContent();
+
+			Set<String> AllWindowHandles = driver.getWindowHandles();
+			String mainWindow = (String) AllWindowHandles.toArray()[0];
+			String popupWindow = (String) AllWindowHandles.toArray()[1];
+			
+			// Switching from main window to popup window
+			return driver.switchTo().window(popupWindow);
+		}
+		
+		public int numberOfWindows() {
+			// It may take a while for a window to close, hence wait a short while ...
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			// ... and now start checking the number of windows.
+			driver.switchTo().defaultContent();
+			Set<String> windowHandles = driver.getWindowHandles();
+			return windowHandles.size();
+		}
+
+		public int numberOfSuggestsStandardStorageLocation(String text) {
+			setStandardStorageLocation(text);
+			List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+			return suggestsList.size();
+		}
+
+		public void deleteStandardStorageLocation() {
+			this.standardStorageLocationBinIcon.click();
+		}
+
+		public String getAttributeStandardStorageLocation(String attribute) {
+			return this.standardStorageLocation.getCssValue(attribute);
+		}
+
+		public Boolean isStandardStorageLocationEnabled() {
+			return this.standardStorageLocation.isEnabled();
+		}
+
+		
+
+		
+		public String getWarningStandardStorageLocationErrorIcon() {
+			return this.standardStorageLocationErrorIcon.getAttribute("alt");
+		}
+
+		// Temporary Storage Unit
+
+		public String getTemporaryStorageUnit() {
+			return this.temporaryStorageUnit.getText();
+		}
+
+		public void setTemporaryStorageUnit(String text) {
+			if (text == "TAB") {
+				this.temporaryStorageUnit.sendKeys(Keys.TAB);
+			} else {
+				this.temporaryStorageUnit.sendKeys(text);
+			}
+		}
+
+		public void selectTemporaryStorageUnit(String text) {
+			this.temporaryStorageUnit.sendKeys(text);
+			WebElement autoSuggest = (new WebDriverWait(driver, 3))
+					.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(text)));
+			autoSuggest.click();
+		}
+
+		public void deleteTemporaryStorageUnit() {
+			this.temporaryStorageUnit.clear();
+		}
+
+		public String getAttributeTemporaryStorageUnit(String attribute) {
+			return this.temporaryStorageUnit.getCssValue(attribute);
+		}
+		
+		public Boolean isTemporaryStorageUnitEnabled() {
+			return this.temporaryStorageUnit.isEnabled();
+		}
+		
+		public int numberOfSuggestsTemporaryStorageUnit(String text) {
+			setStandardStorageUnit(text);
+			List<WebElement> suggestsList = driver.findElements(By.xpath("*//ul[@role='listbox']/li[@role='menuitem']"));
+			return suggestsList.size();
+		}
+
+		public String getWarningTemporaryStorageUnitErrorIcon() {
+			return this.temporaryStorageUnitErrorIcon.getAttribute("alt");
+		}
+
+		// Temporary Storage Location
+
+		public String getTemporaryStorageLocation() {
+			return this.temporaryStorageLocation.getText();
+		}
+
+		public void setTemporaryStorageLocation(String text) {
+			if (text == "TAB") {
+				this.temporaryStorageLocation.sendKeys(Keys.TAB);
+			} else {
+				this.temporaryStorageLocation.sendKeys(text);
+			}
+		}
+
+		public int numberOfSuggestsTemporaryStorageLocation(String text) {
+			setTemporaryStorageLocation(text);
+			List<WebElement> suggestsList = driver.findElements(By.partialLinkText("DW"));
+			return suggestsList.size();
+		}
+
+		public void deleteTemporaryStorageLocation() {
+			this.temporaryStorageLocationBinIcon.click();
+		}
+
+		public String getAttributeTemporaryStorageLocation(String attribute) {
+			return this.temporaryStorageLocation.getCssValue(attribute);
+		}
+
+		public Boolean isTemporaryStorageLocationEnabled() {
+			return this.temporaryStorageLocation.isEnabled();
+		}
+		
+		public String getWarningTemporaryStorageLocationErrorIcon() {
+			return this.standardStorageLocationErrorIcon.getAttribute("alt");
+		}
+
+		// ***
+
 	
 	
 	@Override

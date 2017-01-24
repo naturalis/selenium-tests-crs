@@ -134,9 +134,9 @@ public class SimpleSearchResultsPage extends AbstractPage {
 			if(!e.getText().trim().equals("›")) {
 		        try {
 					WebElement ele = e.findElement(By.cssSelector("a"));
-					links.add(new Link(ele.getAttribute("href"),ele.getText()));
+					links.add(new Link(ele.getAttribute("href"),ele.getText(),null,null));
 		        } catch (Exception exc) {
-					links.add(new Link(null,e.getText()));
+					links.add(new Link(null,e.getText(),null,null));
 		        }
 			}
 		}
