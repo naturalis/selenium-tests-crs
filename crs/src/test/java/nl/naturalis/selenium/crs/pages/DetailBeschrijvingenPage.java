@@ -459,7 +459,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	public void setPrefixExt(String text) {
 		this.switchToFrame_1();
-		if (text == "TAB") {
+		if (text.equals("TAB")) {
 			this.prefix.sendKeys(Keys.TAB);
 		} else {
 			this.prefix.sendKeys(text);
@@ -521,7 +521,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 
 	public void setRegistrationNumber(String text) {
 		this.switchToFrame_1();
-		if (text == "TAB") {
+		if (text.equals("TAB")) {
 			this.registrationNumber.sendKeys(Keys.TAB);
 		} else {
 			this.registrationNumber.sendKeys(text);

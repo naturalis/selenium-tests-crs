@@ -7,27 +7,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Keys;
+//import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+//import org.openqa.selenium.support.ui.FluentWait;
+//import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.Reporter;
+//import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -35,13 +37,13 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
+//import static org.hamcrest.Matchers.equalTo;
 
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.InputGroup;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.fragments.StorageLocations;
-import nl.naturalis.selenium.crs.configuration.*;
+//import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.*;
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
@@ -79,6 +81,9 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() {
+		// Todo: 
+		// -remove the test record
+		
 		// tearDown();
 		Report.LogTestEnd();
 	}
@@ -172,7 +177,7 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getSrc(),
 				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_add.png",
 				"Fout in 2.1.2");
-		Assert.assertEquals(thisIcon.getAlt(), "Add multimedia", "Fout in 2.1.2");
+		Assert.assertEquals(thisIcon.getTitle(), "Add multimedia", "Fout in 2.1.2");
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon2");
 		Assert.assertEquals(thisIcon.getSrc(),
 				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Flexible/images/buttons/multimedia_copy.png",
@@ -544,6 +549,7 @@ public class Test02 extends AbstractTest {
 	public void checkRegistrationNumber() {
 		// ProtoTest.detailBeschrijvingenPage.switchToMasterContentFrame();
 		// (a)
+		Test02.detailBeschrijvingenPage.deletePrefix();
 		Test02.detailBeschrijvingenPage.setPrefix("abc");
 		Test02.detailBeschrijvingenPage.setNumber("1234");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("abc");
@@ -589,8 +595,8 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.deleteCurrentCollectionName();
 		Test02.detailBeschrijvingenPage.setCurrentCollectionName("Vert", "Vert");
 		Test02.detailBeschrijvingenPage.deletePrefix();
-		Test02.detailBeschrijvingenPage.setPrefix("TEST");
-		Test02.detailBeschrijvingenPage.setPrefix("TAB");
+		Test02.detailBeschrijvingenPage.setPrefixExt("TEST");
+		Test02.detailBeschrijvingenPage.setPrefixExt("TAB");
 		Test02.detailBeschrijvingenPage.setNumber(testNumber);
 		Test02.detailBeschrijvingenPage.setSuffix("se"); // "se" : Selenium test
 															// suffix
@@ -612,9 +618,9 @@ public class Test02 extends AbstractTest {
 	public void checkCreateRegistrationNumberWithE() {
 		String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 		Test02.detailBeschrijvingenPage.deletePrefix();
-		Test02.detailBeschrijvingenPage.setPrefix("TAB");
-		Test02.detailBeschrijvingenPage.setPrefix("e");
-		Test02.detailBeschrijvingenPage.setPrefix("TAB");
+		Test02.detailBeschrijvingenPage.setPrefixExt("TAB");
+		Test02.detailBeschrijvingenPage.setPrefixExt("e");
+		Test02.detailBeschrijvingenPage.setPrefixExt("TAB");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getRegistrationNumber(), "e" + testNumber + "." + "se",
 				"Fout in 2.1.12");
 	}
@@ -635,7 +641,7 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("e" + Test02.testNumber + ".se");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
 		/* Prefix */
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "e", "Fout in 2.1.13.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefixExt(), "e", "Fout in 2.1.13.01");
 
 		/*
 		 * Catalog Number The catalog number cannot be accessed directly and
@@ -673,7 +679,7 @@ public class Test02 extends AbstractTest {
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("TEST" + "." + Test02.testNumber + ".se");
 		Test02.detailBeschrijvingenPage.setRegistrationNumber("TAB");
 		/* Prefix */
-		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefix(), "TEST", "Fout in 2.1.14.01");
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getPrefixExt(), "TEST", "Fout in 2.1.14.01");
 
 		/*
 		 * Catalog Number The catalog number cannot be accessed directly and
@@ -860,23 +866,22 @@ public class Test02 extends AbstractTest {
 	/**
 	 * 2.1.22
 	 * 
-	 * Klik in de pop-up van storage location door de boom heen en selecteer een
-	 * storage location door hierop te klikken. 1. Wordt de storage location
-	 * weergegeven in een grijs blok?
+	 * Klik in de pop-up van storage location door de boom heen en 
+	 * selecteer een storage location door hierop te klikken. 
+	 * 1. Wordt de storage location weergegeven in een grijs blok?
 	 * 
 	 */
 	@Test(priority = 41, dependsOnMethods = { "checkStorageLocationsPageing" })
 	public void checkSelectingStorageLocations() {
 		Assert.assertTrue(popupStorageLocations.selectStorageLocation(), "Fout in 2.1.22");
-		// popupStorageLocations.closeWindow();
 	}
 
 	/**
 	 * 2.1.23
 	 * 
-	 * Klik in de pop-up van storage location op het icoon rechtsboven. 1. Is de
-	 * geselecteerde storage location nu ingevoerd in het gekozen veld (Standard
-	 * of Temporary) storage location?
+	 * Klik in de pop-up van storage location op het icoon rechtsboven. 
+	 * 1. Is de geselecteerde storage location nu ingevoerd in het gekozen veld 
+	 * (Standard of Temporary) storage location?
 	 * 
 	 */
 
@@ -900,10 +905,12 @@ public class Test02 extends AbstractTest {
 	 * 
 	 * Losse scripts (afhandeling Storage)
 	 * 
-	 * Zodra er een waarde ingevoerd is in Standard storage location 1. kleurt
-	 * het veld Standard storage unit dan grijs en 2. kan niet worden ingevoerd?
-	 * Of bij het invoeren van Temporary storage location 3. kleurt dan
-	 * Temporary storage unit grijs en 4. kan niet worden ingevoerd?
+	 * Zodra er een waarde ingevoerd is in Standard storage location 
+	 * 1. kleurt het veld Standard storage unit dan grijs, en 
+	 * 2. kan niet worden ingevoerd? 
+	 *    Of bij het invoeren van Temporary storage location 
+	 * 3. kleurt dan Temporary storage unit grijs, en 
+	 * 4. kan niet worden ingevoerd?
 	 * 
 	 */
 	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
@@ -927,11 +934,10 @@ public class Test02 extends AbstractTest {
 	/**
 	 * 2.1.25
 	 * 
-	 * Voer in het veld Remarks de invoerwaarde testrecord in, en sla het record
-	 * op. 1. Lukt dit? 
-	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op
-	 * save klikken en het verdwijnen van het saving blok (het scherm hoeft dus
-	 * niet opnieuw volledig geladen te zijn)
+	 * Voer in het veld Remarks de invoerwaarde testrecord in, en sla het record op. 
+	 * 1. Lukt dit? 
+	 * 2. Noteer in het veld invoerwaarde de tijd tussen het op save klikken en 
+	 * het verdwijnen van het saving blok (het scherm hoeft dus niet opnieuw volledig geladen te zijn)
 	 */
 	@Test(priority = 43, dependsOnMethods = { "checkKoppelStorageLocation" })
 	public void testFirstRecordSave() {
@@ -947,5 +953,133 @@ public class Test02 extends AbstractTest {
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.println("Elapsed time: " + elapsedTime / 1000 + " secs");
 	}
+	
+	/**
+	 * 2.1.26
+	 * 
+	 * Zijn na het opslaan van het nieuwe record  de iconen Copy, Delete, Create report, 
+	 * Statistiek, Add to working set, erbij gekomen?
+	 */
+	@Test(priority = 44, dependsOnMethods = { "testFirstRecordSave" })
+	public void checkExtraIcons() {
+		// Copy 
+		EditIcon thisIcon = null;
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon19");
+		Assert.assertEquals(thisIcon.getAlt(), "Copy", "Fout in 2.1.26 - Copy icon");
+		// Delete
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon20");
+		Assert.assertEquals(thisIcon.getAlt(), "Delete", "Fout in 2.1.26 - Delete icon");
+		// Create report
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon21");
+		Assert.assertEquals(thisIcon.getAlt(), "Create report", "Fout in 2.1.26 - Create report icon");
+		// Statistiek
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon22");
+		Assert.assertEquals(thisIcon.getAlt(), "Geef statistieken weer", "Fout in 2.1.26 - Statistiek icon");
+		// Add to working set
+		thisIcon = detailBeschrijvingenPage.getIconInfo("icon23");
+		Assert.assertEquals(thisIcon.getAlt(), "Add to working set", "Fout in 2.1.26 - Add to working set icon");		
+	}
+	
+	/** 
+	 * 2.1.27
+	 * 
+	 * Verschijnt het registratienummer juist in het samenvattende lichtblauwe blok rechtsboven?
+	 * (Vul het registratienummer in dit formulier in de kolom invoerwaarde in.)
+	 */
+	@Test(priority = 45, dependsOnMethods = { "checkExtraIcons" })
+	public void checkContextRegistrationNumber() {
+		Assert.assertEquals(Test02.detailBeschrijvingenPage.getContextDisplayRegistrationNumber(), "TEST" + "." + Test02.testNumber + ".se");
+	}
+	
+	/**
+	 * 2.1.28
+	 * 
+	 * Wordt de datagroup correct getoond (blauwe balk)?
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkContextRegistrationNumber" })
+	public void checkDataGroups() {
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.isLegendDataGroupAvailable(), "Fout in 2.1.27 - Legenda data group afwezig.");
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.isDataGroupStructureOK(), "Fout in 2.1.27 - Structuur data group niet OK.");
+		Assert.assertTrue((Test02.detailBeschrijvingenPage.numberDataGroups() >= 1), "Fout in 2.1.27 - Geen data group aanwezig.");
+	}
+	
+	/**
+	 * 2.1.29
+	 * 
+	 * 1. Zijn de thesaurus icons aanwezig in de datagroup en 
+	 * 2. werken deze?
+	 * 
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkDataGroups" })
+	public void checkDataGroupThesaurusIcons() {
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupThesaurusLinks(), "Fout in 2.1.29 - Geen thesauruslinks aanwezig in data group.");
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestFirstTlink(), "Fout in 2.1.29 - Koppelen van thesaurus concept in data group heeft gefaald.");
+	}
 
+	/**
+	 * 2.1.30
+	 * 
+	 * 1. Wordt auto-suggest getoond bij de thesaurusvelden? 
+	 * 
+	 */
+	@Test(priority = 46, dependsOnMethods = { "checkDataGroupThesaurusIcons" })
+	public void checkDataGroupThesaurusAutoSuggest() {
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestAutoSuggest(), "Fout in 2.1.30 - Geen autosuggest.");
+		Assert.assertTrue(Test02.detailBeschrijvingenPage.dataGroupTestAutoSuggestSelect(), "Fout in 2.1.30 - Selecteren van thesaurusterm mislukt.");
+		
+		// Save the record to prevent pop-ups when trying to leave the record
+		Test02.detailBeschrijvingenPage.saveDocument();
+		
+		
+		// Wait for the overlay to disappear
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='ui-widget-overlay']")));
+	}
+	
+	/**
+	 * Delete the test record
+	 * 
+	 */
+	@Test(priority = 47, dependsOnMethods = { "checkDataGroupThesaurusAutoSuggest" })
+	public void deleteTestRecord() {
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
+		driver.switchTo().defaultContent();
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebElement detailSearch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
+		// detailSearch.sendKeys("TEST.2017012001.se");
+		detailSearch.sendKeys(Keys.ENTER);
+
+//		WebElement bin = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
+//		bin.click();
+//		
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+	    driver.findElement(By.id("btn_delete")).click();
+	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame | iframe_1 | ]]
+	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame |  | ]]
+	    driver.switchTo().frame(0);
+	    System.out.println("Switched to frame 0");
+	    driver.switchTo().frame(0);
+	    System.out.println("Switched to frame 0");
+	    driver.findElement(By.id("btn_verwijder_client")).click();
+	    Alert deleteAlert = driver.switchTo().alert();
+		String alertText = deleteAlert.getText();
+		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?", "Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
+
+		// Delete? No way!
+		// deleteAlert.dismiss();
+		
+		// Let's delete this record
+		deleteAlert.accept();
+
+		// ...
+
+	}
+
+	
 }
