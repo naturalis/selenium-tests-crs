@@ -39,6 +39,14 @@ import nl.naturalis.selenium.crs.pages.*;
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
 
+
+/**
+ * Test02
+ * 
+ * @author Tom Gilissen <tom.gilissen@naturalis.nl>
+ * @version 1.0
+ *
+ */
 public class Test02 extends AbstractTest {
 
 	private static String projectID = "CRS";
@@ -75,9 +83,8 @@ public class Test02 extends AbstractTest {
 		Report.LogTestEnd();
 	}
 
-	
 	/**
-	 * Make a screenshot whenever a test fails.
+	 * Save a screenshot whenever a test fails.
 	 */
 	@AfterMethod
 	public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
@@ -142,7 +149,9 @@ public class Test02 extends AbstractTest {
 	}
 
 	/**
-	 * 2.1.1 Kies via "Kies een alternatief formulier" het te testen formulier.
+	 * 2.1.1 
+	 * 
+	 * Kies via "Kies een alternatief formulier" het te testen formulier.
 	 * (Als het te testen formulier default al geopend is, kies dan een andere.)
 	 * Laadt deze?
 	 */
@@ -155,7 +164,9 @@ public class Test02 extends AbstractTest {
 	}
 
 	/**
-	 * 2.1.2 Staan op het te testen fomulier de iconen voor multimedia
+	 * 2.1.2 
+	 * 
+	 * Staan op het te testen fomulier de iconen voor multimedia
 	 * (linksboven), nieuw record, opslaan en save defaults & load defaults op
 	 * het scherm met een mouse over als je de muis erover heen beweegt?
 	 * 

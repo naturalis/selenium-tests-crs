@@ -67,7 +67,8 @@ public class StorageLocations {
 	}
 
 	public List<WebElement> getBoomPagerLinks() {
-		WebElement headerPageLinks = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=' DW.E.01.017']/parent::div/parent::li/parent::ul/*//ul[@class='rtUL']")));
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=' DW.E.01.017']/parent::div/parent::li/parent::ul/*//ul[@class='rtUL']")));
 		return driver.findElements(By.xpath("//a[@class='boomPagerLink']"));
 	}
 	
@@ -104,7 +105,7 @@ public class StorageLocations {
 	public void koppelStorageLocation() {
 		Set<String> AllWindowHandles = driver.getWindowHandles();
 		String mainWindow = (String) AllWindowHandles.toArray()[0];
-		String popupWindow = (String) AllWindowHandles.toArray()[1];	
+		// String popupWindow = (String) AllWindowHandles.toArray()[1];	
 
 		// Clicking the koppel button, will also kill the popup window
 		driver.findElement(By.id("img_Koppel")).click();
