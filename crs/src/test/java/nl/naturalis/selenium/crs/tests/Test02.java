@@ -64,21 +64,18 @@ public class Test02 extends AbstractTest {
 		initializeDriver();
 		initializeWaiting(1);
 		initializeLogging();
-//		driver.get(config.getStartUrl());
 		driver.get(Configuration.getStartUrl());
 		Report.LogTestStart();
 		homePage = new HomePage(driver);
 	}
 
 	@AfterClass
-	private static void cleanUp() {
-		// Todo: 
-		// -remove the test record
-		
-		// tearDown();
+	private static void cleanUp() throws SQLException {
+		tearDown();
 		Report.LogTestEnd();
 	}
 
+	
 	/**
 	 * Make a screenshot whenever a test fails.
 	 */
@@ -101,7 +98,7 @@ public class Test02 extends AbstractTest {
 
 	@Test(priority = 2, dependsOnMethods = { "homePageOpen" })
 	public void homePageDoLogin() {
-		startPage = homePage.doLogin(config.getUsername(), config.getPassword());
+		startPage = homePage.doLogin(Configuration.getUsername(), Configuration.getPassword());
 		Assert.assertEquals(driver.getCurrentUrl(), startPage.getPageURL());
 	}
 
@@ -164,8 +161,7 @@ public class Test02 extends AbstractTest {
 	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkIconInfo() {
 		// Wait 15 secs
-
-		WebDriverWait wait = new WebDriverWait(driver, 15);
+		// WebDriverWait wait = new WebDriverWait(driver, 15);
 
 		EditIcon thisIcon = null;
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon1");
@@ -821,8 +817,10 @@ public class Test02 extends AbstractTest {
 	@Test(priority = 39, dependsOnMethods = { "checkAutosuggestStorageLocations" })
 	public void checkSelectButtonStorageLocations() {
 		this.popupStorageLocations.setDriver(detailBeschrijvingenPage.selectStandardStorageLocation());
-		WebElement tree = (new WebDriverWait(driver, 3))
-				.until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
+		
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
+
 		// 1. Check wether there is a popup window with the title "Selecteer"
 		Assert.assertEquals(popupStorageLocations.getTitle(), "Selecteer", "Fout in 2.1.20.01");
 
