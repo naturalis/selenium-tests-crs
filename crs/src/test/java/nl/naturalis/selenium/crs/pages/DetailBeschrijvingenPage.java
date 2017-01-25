@@ -19,8 +19,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.Link;
-import nl.naturalis.selenium.crs.utils.ToolKit;
-
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
@@ -1143,7 +1141,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 			driver.switchTo().defaultContent();
 
 			Set<String> AllWindowHandles = driver.getWindowHandles();
-			String mainWindow = (String) AllWindowHandles.toArray()[0];
+			// String mainWindow = (String) AllWindowHandles.toArray()[0];
 			String popupWindow = (String) AllWindowHandles.toArray()[1];
 			
 			// Switching from main window to popup window

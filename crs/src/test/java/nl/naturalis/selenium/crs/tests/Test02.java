@@ -148,6 +148,8 @@ public class Test02 extends AbstractTest {
 	 */
 	@Test(priority = 7, dependsOnMethods = { "openFormSelect" })
 	public void selectSpecifiedForm() {
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_masterContent_ddl_fomulieren")));
 		detailBeschrijvingenPage.clickFormulierenSelectOption(formListLabels.get(0));
 		Assert.assertEquals(detailBeschrijvingenPage.findSelectedFormulier(), formListLabels.get(0), "Fout in 2.1.1");
 	}
@@ -160,9 +162,6 @@ public class Test02 extends AbstractTest {
 	 */
 	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkIconInfo() {
-		// Wait 15 secs
-		// WebDriverWait wait = new WebDriverWait(driver, 15);
-
 		EditIcon thisIcon = null;
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon1");
 		Assert.assertEquals(thisIcon.getSrc(),
