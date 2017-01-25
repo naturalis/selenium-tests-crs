@@ -7,29 +7,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-//import java.util.Iterator;
 import java.util.List;
-//import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-//import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-//import org.openqa.selenium.support.ui.FluentWait;
-//import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
-//import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -37,13 +29,12 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-//import static org.hamcrest.Matchers.equalTo;
 
+import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.InputGroup;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.fragments.StorageLocations;
-//import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.*;
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
@@ -51,7 +42,6 @@ import nl.naturalis.selenium.crs.utils.Report;
 public class Test02 extends AbstractTest {
 
 	private static String projectID = "CRS";
-	private static String testID = "Test 02";
 	private static String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 
 	private static MenuItems addMenu;
@@ -74,7 +64,8 @@ public class Test02 extends AbstractTest {
 		initializeDriver();
 		initializeWaiting(1);
 		initializeLogging();
-		driver.get(config.getStartUrl());
+//		driver.get(config.getStartUrl());
+		driver.get(Configuration.getStartUrl());
 		Report.LogTestStart();
 		homePage = new HomePage(driver);
 	}
@@ -172,6 +163,10 @@ public class Test02 extends AbstractTest {
 	 */
 	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkIconInfo() {
+		// Wait 15 secs
+
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+
 		EditIcon thisIcon = null;
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon1");
 		Assert.assertEquals(thisIcon.getSrc(),
