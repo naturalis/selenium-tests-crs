@@ -12,29 +12,26 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.Reporter;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
-import nl.naturalis.selenium.crs.fragments.EditIcon;
-import nl.naturalis.selenium.crs.fragments.InputGroup;
+import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.fragments.StorageLocations;
-import nl.naturalis.selenium.crs.configuration.*;
 import nl.naturalis.selenium.crs.pages.*;
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
@@ -42,8 +39,8 @@ import nl.naturalis.selenium.crs.utils.Report;
 public class ProtoTest extends AbstractTest {
 
 	private static String projectID = "CRS";
-	private static String testID = "Test 02";
-	private static String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
+	// private static String testID = "Test 02";
+	// private static String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 
 	private static MenuItems addMenu;
 	private static HomePage homePage;
@@ -65,7 +62,7 @@ public class ProtoTest extends AbstractTest {
 		initializeDriver();
 		initializeWaiting(1);
 		initializeLogging();
-		driver.get(config.getStartUrl());
+		driver.get(Configuration.getStartUrl());
 		Report.LogTestStart();
 		homePage = new HomePage(driver);
 	}
@@ -99,7 +96,7 @@ public class ProtoTest extends AbstractTest {
 
 	@Test(priority = 2, dependsOnMethods = { "homePageOpen" })
 	public void homePageDoLogin() {
-		startPage = homePage.doLogin(config.getUsername(), config.getPassword());
+		startPage = homePage.doLogin(Configuration.getUsername(), Configuration.getPassword());
 		Assert.assertEquals(driver.getCurrentUrl(), startPage.getPageURL());
 	}
 
@@ -165,7 +162,8 @@ public class ProtoTest extends AbstractTest {
 	public void smallDelay() {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame("ctl00_masterContent_iframe_1");
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("registrationNumber")));
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("registrationNumber")));
 	}
 	
 	/**
@@ -283,7 +281,8 @@ public class ProtoTest extends AbstractTest {
 	@Test(priority = 39, dependsOnMethods = { "checkAutosuggestStorageLocations" })
 	public void checkSelectButtonStorageLocations() {
 		this.popupStorageLocations.setDriver(detailBeschrijvingenPage.selectStandardStorageLocation());
-		WebElement tree = (new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("RadBoom")));
 		// 1. Check whether there is a popup window with the title "Selecteer"
 		Assert.assertEquals(popupStorageLocations.getTitle(), "Selecteer", "Fout in 2.1.20.01");
 		

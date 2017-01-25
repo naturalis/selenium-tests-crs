@@ -3,8 +3,6 @@ package nl.naturalis.selenium.crs.tests;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
-import nl.naturalis.selenium.crs.configuration.Configuration;
-
 public class Test02start extends AbstractTest {
 
 	public static void main(String[] args) {

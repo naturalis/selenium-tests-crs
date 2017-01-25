@@ -71,7 +71,7 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() throws SQLException {
-		tearDown();
+		// tearDown();
 		Report.LogTestEnd();
 	}
 
