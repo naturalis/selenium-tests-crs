@@ -466,51 +466,61 @@ public class ProtoTest extends AbstractTest {
 		detailSearch.sendKeys("TEST.2017012501.se");
 		detailSearch.sendKeys(Keys.ENTER);
 
-		// WebElement bin =
-		// wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
-		// bin.click();
-		//
-		// try {
-		// Thread.sleep(5000);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-
 		driver.findElement(By.id("btn_delete")).click();
-		driver.switchTo().frame(0);
-		// This frame now contains one new frame with the user interaction
-		// regarding the deletion of the record
-		driver.switchTo().frame(0);
-		// Click the delete button
+		driver.switchTo().frame(0); // This frame now contains one frame for user interaction
+		driver.switchTo().frame(0); // and this contains the delete button
 		driver.findElement(By.id("btn_verwijder_client")).click();
 		Alert deleteAlert = driver.switchTo().alert();
 		String alertText = deleteAlert.getText();
 		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?",
 				"Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
 
-		// Delete? No way!
+		// Now, either dismiss
 		// deleteAlert.dismiss();
 
-		// Let's delete this record
+		// or accept deleting this record
 		deleteAlert.accept();
 
 		// Wait for the record to be deleted
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@title='detail pagina publiek']")));
 
-		// Are we at the start page?
+		// Test if we are back at the start page now?
 		String url = driver.getCurrentUrl();
 		Assert.assertEquals(url.trim(), startPage.getPageURL() + "?back=true");
 	}
-
+	
+	/**
+	 * Restore the deleted test record
+	 */
 	@Test(priority = 48, dependsOnMethods = { "deleteTestRecord" })
-	public void deleteTestRecordFinal() {
+	public void restoreDeleteTestRecord() {
 
-		driver.get("https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx?restart=true");
+		driver.get(
+				"https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx?restart=true");
 		deletedDocumentsPage = new DeletedDocuments(driver);
-		
+
 		deletedDocumentsPage.selectFormulierByName("Vertebrates");
 		deletedDocumentsPage.restoreRecord("TEST.2017012501.se");
 
+		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST.2017012501.se"), "Record is niet restored");
 	}
 
+	/**
+	 * Delete and completely remove the test record
+	 */
+	@Test(priority = 49, dependsOnMethods = { "restoreDeleteTestRecord" })
+	public void removeTestRecord() {
+
+		driver.get(
+				"https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx?restart=true");
+		deletedDocumentsPage = new DeletedDocuments(driver);
+
+		deletedDocumentsPage.selectFormulierByName("Vertebrates");
+		deletedDocumentsPage.restoreRecord("TEST.2017012501.se");
+
+		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST.2017012501.se"), "Record is niet restored");
+	}
+
+	
+	
 }

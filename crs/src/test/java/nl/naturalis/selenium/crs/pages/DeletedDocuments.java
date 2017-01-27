@@ -1,6 +1,7 @@
 package nl.naturalis.selenium.crs.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,6 +35,9 @@ public class DeletedDocuments extends AbstractPage {
 	
 	@FindBy(id = "ctl00_ctl00_masterContent_functionButtons_btn_Restore_selected_documents")
 	private WebElement restoreButton;
+	
+	@FindBy(id = "ctl00_ctl00_QuickSearchTextBox")
+	private WebElement detailSearch;
 
 	public DeletedDocuments(WebDriver driver) {
 		this.driver = driver;
@@ -69,6 +73,28 @@ public class DeletedDocuments extends AbstractPage {
 		this.selectRecord(registrationNumber);
 		this.restoreButton.click();
 	}
+	
+	public Boolean findRegistrationNumber(String registrationNumber) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		detailSearch.sendKeys(registrationNumber);
+		detailSearch.sendKeys(Keys.ENTER);
+
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+		
+		WebElement results = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='huidige']")));
+		if (results.getText().equals("1")) {
+			System.out.println("result: " + results.getText());
+			return true;
+		} else {
+			System.out.println("result: " + results.getText());
+			return false;
+		}
+	}
+
 	
 	@Override
 	public String getPageName() {

@@ -56,6 +56,7 @@ public class Test02 extends AbstractTest {
 	private static HomePage homePage;
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
+	private static DeletedDocuments deletedDocumentsPage;
 	private static List<String> formListLabels;
 	private StorageLocations popupStorageLocations = new StorageLocations();
 
@@ -1033,7 +1034,6 @@ public class Test02 extends AbstractTest {
 		// Save the record to prevent pop-ups when trying to leave the record
 		Test02.detailBeschrijvingenPage.saveDocument();
 		
-		
 		// Wait for the overlay to disappear
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='ui-widget-overlay']")));
@@ -1043,45 +1043,61 @@ public class Test02 extends AbstractTest {
 	 * Delete the test record
 	 * 
 	 */
-	@Test(priority = 47, dependsOnMethods = { "checkDataGroupThesaurusAutoSuggest" })
+	@Test(priority = 47, dependsOnMethods = { "startPageTitle" })
 	public void deleteTestRecord() {
 		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
 		driver.switchTo().defaultContent();
 		WebDriverWait wait = new WebDriverWait(driver, 15);
-		WebElement detailSearch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		WebElement detailSearch = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
 		detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
-		// detailSearch.sendKeys("TEST.2017012001.se");
 		detailSearch.sendKeys(Keys.ENTER);
 
-//		WebElement bin = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btn_delete")));
-//		bin.click();
-//		
-//		try {
-//			Thread.sleep(5000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-
-	    driver.findElement(By.id("btn_delete")).click();
-	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame | iframe_1 | ]]
-	    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame |  | ]]
-	    driver.switchTo().frame(0);
-	    System.out.println("Switched to frame 0");
-	    driver.switchTo().frame(0);
-	    System.out.println("Switched to frame 0");
-	    driver.findElement(By.id("btn_verwijder_client")).click();
-	    Alert deleteAlert = driver.switchTo().alert();
+		driver.findElement(By.id("btn_delete")).click();
+		driver.switchTo().frame(0); // This frame now contains one frame for user interaction
+		driver.switchTo().frame(0); // and this contains the delete button
+		driver.findElement(By.id("btn_verwijder_client")).click();
+		Alert deleteAlert = driver.switchTo().alert();
 		String alertText = deleteAlert.getText();
-		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?", "Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
+		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?",
+				"Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
 
-		// Delete? No way!
+		// Now, either dismiss
 		// deleteAlert.dismiss();
-		
-		// Let's delete this record
+
+		// or accept deleting this record
 		deleteAlert.accept();
 
-		// ...
+		// Wait for the record to be deleted
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@title='detail pagina publiek']")));
 
+		// Test if we are back at the start page now?
+		String url = driver.getCurrentUrl();
+		Assert.assertEquals(url.trim(), startPage.getPageURL() + "?back=true");
+	}
+	
+	/**
+	 * Restore the deleted test record
+	 */
+	@Test(priority = 48, dependsOnMethods = { "deleteTestRecord" })
+	public void restoreDeleteTestRecord() {
+
+		driver.get(
+				"https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx?restart=true");
+		deletedDocumentsPage = new DeletedDocuments(driver);
+
+		deletedDocumentsPage.selectFormulierByName("Vertebrates");
+		deletedDocumentsPage.restoreRecord("TEST.2017012501.se");
+
+		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST.2017012501.se"), "Record is niet restored");
+	}
+
+	/**
+	 * Delete and completely remove the test record
+	 */
+	@Test(priority = 49, dependsOnMethods = { "restoreDeleteTestRecord" })
+	public void removeTestRecord() {
+		System.out.println("Not deleted yet ...");
 	}
 
 	
