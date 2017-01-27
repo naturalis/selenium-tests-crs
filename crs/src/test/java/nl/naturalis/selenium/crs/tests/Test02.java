@@ -1043,7 +1043,7 @@ public class Test02 extends AbstractTest {
 	 * Delete the test record
 	 * 
 	 */
-	@Test(priority = 47, dependsOnMethods = { "startPageTitle" })
+	@Test(priority = 47, dependsOnMethods = { "checkDataGroupThesaurusAutoSuggest" })
 	public void deleteTestRecord() {
 		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
 		driver.switchTo().defaultContent();
@@ -1087,9 +1087,9 @@ public class Test02 extends AbstractTest {
 		deletedDocumentsPage = new DeletedDocuments(driver);
 
 		deletedDocumentsPage.selectFormulierByName("Vertebrates");
-		deletedDocumentsPage.restoreRecord("TEST.2017012501.se");
+		deletedDocumentsPage.restoreRecord("TEST" + "." + Test02.testNumber + ".se");
 
-		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST.2017012501.se"), "Record is niet restored");
+		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST" + "." + Test02.testNumber + ".se"), "Record is niet restored");
 	}
 
 	/**

@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import nl.naturalis.selenium.crs.configuration.Configuration;
+import nl.naturalis.selenium.crs.fragments.DeleteRecord;
 import nl.naturalis.selenium.crs.fragments.MenuItems;
 import nl.naturalis.selenium.crs.fragments.StorageLocations;
 import nl.naturalis.selenium.crs.pages.*;
@@ -44,12 +45,14 @@ public class ProtoTest extends AbstractTest {
 	// private static String testID = "Test 02";
 	// private static String testNumber = new
 	// SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
+	private static String testNumber = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "01";
 
 	private static MenuItems addMenu;
 	private static HomePage homePage;
 	private static StartPage startPage;
 	private static DetailBeschrijvingenPage detailBeschrijvingenPage;
 	private static DeletedDocuments deletedDocumentsPage;
+	private static DeleteRecord deleteRecord;
 	private static List<String> formListLabels;
 	private StorageLocations popupStorageLocations = new StorageLocations();
 
@@ -69,6 +72,8 @@ public class ProtoTest extends AbstractTest {
 		driver.get(Configuration.getStartUrl());
 		Report.LogTestStart();
 		homePage = new HomePage(driver);
+		deletedDocumentsPage = new DeletedDocuments(driver);
+		deleteRecord = new DeleteRecord(driver);
 	}
 
 	@AfterClass
@@ -462,8 +467,7 @@ public class ProtoTest extends AbstractTest {
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		WebElement detailSearch = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
-		// detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
-		detailSearch.sendKeys("TEST.2017012501.se");
+		detailSearch.sendKeys("TEST" + "." + this.testNumber + ".se");
 		detailSearch.sendKeys(Keys.ENTER);
 
 		driver.findElement(By.id("btn_delete")).click();
@@ -497,12 +501,11 @@ public class ProtoTest extends AbstractTest {
 
 		driver.get(
 				"https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx?restart=true");
-		deletedDocumentsPage = new DeletedDocuments(driver);
 
 		deletedDocumentsPage.selectFormulierByName("Vertebrates");
-		deletedDocumentsPage.restoreRecord("TEST.2017012501.se");
+		deletedDocumentsPage.restoreRecord("TEST" + "." + this.testNumber + ".se");
 
-		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST.2017012501.se"), "Record is niet restored");
+		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST" + "." + this.testNumber + ".se"), "Record is niet restored");
 	}
 
 	/**
@@ -510,15 +513,35 @@ public class ProtoTest extends AbstractTest {
 	 */
 	@Test(priority = 49, dependsOnMethods = { "restoreDeleteTestRecord" })
 	public void removeTestRecord() {
+		// TEST.2017012701.se
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
+		driver.switchTo().defaultContent();
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebElement detailSearch = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		// detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
+		detailSearch.sendKeys("TEST" + "." + this.testNumber + ".se");
+		detailSearch.sendKeys(Keys.ENTER);
 
-		driver.get(
-				"https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx?restart=true");
-		deletedDocumentsPage = new DeletedDocuments(driver);
+		driver.findElement(By.id("btn_delete")).click();
+		driver.switchTo().frame(0); // This frame now contains one frame for user interaction
+		driver.switchTo().frame(0); // and this contains the delete button
+		driver.findElement(By.id("btn_verwijder_client")).click();
+		Alert deleteAlert = driver.switchTo().alert();
+		deleteAlert.accept();
 
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_LoginName")));
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx");
 		deletedDocumentsPage.selectFormulierByName("Vertebrates");
-		deletedDocumentsPage.restoreRecord("TEST.2017012501.se");
-
-		Assert.assertTrue(deletedDocumentsPage.findRegistrationNumber("TEST.2017012501.se"), "Record is niet restored");
+		deletedDocumentsPage.restoreRecord("TEST" + "." + this.testNumber + ".se");
+		
+		driver.get(startPage.getPageURL());
 	}
 
 	
