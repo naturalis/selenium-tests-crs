@@ -80,7 +80,7 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() throws SQLException {
-		// tearDown();
+		tearDown();
 		Report.LogTestEnd();
 	}
 
@@ -1112,7 +1112,7 @@ public class Test02 extends AbstractTest {
 		WebElement detailSearch = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
 		// detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
-		detailSearch.sendKeys("TEST" + "." + this.testNumber + ".se");
+		detailSearch.sendKeys("TEST" + "." + testNumber + ".se");
 		detailSearch.sendKeys(Keys.ENTER);
 
 		driver.findElement(By.id("btn_delete")).click();
@@ -1125,7 +1125,7 @@ public class Test02 extends AbstractTest {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_LoginName")));
 		driver.get("https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx");
 		deletedDocumentsPage.selectFormulierByName("Vertebrates");
-		deletedDocumentsPage.removeRecord("TEST" + "." + this.testNumber + ".se");
+		deletedDocumentsPage.removeRecord("TEST" + "." + testNumber + ".se");
 
 		// Wait for a short while to allow the record to be deleted
 		try {
