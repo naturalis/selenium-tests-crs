@@ -1040,6 +1040,9 @@ public class Test02 extends AbstractTest {
 	}
 	
 	/**
+	 * 
+	 * 2.7.a
+	 * 
 	 * Delete the test record
 	 * 
 	 */
@@ -1060,7 +1063,7 @@ public class Test02 extends AbstractTest {
 		Alert deleteAlert = driver.switchTo().alert();
 		String alertText = deleteAlert.getText();
 		Assert.assertEquals(alertText.trim(), "Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen?",
-				"Fout bij het verwijderen van een record: Waarschuwing klopt niet.");
+				"Fout bij het verwijderen van een record: Waarschuwing klopt niet."); // Test 2.7.2
 
 		// Now, either dismiss
 		// deleteAlert.dismiss();
@@ -1077,7 +1080,10 @@ public class Test02 extends AbstractTest {
 	}
 	
 	/**
+	 * 2.7.b
+	 * 
 	 * Restore the deleted test record
+	 * 
 	 */
 	@Test(priority = 48, dependsOnMethods = { "deleteTestRecord" })
 	public void restoreDeleteTestRecord() {
@@ -1093,11 +1099,44 @@ public class Test02 extends AbstractTest {
 	}
 
 	/**
+	 * 2.7.c
+	 * 
 	 * Delete and completely remove the test record
+	 * 
 	 */
 	@Test(priority = 49, dependsOnMethods = { "restoreDeleteTestRecord" })
 	public void removeTestRecord() {
-		System.out.println("Not deleted yet ...");
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
+		driver.switchTo().defaultContent();
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebElement detailSearch = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_QuickSearchTextBox")));
+		// detailSearch.sendKeys("TEST" + "." + Test02.testNumber + ".se");
+		detailSearch.sendKeys("TEST" + "." + this.testNumber + ".se");
+		detailSearch.sendKeys(Keys.ENTER);
+
+		driver.findElement(By.id("btn_delete")).click();
+		driver.switchTo().frame(0); // This frame now contains one frame for user interaction
+		driver.switchTo().frame(0); // and this contains the delete button
+		driver.findElement(By.id("btn_verwijder_client")).click();
+		Alert deleteAlert = driver.switchTo().alert();
+		deleteAlert.accept();
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_LoginName")));
+		driver.get("https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx");
+		deletedDocumentsPage.selectFormulierByName("Vertebrates");
+		deletedDocumentsPage.removeRecord("TEST" + "." + this.testNumber + ".se");
+
+		// Wait for a short while to allow the record to be deleted
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// Return home
+		driver.get(startPage.getPageURL());
+		wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_LoginName")));
 	}
 
 	

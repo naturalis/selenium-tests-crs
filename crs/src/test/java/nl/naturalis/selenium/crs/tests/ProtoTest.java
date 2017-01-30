@@ -513,7 +513,7 @@ public class ProtoTest extends AbstractTest {
 	 */
 	@Test(priority = 49, dependsOnMethods = { "restoreDeleteTestRecord" })
 	public void removeTestRecord() {
-		// TEST.2017012701.se
+		// TEST.2017013001.se
 		driver.get("https://crspl.naturalis.nl/AtlantisWeb/default.aspx");
 		driver.switchTo().defaultContent();
 		WebDriverWait wait = new WebDriverWait(driver, 15);
@@ -530,16 +530,17 @@ public class ProtoTest extends AbstractTest {
 		Alert deleteAlert = driver.switchTo().alert();
 		deleteAlert.accept();
 
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_LoginName")));
 		driver.get("https://crspl.naturalis.nl/AtlantisWeb/pages/medewerker/ZoekenVerwijderdedocumenten.aspx");
 		deletedDocumentsPage.selectFormulierByName("Vertebrates");
-		deletedDocumentsPage.restoreRecord("TEST" + "." + this.testNumber + ".se");
+		deletedDocumentsPage.removeRecord("TEST" + "." + this.testNumber + ".se");
+
+		// ctl00_ctl00_masterContent_functionButtons_btn_Delete_selected_documents
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		driver.get(startPage.getPageURL());
 	}
