@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.Link;
-import nl.naturalis.selenium.crs.tests.Test02;
+
 
 public class DetailBeschrijvingenPage extends AbstractPage {
 
