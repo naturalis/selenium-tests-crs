@@ -953,7 +953,7 @@ public class Test02 extends AbstractTest {
 		WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
 		Assert.assertTrue(url.getAttribute("href").length() > 0);
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		System.out.println("Registration number test record: " + detailBeschrijvingenPage.getRegistrationNumber());
+		System.out.println("Registration number test record: " + "TEST" + "." + Test02.testNumber + ".se");
 		System.out.println("Saving time: " + elapsedTime / 1000 + " secs");
 	}
 	
