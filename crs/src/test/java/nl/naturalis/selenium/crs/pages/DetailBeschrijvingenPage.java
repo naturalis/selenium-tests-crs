@@ -111,7 +111,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(xpath = "//input[@id='uniqueID0219179827']/parent::*/span[@class='CSContainer']/a[@class='conceptLink']")
 	private WebElement tlinkCurrentCollectionName;
 
-	@FindBy(xpath = "//input[@id='uniqueID1219179928']/parent::*/span[@class='CSContainer']/input[2]")
+	@FindBy(xpath = "//input[@atfid='add_ncrs_specimen_prefix?selectfield']/parent::*/span/input[2]")
 	private WebElement clearPrefix;
 	
 	@FindBy(id = "uniqueID3219180130")
@@ -509,14 +509,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 	public String getRegistrationNumber() {
 		WebElement registrationNumber = driver.findElement(By.id("registrationNumber"));
-		System.out.println(registrationNumber.getAttribute("value"));
 		return registrationNumber.getAttribute("value");
 	}
-
-//	public String getRegistrationNumber() {
-//		this.switchToFrame_1();
-//		return this.registrationNumber.getAttribute("lastval");
-//	}
 
 	public void setRegistrationNumber(String text) {
 		this.switchToFrame_1();

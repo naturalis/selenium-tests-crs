@@ -90,7 +90,7 @@ public class Test02 extends AbstractTest {
 	@AfterMethod
 	public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
 		if (testResult.getStatus() == ITestResult.FAILURE) {
-			System.out.println("Test " + testResult.getName() + "failed.");
+			System.out.println("Test " + testResult.getName() + " failed.");
 			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			File localFile = new File("test-output/screenshots/Test" + timeStamp + "-" + testResult.getName() + ".png");
@@ -839,11 +839,9 @@ public class Test02 extends AbstractTest {
 		List<WebElement> listStorageLocations = popupStorageLocations.getStorageLocations();
 		int i = 0;
 		for (WebElement element : listStorageLocations) {
-			// System.out.println(element.getText());
 			Assert.assertEquals((element.getText().length() > 0), true, "Fout in 2.1.20.02");
 			i++;
 		}
-		// System.out.println("i: " + i);
 		Assert.assertEquals((i > 0), true);
 	}
 
@@ -955,7 +953,8 @@ public class Test02 extends AbstractTest {
 		WebElement url = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='detail pagina publiek']")));
 		Assert.assertTrue(url.getAttribute("href").length() > 0);
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		System.out.println("Elapsed time: " + elapsedTime / 1000 + " secs");
+		System.out.println("Registration number test record: " + detailBeschrijvingenPage.getRegistrationNumber());
+		System.out.println("Saving time: " + elapsedTime / 1000 + " secs");
 	}
 	
 	/**
