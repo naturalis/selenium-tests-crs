@@ -24,6 +24,8 @@ import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
 import nl.naturalis.selenium.crs.utils.Report;
 
 
+
+
 /**
  * CRS Test 01, runs through scenario for logging in and out 
  * Runs as TestNG application only (no main())
@@ -129,7 +131,7 @@ public class Test01 extends AbstractTest {
 	@Test(priority=3, dependsOnMethods = { "homePageLoginElements" })
 	public void homePageDoLogin() {
 		startPage = homePage.doLogin(Configuration.getUsername(), Configuration.getPassword());
-		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL(),"URL of home page");
+		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL(),"1.1.4. URL of home page");
 	}
 
 	/**
@@ -139,7 +141,7 @@ public class Test01 extends AbstractTest {
 	 */
 	@Test(priority=4, dependsOnMethods = { "homePageDoLogin" })
 	public void startPageTitle() {
-		Assert.assertEquals(driver.getTitle().trim(),startPage.getPageTitle(),"title of start page");
+		Assert.assertEquals(driver.getTitle().trim(),startPage.getPageTitle(),"1.1.4. title of start page");
 	}
 
 	/**

@@ -10,9 +10,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.Reporter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -51,7 +53,7 @@ public class Test12 extends AbstractTest {
 		Report.LogTestStart();
 	}
 
-	@AfterClass
+	@AfterSuite
 	private static void cleanUp() throws SQLException {
 		//tearDown();
 		Report.LogTestEnd();
@@ -66,7 +68,7 @@ public class Test12 extends AbstractTest {
 	@Test(priority=3, dependsOnMethods = { "homePageOpen" })
 	public void homePageDoLogin() {
 		startPage = homePage.doLogin(Configuration.getUsername(), Configuration.getPassword());
-		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL(),"URL of home page");
+		Assert.assertEquals(driver.getCurrentUrl(),startPage.getPageURL(),"1.1.1. URL of home page");
 	}
 
 	@Test(priority=6, dependsOnMethods = { "homePageDoLogin" }, dataProvider = "testCases")
@@ -74,11 +76,11 @@ public class Test12 extends AbstractTest {
 
 		setCurrentTestCase(thisTest);
 
-		//System.out.println("running " + getCurrentTestCase().getIdentifier());
-		System.out.println("running " + getCurrentTestCase().getIdentifier());
+		System.out.println("running " + getCurrentTestCase().getIdString());
 		System.out.println("  tests: " + getCurrentTestCase().getTests());
-		
-		
+		Reporter.log("running " + getCurrentTestCase().getIdString());
+		Reporter.log("  tests: " + getCurrentTestCase().getTests());
+	
 		
 		detailBeschrijvingenPage = new DetailBeschrijvingenPage(driver);
 		detailBeschrijvingenPage.setPageUrlQueryString(getCurrentTestCase().getQuery());
@@ -98,8 +100,9 @@ public class Test12 extends AbstractTest {
 		}
 		else {
 			Assert.assertTrue(
-					detailBeschrijvingenPage.hasFormulierByName(getCurrentTestCase().getForm()),
-					"context.hasForm - " + getCurrentTestCase().getIdentifier() + " (form: " + getCurrentTestCase().getForm() + ")");
+				detailBeschrijvingenPage.hasFormulierByName(getCurrentTestCase().getForm()),
+				"context.hasForm - " + getCurrentTestCase().getIdentifier() + " (form: " + getCurrentTestCase().getForm() + ")"
+			);
 			return detailBeschrijvingenPage.selectFormulierByName(getCurrentTestCase().getForm());
 		}
 	}
@@ -107,6 +110,7 @@ public class Test12 extends AbstractTest {
 	public void contextTest() {
 		if (!getCurrentTestCase().hasTest("Context")) return;
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": Context");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": Context");
 		testContextExists();
 		testContextMatchRelations();
 		testContextFunctioningLinks();
@@ -115,12 +119,14 @@ public class Test12 extends AbstractTest {
 	private void testContextExists() {
 		//Komt het context scherm voor in het formulier
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": Context: testContextExists");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": Context: testContextExists");
 		Assert.assertTrue(detailBeschrijvingenPage.getContextDisplayIsDisplayed(),"context.1 - " + getCurrentTestCase().getIdentifier());
 	}
 
 	private void testContextMatchRelations() {
 		//Komen de relaties in het formulier overeen met wat er in het context scherm staat. Let ook specifiek op dat de relatienamen "current" en "usual" (storage unit / storage location) niet meer voorkomen
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": Context: testContextMatchRelations");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": Context: testContextMatchRelations");
 		
 		contextLinks = detailBeschrijvingenPage.getContextDisplayLinks();
 		List<Link> tmp = currentTestCase.getContextLinks();
@@ -129,12 +135,12 @@ public class Test12 extends AbstractTest {
 			Link lp = tmp.get(n++);
 			Assert.assertTrue(l.getAdditionalInfo().equals(lp.getAdditionalInfo()) && l.getText().equals(lp.getText()),"context.2 - " + getCurrentTestCase().getIdentifier());
 		}
-
 	}
 
 	private void testContextFunctioningLinks() {
 		//Werken de links in het context scherm naar de relaties toe.
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": Context: testContextFunctioningLinks");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": Context: testContextFunctioningLinks");
 		
 		boolean assertion=true;
 		for(Link l : contextLinks) {
@@ -144,6 +150,7 @@ public class Test12 extends AbstractTest {
 
 			if (!driver.getCurrentUrl().equals(l.getHref())) {
 				System.out.println("context.3 - " + getCurrentTestCase().getIdentifier() + ": " + l.getText() + " " + l.getAdditionalInfo() + driver.getCurrentUrl() +" != " + l.getHref());
+				Reporter.log("context.3 - " + getCurrentTestCase().getIdentifier() + ": " + l.getText() + " " + l.getAdditionalInfo() + driver.getCurrentUrl() +" != " + l.getHref());
 				assertion=false;
 			}
 		}
@@ -182,6 +189,8 @@ public class Test12 extends AbstractTest {
 	public void newSpecimenOtherTests() {
 		if (!getCurrentTestCase().hasTest("New specimen other")) return;
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": New specimen other");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": New specimen other");
+
 		testNewSpecimenOtherPrefix();
 		testNewSpecimenOtherDisabledFields();
 		testNewSpecimenOtherExclusiveNCBN();
@@ -191,6 +200,7 @@ public class Test12 extends AbstractTest {
 	private void testNewSpecimenOtherPrefix() {
 		//vul prefix met 'e' en catalognumber met nieuwe waarde. Wordt het registratienummer samengesteld zonder punt tussen prefix en catalogumber?
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherPrefix");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherPrefix");
 
 		String prefix = "e";
 		String number = "621";
@@ -202,6 +212,7 @@ public class Test12 extends AbstractTest {
 	private void testNewSpecimenOtherDisabledFields() {
 		//Vul mount met '96 well plate'. Worden de storage location velden uitgegrijst?
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherDisabledFields");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherDisabledFields");
 
 		boolean before =
 			detailBeschrijvingenPage.isStandardStorageLocationEnabled() && 
@@ -222,19 +233,20 @@ public class Test12 extends AbstractTest {
 	private void testNewSpecimenOtherExclusiveNCBN() {
 		//Kun je een NCBN storage unit koppelen, maar niet een BE storage unit? (als mount = 96 well plate, aldus tekla)
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherExclusiveNCBN");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherExclusiveNCBN");
 
 		//detailBeschrijvingenPage.setMount("96 well plate","96 well plate"); // already there
 		detailBeschrijvingenPage.setStandardStorageUnit("N");
 		// unable to get this to work
 		detailBeschrijvingenPage.getStorgeUnitSuggestions();
 		
-		Assert.assertEquals(true,true,"spec.other.3 - " + getCurrentTestCase().getIdentifier() + " - CANNOT GET THIS ONE TO WORK (will always pass)");
-		
+		Assert.assertEquals(true,true,"spec.other.3 - " + getCurrentTestCase().getIdentifier() + " - CANNOT GET THIS ONE TO WORK (will always pass)");	
 	}
 
 	private void testNewSpecimenOtherSaves() {
 		//Kan het record opgeslagen worden?
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherSaves");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": New specimen other: testNewSpecimenOtherSaves");
 	}
 
 
@@ -242,6 +254,8 @@ public class Test12 extends AbstractTest {
 	public void molecularStorageUnitTests() {
 		if (!getCurrentTestCase().hasTest("Molecular storage unit")) return;
 		System.out.println("running " + getCurrentTestCase().getIdentifier() + ": Molecular storage unit");
+		Reporter.log("running " + getCurrentTestCase().getIdentifier() + ": Molecular storage unit");
+
 		testMolecularStorageUnitPrefixZeroes01();
 		testMolecularStorageUnitPrefixZeroes02();
 	}
@@ -270,36 +284,6 @@ public class Test12 extends AbstractTest {
 	private void testGeneiousOIASpecimen() {
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

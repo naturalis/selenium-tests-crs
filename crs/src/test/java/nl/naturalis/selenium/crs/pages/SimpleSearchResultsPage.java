@@ -40,6 +40,8 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	private int resultRowsWithModeration=0;
 	private int resultRowsWithAllTerms=0;
 	private int resultRowsWithOneOfTerms=0;
+	private int resultRowsWithAllTermsRegExp=0;
+	private int resultRowsWithOneOfTermsRegExp=0;
 	private int resultRowsMatchSpecificColumn=0;
 	private int columnToCheck=-1;
 	
@@ -111,7 +113,7 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		return this.resultRowsWithModeration;
 	}
 
-	public int getResultRowWithWithAllTermsCount() {
+	public int getResultRowWithAllTermsCount() {
 		this.countResultRows();
 		return this.resultRowsWithAllTerms;
 	}
@@ -125,6 +127,16 @@ public class SimpleSearchResultsPage extends AbstractPage {
 		this.setColumnToCheck(this.getResultTableHeaders().indexOf(columnHeader));
 		this.countResultRows();
 		return this.resultRowsMatchSpecificColumn;
+	}
+	
+	public int getResultRowWithAllTermsRegExpCount() {
+		this.countResultRows();
+		return this.resultRowsWithAllTermsRegExp;
+	}
+	
+	public int getResultRowWithWithOneOfTermsRegExpCount() {
+		this.countResultRows();
+		return this.resultRowsWithOneOfTermsRegExp;
 	}
 	
 	public List<Link> getBreadcrumbTrail() {
@@ -253,6 +265,8 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	            	
 	            	boolean hasAllTerms = true;
 	            	boolean hasOneOfTerms = false;
+	            	boolean hasAllTermsRegExp = true;
+	            	boolean hasOneOfTermsRegExp = false;
 
 	            	String temp="";
 	            	List<WebElement> tds = row.findElements(By.cssSelector("td"));
@@ -271,6 +285,14 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	            	}
 	
 	            	for(String e : searchTerms) {
+	            		if (!temp.matches("(.*)"+e.toLowerCase().replace("?","(.*)")+"(.*)")) {
+	            			hasAllTermsRegExp = false;
+	            		}
+	            		else {
+	            			hasOneOfTermsRegExp = true;
+	            		}
+	            		
+	            		
 	            		if (!temp.contains(e.toLowerCase())) {
 	            			hasAllTerms = false;
 	            		}
@@ -286,7 +308,15 @@ public class SimpleSearchResultsPage extends AbstractPage {
 	            	if (hasOneOfTerms) {
 	            		this.resultRowsWithOneOfTerms++;
 	            	}
-	            	
+
+	            	if (hasAllTermsRegExp) {
+	            		this.resultRowsWithAllTermsRegExp++;
+	            	}
+
+	            	if (hasOneOfTermsRegExp) {
+	            		this.resultRowsWithOneOfTermsRegExp++;
+	            	}
+
 	            	this.resultRows++;
 	            }
 	        }
@@ -294,7 +324,5 @@ public class SimpleSearchResultsPage extends AbstractPage {
 			//
 		}
 	}
-
-
 	
 }
