@@ -1,27 +1,20 @@
 package nl.naturalis.selenium.crs.utils;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 
 public class Report {
 	
 	private static String testName;
 	private static String username;
-	private static String password;
-	private static Connection connection;
-	
 	public enum LogLevel {
 	    INFO, TRIVIAL, SEVERE, FATAL 
 	}
 
 	public static void setCredentials(String username, String password) {
 		Report.username=username;
-		Report.password=password;
 	}
 
 	public static void setTestName(String name) {
@@ -47,7 +40,6 @@ public class Report {
 	}
 
 	public static void setTestName(Connection connection) {
-		Report.connection=connection;
 	}
           
 }
