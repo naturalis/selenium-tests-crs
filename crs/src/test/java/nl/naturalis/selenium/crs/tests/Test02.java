@@ -16,6 +16,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -80,7 +81,7 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() throws SQLException {
-		// tearDown();
+		tearDown();
 		Report.LogTestEnd();
 	}
 
@@ -301,18 +302,14 @@ public class Test02 extends AbstractTest {
 	// 1. Current Collection name
 	@Test(priority = 11, dependsOnMethods = { "checkThesaurusAndBinIcons" })
 	public void checkIncorrectSubmissionValueTest1A() {
-		// Cursor in veld, veld leeg laten en met tab verder
-		EditIcon thisIcon = null;
-		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "TAB");
-		thisIcon = detailBeschrijvingenPage.getIconInfo("icon15");
-		Assert.assertEquals(thisIcon.getSrc(),
-				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name",
-				"Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");
-	}
-
-	@Test(priority = 12, dependsOnMethods = { "checkThesaurusAndBinIcons" })
-	public void checkIncorrectSubmissionValueTest1B() {
+		// Scroll into view first
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
+		// wait a little while for this to happen
+		try {
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		// Verkeerde waarde
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("currentcollectionname", "illegal-text");
@@ -322,8 +319,8 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getTitle(), "Invalid (sub)collection name", "Fout in 2.1.5");
 	}
 
-	@Test(priority = 13, dependsOnMethods = { "checkIncorrectSubmissionValueTest1B" })
-	public void checkIncorrectSubmissionValueTest1C() {
+	@Test(priority = 12, dependsOnMethods = { "checkIncorrectSubmissionValueTest1A" })
+	public void checkIncorrectSubmissionValueTest1B() {
 		// Blijft de verkeerde waarde staan?
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.readValueFromField("currentcollectionname"), "illegal-text",
 				"Fout in 2.1.5");
@@ -331,20 +328,8 @@ public class Test02 extends AbstractTest {
 	}
 
 	// 2. Basis of record
-	@Test(priority = 14, dependsOnMethods = { "checkIncorrectSubmissionValueTest1C" })
+	@Test(priority = 13, dependsOnMethods = { "checkIncorrectSubmissionValueTest1B" })
 	public void checkIncorrectSubmissionValueTest2A() {
-		Test02.detailBeschrijvingenPage.switchToFrame_1();
-		// Cursor in veld, veld leeg laten en met tab verder
-		EditIcon thisIcon = null;
-		Test02.detailBeschrijvingenPage.enterValueToField("basisofrecord", "TAB");
-		thisIcon = detailBeschrijvingenPage.getIconInfo("icon16");
-		Assert.assertEquals(thisIcon.getSrc(),
-				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-		Assert.assertEquals(thisIcon.getTitle(), "Invalid basis of record", "Fout in 2.1.5");
-	}
-
-	@Test(priority = 15, dependsOnMethods = { "checkIncorrectSubmissionValueTest1C" })
-	public void checkIncorrectSubmissionValueTest2B() {
 		// Verkeerde waarde
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("basisofrecord", "illegal-text");
@@ -354,8 +339,8 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getTitle(), "May only contain thesaurus value!", "Fout in 2.1.5");
 	}
 
-	@Test(priority = 16, dependsOnMethods = { "checkIncorrectSubmissionValueTest1C" })
-	public void checkIncorrectSubmissionValueTest2C() {
+	@Test(priority = 14, dependsOnMethods = { "checkIncorrectSubmissionValueTest1B" })
+	public void checkIncorrectSubmissionValueTest2B() {
 		// Blijft de verkeerde waarde staan?
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.readValueFromField("basisofrecord"), "illegal-text",
 				"Fout in 2.1.5");
@@ -363,21 +348,8 @@ public class Test02 extends AbstractTest {
 	}
 
 	// 3. Mount
-	@Test(priority = 17, dependsOnMethods = { "checkIncorrectSubmissionValueTest2C" })
+	@Test(priority = 15, dependsOnMethods = { "checkIncorrectSubmissionValueTest2B" })
 	public void checkIncorrectSubmissionValueTest3A() {
-		Test02.detailBeschrijvingenPage.switchToFrame_1();
-		// Cursor in veld, veld leeg laten en met tab verder
-		EditIcon thisIcon = null;
-		Test02.detailBeschrijvingenPage.enterValueToField("mount", "TAB");
-		thisIcon = detailBeschrijvingenPage.getIconInfo("icon17");
-		Assert.assertEquals(thisIcon.getSrc(),
-				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-		Assert.assertEquals(thisIcon.getTitle(), "Invalid mount",
-				"Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");
-	}
-
-	@Test(priority = 18, dependsOnMethods = { "checkIncorrectSubmissionValueTest2C" })
-	public void checkIncorrectSubmissionValueTest3B() {
 		// Verkeerde waarde
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("mount", "illegal-text");
@@ -387,8 +359,8 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getTitle(), "May only contain thesaurus value!", "Fout in 2.1.5");
 	}
 
-	@Test(priority = 19, dependsOnMethods = { "checkIncorrectSubmissionValueTest2C" })
-	public void checkIncorrectSubmissionValueTest3C() {
+	@Test(priority = 19, dependsOnMethods = { "checkIncorrectSubmissionValueTest2B" })
+	public void checkIncorrectSubmissionValueTest3B() {
 		// Blijft de verkeerde waarde staan?
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.readValueFromField("mount"), "illegal-text",
 				"Fout in 2.1.5");
@@ -396,21 +368,8 @@ public class Test02 extends AbstractTest {
 	}
 
 	// 4. Preserved part
-	@Test(priority = 20, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 21, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkIncorrectSubmissionValueTest4A() {
-		Test02.detailBeschrijvingenPage.switchToFrame_1();
-		// Cursor in veld, veld leeg laten en met tab verder
-		EditIcon thisIcon = null;
-		Test02.detailBeschrijvingenPage.enterValueToField("preservedpart", "TAB");
-		thisIcon = detailBeschrijvingenPage.getIconInfo("icon18");
-		Assert.assertEquals(thisIcon.getSrc(),
-				"https://crspl.naturalis.nl/AtlantisWeb/App_Themes/Base/images/buttons/alert.gif", "Fout in 2.1.5");
-		Assert.assertEquals(thisIcon.getTitle(), "Invalid preserved part",
-				"Fout in 2.1.5: TAB naar volgende veld geeft geen foutmelding!");
-	}
-
-	@Test(priority = 21, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
-	public void checkIncorrectSubmissionValueTest4B() {
 		// Verkeerde waarde
 		EditIcon thisIcon = null;
 		Test02.detailBeschrijvingenPage.enterValueToField("preservedpart", "illegal-text");
@@ -420,8 +379,8 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(thisIcon.getTitle(), "May only contain thesaurus value!", "Fout in 2.1.5");
 	}
 
-	@Test(priority = 22, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
-	public void checkIncorrectSubmissionValueTest4C() {
+	@Test(priority = 22, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
+	public void checkIncorrectSubmissionValueTest4B() {
 		// Blijft de verkeerde waarde staan?
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.readValueFromField("preservedpart"), "illegal-text",
 				"Fout in 2.1.5");
@@ -441,7 +400,7 @@ public class Test02 extends AbstractTest {
 	 * 
 	 */
 
-	@Test(priority = 23, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 23, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkTextEntryCurrentCollectionName() {
 		// Pisces(Vertebrates)
 		String entryText = "p";
@@ -451,7 +410,7 @@ public class Test02 extends AbstractTest {
 				"Fout in 2.1.6: Current Collection name.");
 	}
 
-	@Test(priority = 24, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 24, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkTextEntryBasisOfRecord() {
 		// Basis of record
 		String entryText = "v";
@@ -465,7 +424,7 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(basisOfRecord.getThesaurusConcept(), specimenType, "Fout in 2.1.6: Basis of Record.");
 	}
 
-	@Test(priority = 25, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 25, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkTextEntryMount() {
 		// Mount
 		String entryText = "n";
@@ -474,7 +433,7 @@ public class Test02 extends AbstractTest {
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getMountTlink(), specimenType, "Fout in 2.1.6: Mount");
 	}
 
-	@Test(priority = 26, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 26, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkTextEntryPreservedPart() {
 		// Preserved part
 		String entryText = "n";
@@ -494,7 +453,7 @@ public class Test02 extends AbstractTest {
 	 * prullenbak icoon)?
 	 * 
 	 */
-	@Test(priority = 27, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 27, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkPrefix() {
 		// Test met InputGroupExt
 		InputGroup prefix = new InputGroup(driver, "uniqueID1219179928");
@@ -518,7 +477,7 @@ public class Test02 extends AbstractTest {
 	 * dat dit niet geaccepteerd wordt?
 	 * 
 	 */
-	@Test(priority = 28, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 28, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkNumber() {
 		Test02.detailBeschrijvingenPage.setNumber("abc");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getNumber(), "", "Fout in 2.1.8");
@@ -532,7 +491,7 @@ public class Test02 extends AbstractTest {
 	 * achter het veld?
 	 * 
 	 */
-	@Test(priority = 29, dependsOnMethods = { "checkIncorrectSubmissionValueTest3C" })
+	@Test(priority = 29, dependsOnMethods = { "checkIncorrectSubmissionValueTest3B" })
 	public void checkSuffix() {
 		Test02.detailBeschrijvingenPage.setSuffix("abc");
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getSuffix(), "", "Fout in 2.1.9");
@@ -988,7 +947,7 @@ public class Test02 extends AbstractTest {
 	 * Verschijnt het registratienummer juist in het samenvattende lichtblauwe blok rechtsboven?
 	 * (Vul het registratienummer in dit formulier in de kolom invoerwaarde in.)
 	 */
-	@Test(priority = 45, dependsOnMethods = { "checkExtraIcons" })
+	@Test(priority = 45, dependsOnMethods = { "testFirstRecordSave" })
 	public void checkContextRegistrationNumber() {
 		Assert.assertEquals(Test02.detailBeschrijvingenPage.getContextDisplayRegistrationNumber(), "TEST" + "." + Test02.testNumber + ".se");
 	}

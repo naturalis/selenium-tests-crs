@@ -67,16 +67,16 @@ public class AbstractTest {
 			}
 
 			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--enable-automation");
 			// options.addArguments("--start-maximized");
 			options.addArguments("--incognito");
             options.addArguments("--ignore-certificate-errors");
             options.addArguments("--disable-popup-blocking");
 			options.addArguments("--test-type");
-			options.addArguments("--disable-extensions");
-			options.addArguments("--disable-extensions-file-access-check");
-			options.addArguments("--disable-extensions-http-throttling");
-			options.addArguments("--disable-infobars");
-			// options.addArguments("--enable-automation");
+//			options.addArguments("--disable-extensions");
+//			options.addArguments("--disable-extensions-file-access-check");
+//			options.addArguments("--disable-extensions-http-throttling");
+//			options.addArguments("--disable-infobars");
 			
 			// Preferences
 	        Map<String, Object> prefs = new HashMap<String, Object>();

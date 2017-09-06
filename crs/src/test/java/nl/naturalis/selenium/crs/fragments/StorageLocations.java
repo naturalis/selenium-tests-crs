@@ -4,15 +4,18 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StorageLocations {
 	
 	private WebDriver driver;
+	private Actions action;
 
 	public StorageLocations() {
 		this.driver = null;
@@ -20,10 +23,12 @@ public class StorageLocations {
 	
 	public StorageLocations(WebDriver driver) {
 		this.driver = driver;
+		this.action = new Actions(driver);
 	}
 
 	public void setDriver(WebDriver driver) {
 		this.driver = driver;
+		this.action = new Actions(driver);
 	}
 	
 	public String getTitle() {
@@ -92,9 +97,18 @@ public class StorageLocations {
 	    }
 	
 	public Boolean selectStorageLocation() {
-		// When there is a page, this method selects the 10th storage location 
+		// When there is a page, this method selects the 10th storage location
+		// Actions action = new Actions(driver);
 		WebElement selectLocation = driver.findElement(By.xpath("//a[@class='boomPagerLink']/../../../../li[10]/div/span[@class='rtIn']"));
-		selectLocation.click();
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", selectLocation);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+//		selectLocation = driver.findElement(By.xpath("//a[@class='boomPagerLink']/../../../../li[10]/div/span[@class='rtIn']"));
+//		selectLocation.click();
+		action.doubleClick(selectLocation).perform();
 		if (selectLocation.getCssValue("background-color").equals("rgba(130, 130, 130, 1)")) {
 			return true;
 		} else {
@@ -108,6 +122,12 @@ public class StorageLocations {
 		// String popupWindow = (String) AllWindowHandles.toArray()[1];	
 
 		// Clicking the koppel button, will also kill the popup window
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.id("img_Koppel")));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		driver.findElement(By.id("img_Koppel")).click();
 		
 		// So we need to switch back to the main window
