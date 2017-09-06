@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,31 +21,7 @@ import nl.naturalis.selenium.crs.configuration.Configuration;
 import nl.naturalis.selenium.crs.fragments.EditIcon;
 import nl.naturalis.selenium.crs.fragments.Link;
 
-
 public class DetailBeschrijvingenPage extends AbstractPage {
-
-/*
- * prefix
- * 	input conceptfield="PREFIX"
- * 
- * storage
- * 	name=
- * 		CURRENTCOLLECTIONUNIT
- * 		CURRENTSTORAGELOCATION
- * 		USUALCOLLECTIONUNIT
- * 		USUALSTORAGELOCATION
- * 			VerifyNotEditable 
- * 
- * conceptfield="PRESERVEDPART"
- * 
- *  
- * iconSaveDocument
- * 
- * CONTEXT
- * ctl00_masterContent_iframe_1
- *   div#scrolldiv
- *		 p#scrollcontextinhoud
- */
 
 	private WebDriver driver;
 
@@ -198,7 +175,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	// Buttons, icons, ...
 	
 	// #1 Add multimedia
-	@FindBy(css = "span#ctl00_masterContent_UpdatePanel1 input")
+	@FindBy(xpath = ".//*[@id='imgBtnMultiMedia'][3]")
 	private WebElement iconAddMultimedia;
 
 	// #2 Attach all multimedia ...
@@ -289,6 +266,10 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(id = "ctl00_masterContent_btn_werkset")
 	private WebElement iconAddToWorkingSet;
 	
+	// Extra: Leave this Page button
+	@FindBy(xpath = ".//span[@class='ui-button-text'][text()='Leave this Page']")
+	private WebElement buttonLeaveThisPage;
+	
 	public EditIcon getIconInfo(String choice) {
 		WebElement icon = null;
 		switch (choice) {
@@ -368,7 +349,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	
 		EditIcon thisIcon = new EditIcon();
 		
-		WebDriverWait wait = new WebDriverWait(driver, 5);
+		WebDriverWait wait = new WebDriverWait(driver, 8);
 		wait.until(ExpectedConditions.visibilityOf(icon));
 
 		thisIcon.getSrc(icon.getAttribute("src").trim());
@@ -386,7 +367,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 	@FindBy(css = "span.ui-icon.ui-icon-triangle-1-e")
 	private WebElement contextDisplayMoreButton;
 
-	@FindBy(css = "input[atfid=\"add_ncrs_gatheringsites_dialog?dialog\"]")
+	@FindBy(xpath = ".//input[@atfid=\"add_ncrs_gatheringsites_dialog?dialog\"]")
 	private WebElement buttonAddGatheringSite;
 
 	@FindBy(css = "*[title=\"Close\"")
@@ -649,6 +630,8 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		select.selectByVisibleText(optionLabel);
 		select.getFirstSelectedOption().click();
 		buttonFormulierenSelect.click();
+		buttonLeaveThisPage.click();
+		
 	}
 
 	public void enterValueToField(String fieldname, String value) {
@@ -725,14 +708,17 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		this.driver.switchTo().frame("iframe_1");
 	}
 
-	
-	/**
-	 * 
-	 */
 	public void switchToGatheringSitesFrame() {
+		// Scroll into view first
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", buttonAddGatheringSite);
+		// wait a little for this to happen
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		buttonAddGatheringSite.click();
-		driver.switchTo().defaultContent();
-
+		
 		int size = driver.findElements(By.tagName("iframe")).size();
 		for (int n = 0; n < size; n++) {
 			driver.switchTo().frame(n);

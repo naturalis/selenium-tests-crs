@@ -2,12 +2,15 @@ package nl.naturalis.selenium.crs.tests;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import com.mysql.jdbc.Connection;
 
 import nl.naturalis.selenium.crs.utils.MissingConfigurationException;
@@ -62,7 +65,26 @@ public class AbstractTest {
 				System.setProperty("webdriver.chromedriver.bin",Configuration.getBrowserPath());
 				System.out.println("webdriver.chromedriver.bin"+':'+Configuration.getBrowserPath());
 			}
-			driver = new ChromeDriver();
+
+			ChromeOptions options = new ChromeOptions();
+			// options.addArguments("--start-maximized");
+			options.addArguments("--incognito");
+            options.addArguments("--ignore-certificate-errors");
+            options.addArguments("--disable-popup-blocking");
+			options.addArguments("--test-type");
+			options.addArguments("--disable-extensions");
+			options.addArguments("--disable-extensions-file-access-check");
+			options.addArguments("--disable-extensions-http-throttling");
+			options.addArguments("--disable-infobars");
+			// options.addArguments("--enable-automation");
+			
+			// Preferences
+	        Map<String, Object> prefs = new HashMap<String, Object>();
+	        prefs.put("credentials_enable_service", false);
+	        prefs.put("profile.password_manager_enabled", false);
+	        options.setExperimentalOption("prefs", prefs);
+	        
+			driver = new ChromeDriver(options);
 		}
 	}
 

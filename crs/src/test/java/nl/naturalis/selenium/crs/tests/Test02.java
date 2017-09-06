@@ -80,7 +80,7 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() throws SQLException {
-		tearDown();
+		// tearDown();
 		Report.LogTestEnd();
 	}
 
@@ -172,7 +172,7 @@ public class Test02 extends AbstractTest {
 	 * het scherm met een mouse over als je de muis erover heen beweegt?
 	 * 
 	 */
-	@Test(priority = 8, dependsOnMethods = { "selectSpecifiedForm" })
+	@Test(priority = 8, dependsOnMethods = { "openFormSelect" }) // dependsOnMethods = { "selectSpecifiedForm" })
 	public void checkIconInfo() {
 		EditIcon thisIcon = null;
 		thisIcon = detailBeschrijvingenPage.getIconInfo("icon1");
@@ -267,7 +267,6 @@ public class Test02 extends AbstractTest {
 
 		// Gathering Site > Country
 		Test02.detailBeschrijvingenPage.switchToGatheringSitesFrame();
-
 		// Algemenere methode: moet nog uitgewerkt worden ...
 		// this.detailBeschrijvingenPage.buttonAddGatheringSite.click();
 		// this.detailBeschrijvingenPage.switchToFrameContainingElementID("select21");
