@@ -40,11 +40,22 @@ public class StorageLocations {
 	}
 	
 	public void clickDW() {
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		WebElement DW = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW')]/parent::div/span[@class='rtPlus']")));
 		DW.click();
 	}
 
 	public void clickDW_E() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		Boolean branchAvailable = driver.findElements(By.xpath("//span[contains(text(), ' DW.E')]/parent::div/span[@class='rtPlus']")).size() > 0;
 		if (!branchAvailable) {
 			this.clickDW();
@@ -54,20 +65,34 @@ public class StorageLocations {
 	}
 
 	public void clickDW_E_01() {
+//		try {
+//			Thread.sleep(1500);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
 		Boolean branchAvailable = driver.findElements(By.xpath("//span[contains(text(), ' DW.E.01')]/parent::div/span[@class='rtPlus']")).size() > 0;
 		if (!branchAvailable) {
 			this.clickDW_E();
 		}
 		WebElement DW_E_01 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW.E.01')]/parent::div/span[@class='rtPlus']")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", DW_E_01);
 		DW_E_01.click();
 	}
 
 	public void clickDW_E_01_017() {
+//		try {
+//			Thread.sleep(1500);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
 		Boolean branchAvailable = driver.findElements(By.xpath("//span[contains(text(), ' DW.E.01.017')]/parent::div/span[@class='rtPlus']")).size() > 0;
 		if (!branchAvailable) {
 			this.clickDW_E_01();
 		}
 		WebElement DW_E_01_017 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), ' DW.E.01.017')]/parent::div/span[@class='rtPlus']")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", DW_E_01_017);
 		DW_E_01_017.click();
 	}
 

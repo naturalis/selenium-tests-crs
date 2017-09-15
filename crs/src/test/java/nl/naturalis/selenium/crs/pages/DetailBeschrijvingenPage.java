@@ -630,7 +630,7 @@ public class DetailBeschrijvingenPage extends AbstractPage {
 		select.selectByVisibleText(optionLabel);
 		select.getFirstSelectedOption().click();
 		buttonFormulierenSelect.click();
-		buttonLeaveThisPage.click();
+		// buttonLeaveThisPage.click();
 		
 	}
 

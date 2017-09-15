@@ -83,7 +83,7 @@ public class Test02 extends AbstractTest {
 
 	@AfterClass
 	private static void cleanUp() throws SQLException {
-		tearDown();
+		//tearDown();
 		Report.LogTestEnd();
 	}
 
@@ -1094,7 +1094,7 @@ public class Test02 extends AbstractTest {
 		}
 		// Return home
 		driver.get(startPage.getPageURL());
-		wait = new WebDriverWait(driver, 3);
+		wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ctl00_LoginName")));
 	}
 
